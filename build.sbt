@@ -2,7 +2,7 @@ name := "Santander-Product-Recommendation"
 
 version := "1.0"
 
-scalaVersion := "2.12.4"
+scalaVersion := "2.11.8"
 
 lazy val dataclean = (project in file("data-cleaning-app"))
 
