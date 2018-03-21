@@ -3,7 +3,7 @@ import scala.io.Source
 /**
   * Trait responsible for reading/loading [[Customer]].
   *
-  * @author Luciano Molinari
+  * Team 7 | Project-Santander product Recommendation 
   */
 trait CustReader {
 
