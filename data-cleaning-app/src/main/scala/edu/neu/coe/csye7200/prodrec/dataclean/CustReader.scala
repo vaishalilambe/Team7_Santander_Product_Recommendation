@@ -8,7 +8,7 @@ import scala.io.Source
 trait CustReader {
 
   /**
-    * @return A [[Seq]] containing all the customers.
+    * @return A [[Seq]] containing all the customers information/history.
     */
   def readCust(): Seq[Customer]
 
@@ -25,7 +25,7 @@ case class Customer(fecha_dato: String, ncodpers: String, ind_empleado:String, p
   * Implementation of [[CustReader]] responsible for reading sales from a CSV file.
   *
   * @param fileName The name of the CSV file to be read.
-  * @author Luciano Molinari
+  * 
   */
 class CustCSVReader(val fileName: String) extends CustReader {
 
