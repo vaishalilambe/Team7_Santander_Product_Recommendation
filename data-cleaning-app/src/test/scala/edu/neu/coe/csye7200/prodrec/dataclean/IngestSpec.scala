@@ -12,7 +12,7 @@ import org.scalatest.Matchers._
 
 /**
   *
-  * @author Luciano Molinari
+  * Team7 | Project-Santander product Recommendation 
   */
 class CustCSVReaderTest extends FunSuite {
 
