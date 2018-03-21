@@ -1,0 +1,430 @@
+{
+  "paragraphs": [
+    {
+      "text": "// Read Training data using spark-csv\n\nval df \u003d sqlContext.read\n    .format(\"com.databricks.spark.csv\")\n    .option(\"header\", \"true\") // Use first line of all files as header\n    .option(\"inferSchema\", \"true\") // Automatically infer data types //.option(\"quote\", \"\\\"\")\n    .option(\"mode\", \"DROPMALFORMED\")\n    .load(\"file:///Users/arpitrawat/Downloads/Santander_Data/datasets/train_ver2.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "Mar 20, 2018 9:29:01 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 263.0,
+              "optionOpen": false
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "df: org.apache.spark.sql.DataFrame \u003d [fecha_dato: timestamp, ncodpers: double ... 46 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521580050881_282595399",
+      "id": "20180320-170730_538279661",
+      "dateCreated": "Mar 20, 2018 5:07:30 PM",
+      "dateStarted": "Mar 20, 2018 9:24:00 PM",
+      "dateFinished": "Mar 20, 2018 9:28:10 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Total number of rows in the data\ndf.count",
+      "user": "anonymous",
+      "dateUpdated": "Mar 20, 2018 9:32:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res67: Long \u003d 13647309\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521595953812_-1929720562",
+      "id": "20180320-213233_1947710605",
+      "dateCreated": "Mar 20, 2018 9:32:33 PM",
+      "dateStarted": "Mar 20, 2018 9:32:49 PM",
+      "dateFinished": "Mar 20, 2018 9:33:31 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Total number of features in the data\ndf.columns.length",
+      "user": "anonymous",
+      "dateUpdated": "Mar 20, 2018 9:41:57 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res70: Int \u003d 48\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521596342732_1728049482",
+      "id": "20180320-213902_2001116190",
+      "dateCreated": "Mar 20, 2018 9:39:02 PM",
+      "dateStarted": "Mar 20, 2018 9:41:57 PM",
+      "dateFinished": "Mar 20, 2018 9:41:57 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Name of the features\ndf.columns.map(c \u003d\u003e println(c))",
+      "user": "anonymous",
+      "dateUpdated": "Mar 20, 2018 10:20:45 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "fecha_dato\nncodpers\nind_empleado\npais_residencia\nsexo\nage\nfecha_alta\nind_nuevo\nantiguedad\nindrel\nult_fec_cli_1t\nindrel_1mes\ntiprel_1mes\nindresi\nindext\nconyuemp\ncanal_entrada\nindfall\ntipodom\ncod_prov\nnomprov\nind_actividad_cliente\nrenta\nsegmento\nind_ahor_fin_ult1\nind_aval_fin_ult1\nind_cco_fin_ult1\nind_cder_fin_ult1\nind_cno_fin_ult1\nind_ctju_fin_ult1\nind_ctma_fin_ult1\nind_ctop_fin_ult1\nind_ctpp_fin_ult1\nind_deco_fin_ult1\nind_deme_fin_ult1\nind_dela_fin_ult1\nind_ecue_fin_ult1\nind_fond_fin_ult1\nind_hip_fin_ult1\nind_plan_fin_ult1\nind_pres_fin_ult1\nind_reca_fin_ult1\nind_tjcr_fin_ult1\nind_valo_fin_ult1\nind_viv_fin_ult1\nind_nomina_ult1\nind_nom_pens_ult1\nind_recibo_ult1\nres74: Array[Unit] \u003d Array((), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), ())\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521598768624_-720813803",
+      "id": "20180320-221928_1414399579",
+      "dateCreated": "Mar 20, 2018 10:19:28 PM",
+      "dateStarted": "Mar 20, 2018 10:20:18 PM",
+      "dateFinished": "Mar 20, 2018 10:20:18 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Exporing the data types of the fields\ndf.printSchema",
+      "user": "anonymous",
+      "dateUpdated": "Mar 20, 2018 9:42:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- fecha_dato: timestamp (nullable \u003d true)\n |-- ncodpers: double (nullable \u003d true)\n |-- ind_empleado: string (nullable \u003d true)\n |-- pais_residencia: string (nullable \u003d true)\n |-- sexo: string (nullable \u003d true)\n |-- age: string (nullable \u003d true)\n |-- fecha_alta: timestamp (nullable \u003d true)\n |-- ind_nuevo: string (nullable \u003d true)\n |-- antiguedad: string (nullable \u003d true)\n |-- indrel: string (nullable \u003d true)\n |-- ult_fec_cli_1t: timestamp (nullable \u003d true)\n |-- indrel_1mes: string (nullable \u003d true)\n |-- tiprel_1mes: string (nullable \u003d true)\n |-- indresi: string (nullable \u003d true)\n |-- indext: string (nullable \u003d true)\n |-- conyuemp: string (nullable \u003d true)\n |-- canal_entrada: string (nullable \u003d true)\n |-- indfall: string (nullable \u003d true)\n |-- tipodom: string (nullable \u003d true)\n |-- cod_prov: string (nullable \u003d true)\n |-- nomprov: string (nullable \u003d true)\n |-- ind_actividad_cliente: string (nullable \u003d true)\n |-- renta: double (nullable \u003d true)\n |-- segmento: string (nullable \u003d true)\n |-- ind_ahor_fin_ult1: integer (nullable \u003d true)\n |-- ind_aval_fin_ult1: integer (nullable \u003d true)\n |-- ind_cco_fin_ult1: integer (nullable \u003d true)\n |-- ind_cder_fin_ult1: integer (nullable \u003d true)\n |-- ind_cno_fin_ult1: integer (nullable \u003d true)\n |-- ind_ctju_fin_ult1: integer (nullable \u003d true)\n |-- ind_ctma_fin_ult1: integer (nullable \u003d true)\n |-- ind_ctop_fin_ult1: integer (nullable \u003d true)\n |-- ind_ctpp_fin_ult1: integer (nullable \u003d true)\n |-- ind_deco_fin_ult1: integer (nullable \u003d true)\n |-- ind_deme_fin_ult1: integer (nullable \u003d true)\n |-- ind_dela_fin_ult1: integer (nullable \u003d true)\n |-- ind_ecue_fin_ult1: integer (nullable \u003d true)\n |-- ind_fond_fin_ult1: integer (nullable \u003d true)\n |-- ind_hip_fin_ult1: integer (nullable \u003d true)\n |-- ind_plan_fin_ult1: integer (nullable \u003d true)\n |-- ind_pres_fin_ult1: integer (nullable \u003d true)\n |-- ind_reca_fin_ult1: integer (nullable \u003d true)\n |-- ind_tjcr_fin_ult1: integer (nullable \u003d true)\n |-- ind_valo_fin_ult1: integer (nullable \u003d true)\n |-- ind_viv_fin_ult1: integer (nullable \u003d true)\n |-- ind_nomina_ult1: string (nullable \u003d true)\n |-- ind_nom_pens_ult1: string (nullable \u003d true)\n |-- ind_recibo_ult1: integer (nullable \u003d true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521593003134_-1094444903",
+      "id": "20180320-204323_1164407989",
+      "dateCreated": "Mar 20, 2018 8:43:23 PM",
+      "dateStarted": "Mar 20, 2018 9:42:25 PM",
+      "dateFinished": "Mar 20, 2018 9:42:25 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Stats for features\n\ndf.describe(\"age\",\"renta\").show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 20, 2018 10:25:14 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+------------------+------------------+\n|summary|               age|             renta|\n+-------+------------------+------------------+\n|  count|          13647309|          10852934|\n|   mean| 40.18146491355274|134254.31823814227|\n| stddev|17.185086968822375|230620.23882188654|\n|    min|                 2|           1202.73|\n|    max|               164|     2.889439551E7|\n+-------+------------------+------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521598969664_-905433623",
+      "id": "20180320-222249_196875349",
+      "dateCreated": "Mar 20, 2018 10:22:49 PM",
+      "dateStarted": "Mar 20, 2018 10:25:14 PM",
+      "dateFinished": "Mar 20, 2018 10:26:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Storing dataframe in tabular perform some analysis on the data using Spark-SQL\ndf.registerTempTable(\"sbank\")",
+      "user": "anonymous",
+      "dateUpdated": "Mar 20, 2018 9:30:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521581563679_-2062135562",
+      "id": "20180320-173243_1885441148",
+      "dateCreated": "Mar 20, 2018 5:32:43 PM",
+      "dateStarted": "Mar 20, 2018 8:47:39 PM",
+      "dateFinished": "Mar 20, 2018 8:47:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// First 10 rows from the data\n%sql\nselect * from sbank limit 10",
+      "user": "anonymous",
+      "dateUpdated": "Mar 20, 2018 10:38:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": true,
+              "setting": {
+                "scatterChart": {
+                  "xAxis": {
+                    "name": "sexo",
+                    "index": 4.0,
+                    "aggr": "sum"
+                  },
+                  "yAxis": {
+                    "name": "renta",
+                    "index": 22.0,
+                    "aggr": "sum"
+                  },
+                  "group": {
+                    "name": "age",
+                    "index": 5.0,
+                    "aggr": "sum"
+                  }
+                },
+                "stackedAreaChart": {}
+              },
+              "keys": [
+                {
+                  "name": "sexo",
+                  "index": 4.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "age",
+                  "index": 5.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "ncodpers",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "fecha_dato\tncodpers\tind_empleado\tpais_residencia\tsexo\tage\tfecha_alta\tind_nuevo\tantiguedad\tindrel\tult_fec_cli_1t\tindrel_1mes\ttiprel_1mes\tindresi\tindext\tconyuemp\tcanal_entrada\tindfall\ttipodom\tcod_prov\tnomprov\tind_actividad_cliente\trenta\tsegmento\n2016-06-28 00:00:00.0\t15889.0\tF\tES\tV\t56.0\t1995-01-16 00:00:00.0\t0\t256.0\t1.0\tnull\t1.0\tA\tS\tN\tN\tKAT\tN\t1\t28\tMADRID\t1\t  326124.90\t01 - TOP\n2016-06-28 00:00:00.0\t1170544.0\tN\tES\tH\t36.0\t2013-08-28 00:00:00.0\t0\t34.0\t1.0\tnull\t1.0\tI\tS\tN\tnull\tKAT\tN\t1\t 3\tALICANTE\t0\t         NA\t02 - PARTICULARES\n2016-06-28 00:00:00.0\t1170545.0\tN\tES\tV\t22.0\t2013-08-28 00:00:00.0\t0\t34.0\t1.0\tnull\t1.0\tA\tS\tN\tnull\tKHE\tN\t1\t15\tCORUÑA, A\t1\t         NA\t03 - UNIVERSITARIO\n2016-06-28 00:00:00.0\t1170547.0\tN\tES\tH\t22.0\t2013-08-28 00:00:00.0\t0\t34.0\t1.0\tnull\t1.0\tI\tS\tN\tnull\tKHE\tN\t1\t 8\tBARCELONA\t0\t  148402.98\t03 - UNIVERSITARIO\n2016-06-28 00:00:00.0\t1170548.0\tN\tES\tH\t22.0\t2013-08-28 00:00:00.0\t0\t34.0\t1.0\tnull\t1.0\tI\tS\tN\tnull\tKHE\tN\t1\t 7\tBALEARS, ILLES\t0\t  106885.80\t03 - UNIVERSITARIO\n2016-06-28 00:00:00.0\t1170550.0\tN\tES\tV\t22.0\t2013-08-28 00:00:00.0\t0\t34.0\t1.0\tnull\t1.0\tI\tS\tN\tnull\tKHE\tN\t1\t 8\tBARCELONA\t0\t         NA\t03 - UNIVERSITARIO\n2016-06-28 00:00:00.0\t1170552.0\tN\tES\tH\t51.0\t2013-08-28 00:00:00.0\t0\t34.0\t1.0\tnull\t1.0\tA\tS\tN\tnull\tKFC\tN\t1\t35\tPALMAS, LAS\t1\t   96395.88\t02 - PARTICULARES\n2016-06-28 00:00:00.0\t1170553.0\tN\tES\tH\t22.0\t2013-08-28 00:00:00.0\t0\t34.0\t1.0\tnull\t1.0\tI\tS\tN\tnull\tKHE\tN\t1\t45\tTOLEDO\t0\t         NA\t03 - UNIVERSITARIO\n2016-06-28 00:00:00.0\t1170555.0\tN\tES\tV\t22.0\t2013-08-28 00:00:00.0\t0\t34.0\t1.0\tnull\t1.0\tI\tS\tN\tnull\tKHE\tN\t1\t28\tMADRID\t0\t         NA\t03 - UNIVERSITARIO\n2016-06-28 00:00:00.0\t1170557.0\tN\tES\tH\t22.0\t2013-08-28 00:00:00.0\t0\t34.0\t1.0\tnull\t1.0\tA\tS\tN\tnull\tKHE\tN\t1\t15\tCORUÑA, A\t1\t   68322.72\t03 - UNIVERSITARIO\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521582340057_-638413034",
+      "id": "20180320-174540_1158815250",
+      "dateCreated": "Mar 20, 2018 5:45:40 PM",
+      "dateStarted": "Mar 20, 2018 10:37:38 PM",
+      "dateFinished": "Mar 20, 2018 10:37:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Distinct Customers\n%sql\nselect count(distinct ncodpers) as Total_Customers from sbank",
+      "user": "anonymous",
+      "dateUpdated": "Mar 20, 2018 10:37:35 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "Total_Customers\n929615\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521595054756_-128045443",
+      "id": "20180320-211734_1377586752",
+      "dateCreated": "Mar 20, 2018 9:17:34 PM",
+      "dateStarted": "Mar 20, 2018 10:10:55 PM",
+      "dateFinished": "Mar 20, 2018 10:11:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n",
+      "user": "anonymous",
+      "dateUpdated": "Mar 20, 2018 10:05:13 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1521597913792_-627374015",
+      "id": "20180320-220513_56581967",
+      "dateCreated": "Mar 20, 2018 10:05:13 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Santander_Product_Recommendation",
+  "id": "2D9FJ41VX",
+  "angularObjects": {
+    "2D9DGRQF7:shared_process": [],
+    "2D8PET8PW:shared_process": [],
+    "2DASB55DC:shared_process": [],
+    "2DADC4VMZ:shared_process": [],
+    "2D8FFPGNW:shared_process": [],
+    "2DBXV5WS7:shared_process": [],
+    "2D9Z65F9C:shared_process": [],
+    "2D96YCHZE:shared_process": [],
+    "2D84MDF2Q:shared_process": [],
+    "2DADT8PAJ:shared_process": [],
+    "2DBTFK7RF:shared_process": [],
+    "2D9KZYRR8:shared_process": [],
+    "2DA7YX813:shared_process": [],
+    "2D9XWZ3TX:shared_process": [],
+    "2D9J1TE8G:shared_process": [],
+    "2DBFAEAQN:shared_process": [],
+    "2D9ZVK41R:shared_process": [],
+    "2D8MYYZZ5:shared_process": [],
+    "2DBQTCA29:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
