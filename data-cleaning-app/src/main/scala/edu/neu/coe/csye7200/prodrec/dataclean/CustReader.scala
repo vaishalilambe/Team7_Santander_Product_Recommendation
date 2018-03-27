@@ -12,7 +12,7 @@ import scala.util.Try
   *
   * @param Cust_Code    Unique code for the Customer of the bank
   * @param Cust_Age     Age of a bank customer
-  * @param Cust_Sex     Gender of a bank customer
+  * @param Cust_Gender    Gender of a bank customer
   * @param Cust_Income  Income of a bank customer
   * @param Cust_Id      Customer identification as VIP, Individual or Student
   * @param Cust_Type    Type of a customer as Primary, Co-owner, Potential
@@ -21,7 +21,7 @@ import scala.util.Try
   */
 
 
-case class CustReader(Cust_Code: Int, Cust_Age: Int, Cust_Sex: String, Cust_Income: Double, Cust_Id: Int, Cust_Type: Int, Cust_Addr: Address, Cust_Profile: BankProfile)
+case class CustReader(Cust_Code: Int, Cust_Age: Int, Cust_Gender: String, Cust_Income: Double, Cust_Id: Int, Cust_Type: Int, Cust_Addr: CustAddress, Cust_Profile: CustProfile)
 
 
 /**
@@ -34,7 +34,7 @@ case class CustReader(Cust_Code: Int, Cust_Age: Int, Cust_Sex: String, Cust_Inco
   * @param Residence_Index Residence Index of a customer
   * @param Foreign_Index   Foreign Index of a customer
   */
-case class Address(Primary_Addr: Boolean, Country: String, Province_Name: String, Province_Code: Int, Residence_Index: Boolean, Foreign_Index: Boolean) {
+case class CustAddress(Primary_Addr: Boolean, Country: String, Province_Name: String, Province_Code: Int, Residence_Index: Boolean, Foreign_Index: Boolean) {
   override def toString: String = s"$Primary_Addr,$Country,$Province_Name ,$Province_Code ,$Residence_Index ,$Foreign_Index"
 }
 
@@ -47,7 +47,7 @@ case class Address(Primary_Addr: Boolean, Country: String, Province_Name: String
   * @param Emp_Index        Employee Index of a customer
   * @param Emp_Spouse_Index Employee Spouse Index for a customers who are employee
   */
-case class BankProfile(New_Index: Boolean, Join_Date: String, Seniority: Int, Emp_Index: Boolean, Emp_Spouse_Index: Boolean) {
+case class CustProfile(New_Index: Boolean, Join_Date: String, Seniority: Int, Emp_Index: Boolean, Emp_Spouse_Index: Boolean) {
   override def toString: String = s"$New_Index, $Join_Date, $Seniority, $Emp_Index, $Emp_Spouse_Index"
 }
 
@@ -68,9 +68,9 @@ object Customer extends App {
 
     val Cust_Type = splitRow(11).replace(" ", "").toDouble.toInt
 
-    val Cust_Addr = Cust_Addr(Seq(splitRow(18), splitRow(3), splitRow(20), splitRow(19), splitRow(13), splitRow(14)))
+    val Cust_Addr = CustAddress(Seq(splitRow(18), splitRow(3), splitRow(20), splitRow(19), splitRow(13), splitRow(14)))
 
-    val Cust_Profile = Cust_Profile(Seq(splitRow(7), splitRow(6), splitRow(8), splitRow(2), splitRow(15)))
+    val Cust_Profile = CustProfile(Seq(splitRow(7), splitRow(6), splitRow(8), splitRow(2), splitRow(15)))
 
     CustReader(Cust_Code, Cust_Age, Cust_Sex, Cust_Income, Cust_Id, Cust_Type, Cust_Addr, Cust_Profile)
   }
@@ -85,8 +85,8 @@ object Customer extends App {
 
 }
 
-object Address{
-  def apply(params: Seq[String]): Address = {
+object CustAddress{
+  def apply(params: Seq[String]): CustAddress = {
     params match {
       case primaryAddress :: country :: provinceName :: provinceCode :: residenceIndex :: foreignIndex :: Nil=>
         apply( {if(primaryAddress.replace(" ","").toDouble.toInt == 1) true else false},
@@ -99,8 +99,8 @@ object Address{
   }
 }
 
-object BankProfile{
-  def apply(params: Seq[String]): BankProfile = {
+object CustProfile{
+  def apply(params: Seq[String]): CustProfile = {
     params match {
       case newIndex :: joinDate :: seniority :: employeeIndex :: employeeSpouseIndex :: Nil =>
         apply(
