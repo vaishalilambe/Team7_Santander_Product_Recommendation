@@ -12,8 +12,8 @@ libraryDependencies ++= Seq(
   "com.typesafe" % "config" % configVersion,
   "org.apache.spark" % "spark-core_2.11" % sparkVersion,
   "org.apache.spark" %% "spark-sql" % sparkVersion,
+  "com.github.scopt" %% "scopt" % "3.7.0",
   "org.scalatest" %% "scalatest" % scalatestVersion % "test"
 )
 
 parallelExecution in Test := false      
-
