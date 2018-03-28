@@ -1,5 +1,5 @@
 # [Santander Product Recommendation](https://www.kaggle.com/c/santander-product-recommendation/data)
-### Build Status: [![CircleCI](https://circleci.com/gh/rchillyard/CSYE7200.svg?style=svg)](https://circleci.com/gh/vaishalilambe/Team7_Santander_Product_Recommendation)
+### Build Status: [![CircleCI](https://circleci.com/gh/vaishalilambe/Team7_Santander_Product_Recommendation.svg?style=svg)](https://circleci.com/gh/vaishalilambe/Team7_Santander_Product_Recommendation)
 
 Course : [CSYE7200 Big Data Engineering with Scala](https://www.coursicle.com/neu/courses/CSYE/7200/)
 
