@@ -1,1 +1,1698 @@
-﻿{"paragraphs":[{"config":{"colWidth":12,"graph":{"mode":"table","height":300,"optionOpen":false,"keys":[],"values":[],"groups":[],"scatter":{}},"enabled":true,"editorMode":"ace/mode/markdown","editorHide":true},"settings":{"params":{},"forms":{}},"jobName":"paragraph_1481279787553_-1906180463","id":"20161209-023627_1190136612","dateCreated":"2016-12-09T02:36:27-0800","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:768","text":"%md\n#First Analysis of the Data downloaded from Kaggle","dateUpdated":"2016-12-09T02:40:11-0800","dateFinished":"2016-12-09T02:39:26-0800","dateStarted":"2016-12-09T02:39:21-0800","result":{"code":"SUCCESS","type":"HTML","msg":"<h1>First Analysis of the Data downloaded from Kaggle</h1>\n"}},{"text":"%dep\nz.reset()\nz.addRepo(\"Spark Packages Repo\").url(\"http://dl.bintray.com/spark-packages/maven\")\nz.load(\"com.databricks:spark-csv_2.10:1.2.0\")\n\n\nimport org.apache.spark.sql.functions.udf\n\nimport util.Random._","dateUpdated":"2016-12-01T12:28:01-0800","config":{"colWidth":12,"graph":{"mode":"table","height":300,"optionOpen":false,"keys":[],"values":[],"groups":[],"scatter":{}},"enabled":true,"editorMode":"ace/mode/scala"},"settings":{"params":{},"forms":{}},"jobName":"paragraph_1480619788681_944676629","id":"20161201-111628_617816778","result":{"code":"ERROR","type":"TEXT","msg":"Must be used before SparkInterpreter (%spark) initialized\nHint: put this paragraph before any Spark code and restart Zeppelin/Interpreter"},"dateCreated":"2016-12-01T11:16:28-0800","dateStarted":"2016-12-01T12:28:01-0800","dateFinished":"2016-12-01T12:28:01-0800","status":"ERROR","progressUpdateIntervalMs":500,"$$hashKey":"object:201"},{"config":{"colWidth":12,"graph":{"mode":"table","height":300,"optionOpen":false,"keys":[],"values":[],"groups":[],"scatter":{}},"enabled":true,"editorMode":"ace/mode/markdown","editorHide":true},"settings":{"params":{},"forms":{}},"jobName":"paragraph_1481280035621_-1087867169","id":"20161209-024035_1358319397","dateCreated":"2016-12-09T02:40:35-0800","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:878","text":"%md\n### Imported CSV Data and created a DataFrame","dateUpdated":"2016-12-09T02:41:40-0800","dateFinished":"2016-12-09T02:41:35-0800","dateStarted":"2016-12-09T02:41:35-0800","result":{"code":"SUCCESS","type":"HTML","msg":"<h3>Imported CSV Data and created a DataFrame</h3>\n"}},{"text":"  val trainData = sqlContext.read.format(\"com.databricks.spark.csv\").option(\"header\", \"true\").option(\"inferSchema\", \"true\").load(\"/home/sweta/train_ver2.csv\")\n  \n  trainData.toDF().registerTempTable(\"Data\")","dateUpdated":"2016-12-01T11:38:32-0800","config":{"colWidth":12,"graph":{"mode":"table","height":300,"optionOpen":false,"keys":[],"values":[],"groups":[],"scatter":{}},"enabled":true},"settings":{"params":{},"forms":{}},"jobName":"paragraph_1480619797213_1772286838","id":"20161201-111637_1642387972","result":{"code":"SUCCESS","type":"TEXT","msg":"\ntrainData: org.apache.spark.sql.DataFrame = [fecha_dato: timestamp, ncodpers: double ... 46 more fields]\n\nwarning: there was one deprecation warning; re-run with -deprecation for details\n"},"dateCreated":"2016-12-01T11:16:37-0800","dateStarted":"2016-12-01T11:38:32-0800","dateFinished":"2016-12-01T11:44:18-0800","status":"FINISHED","progressUpdateIntervalMs":500,"$$hashKey":"object:202"},{"config":{"colWidth":12,"graph":{"mode":"table","height":300,"optionOpen":false,"keys":[],"values":[],"groups":[],"scatter":{}},"enabled":true,"editorMode":"ace/mode/markdown","editorHide":true},"settings":{"params":{},"forms":{}},"jobName":"paragraph_1481280111876_-1760518805","id":"20161209-024151_1691155538","dateCreated":"2016-12-09T02:41:51-0800","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:996","text":"%md\n### Count of Customers Segregation according to their Segmentation","dateUpdated":"2016-12-09T02:43:08-0800","dateFinished":"2016-12-09T02:43:06-0800","dateStarted":"2016-12-09T02:43:06-0800","result":{"code":"SUCCESS","type":"HTML","msg":"<h3>Count of Customers Segregation according to their Segmentation</h3>\n"}},{"text":"%sql\nselect segmento, count(ncodpers) as count from Data  group by segmento","dateUpdated":"2016-12-01T12:26:07-0800","config":{"colWidth":12,"graph":{"mode":"pieChart","height":300,"optionOpen":false,"keys":[{"name":"segmento","index":0,"aggr":"sum"}],"values":[{"name":"count","index":1,"aggr":"sum"}],"groups":[],"scatter":{"yAxis":{"name":"count","index":1,"aggr":"sum"}}},"enabled":true},"settings":{"params":{},"forms":{}},"jobName":"paragraph_1480619856075_1055392368","id":"20161201-111736_1524319730","result":{"code":"SUCCESS","type":"TABLE","msg":"segmento\tcount\n01 - TOP\t562142\n02 - PARTICULARES\t7960220\n\t189368\n03 - UNIVERSITARIO\t4935579\n","comment":"","msgTable":[[{"key":"count","value":"01 - TOP"},{"key":"count","value":"562142"}],[{"value":"02 - PARTICULARES"},{"value":"7960220"}],[{"value":""},{"value":"189368"}],[{"value":"03 - UNIVERSITARIO"},{"value":"4935579"}]],"columnNames":[{"name":"segmento","index":0,"aggr":"sum"},{"name":"count","index":1,"aggr":"sum"}],"rows":[["01 - TOP","562142"],["02 - PARTICULARES","7960220"],["","189368"],["03 - UNIVERSITARIO","4935579"]]},"dateCreated":"2016-12-01T11:17:36-0800","dateStarted":"2016-12-01T12:21:22-0800","dateFinished":"2016-12-01T12:25:15-0800","status":"FINISHED","progressUpdateIntervalMs":500,"$$hashKey":"object:203"},{"config":{"colWidth":12,"graph":{"mode":"table","height":300,"optionOpen":false,"keys":[],"values":[],"groups":[],"scatter":{}},"enabled":true,"editorMode":"ace/mode/markdown","editorHide":true},"settings":{"params":{},"forms":{}},"jobName":"paragraph_1481280203797_699335800","id":"20161209-024323_999591541","dateCreated":"2016-12-09T02:43:23-0800","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:1105","text":"%md\n### Monthly Count of Santander Customers acording to their Segmentations","dateUpdated":"2016-12-09T02:44:44-0800","dateFinished":"2016-12-09T02:44:37-0800","dateStarted":"2016-12-09T02:44:37-0800","result":{"code":"SUCCESS","type":"HTML","msg":"<h3>Monthly Count of Santander Customers acording to their Segmentations</h3>\n"}},{"text":"%sql\nselect Cast(fecha_dato as Date), segmento , count(ncodpers) from Data group by fecha_dato,segmento order by fecha_dato,segmento\n\n\n\n\n\n\n\n","dateUpdated":"2016-12-09T02:36:06-0800","config":{"colWidth":12,"graph":{"mode":"multiBarChart","height":300,"optionOpen":false,"keys":[{"name":"fecha_dato","index":0,"aggr":"sum"}],"values":[{"name":"count(ncodpers)","index":2,"aggr":"sum"}],"groups":[{"name":"segmento","index":1,"aggr":"sum"}],"scatter":{"xAxis":{"name":"fecha_dato","index":0,"aggr":"sum"}}},"enabled":true,"editorMode":"ace/mode/sql"},"settings":{"params":{},"forms":{}},"jobName":"paragraph_1480621833322_-77321550","id":"20161201-115033_233213854","result":{"code":"SUCCESS","type":"TABLE","msg":"fecha_dato\tsegmento\tcount(ncodpers)\n2015-01-28\t\t7024\n2015-01-28\t01 - TOP\t30508\n2015-01-28\t02 - PARTICULARES\t360899\n2015-01-28\t03 - UNIVERSITARIO\t227026\n2015-02-28\t\t6003\n2015-02-28\t01 - TOP\t30849\n2015-02-28\t02 - PARTICULARES\t363262\n2015-02-28\t03 - UNIVERSITARIO\t227280\n2015-03-28\t\t5145\n2015-03-28\t01 - TOP\t31226\n2015-03-28\t02 - PARTICULARES\t365368\n2015-03-28\t03 - UNIVERSITARIO\t227470\n2015-04-28\t\t4321\n2015-04-28\t01 - TOP\t31595\n2015-04-28\t02 - PARTICULARES\t366871\n2015-04-28\t03 - UNIVERSITARIO\t227580\n2015-05-28\t\t3619\n2015-05-28\t01 - TOP\t31958\n2015-05-28\t02 - PARTICULARES\t368666\n2015-05-28\t03 - UNIVERSITARIO\t227714\n2015-06-28\t\t1868\n2015-06-28\t01 - TOP\t32159\n2015-06-28\t02 - PARTICULARES\t370290\n2015-06-28\t03 - UNIVERSITARIO\t227793\n2015-07-28\t\t19358\n2015-07-28\t01 - TOP\t32244\n2015-07-28\t02 - PARTICULARES\t505852\n2015-07-28\t03 - UNIVERSITARIO\t272363\n2015-08-28\t\t16981\n2015-08-28\t01 - TOP\t32569\n2015-08-28\t02 - PARTICULARES\t510013\n2015-08-28\t03 - UNIVERSITARIO\t283638\n2015-09-28\t\t25848\n2015-09-28\t01 - TOP\t32970\n2015-09-28\t02 - PARTICULARES\t513627\n2015-09-28\t03 - UNIVERSITARIO\t292995\n2015-10-28\t\t30726\n2015-10-28\t01 - TOP\t33580\n2015-10-28\t02 - PARTICULARES\t517430\n2015-10-28\t03 - UNIVERSITARIO\t310515\n2015-11-28\t\t18157\n2015-11-28\t01 - TOP\t33846\n2015-11-28\t02 - PARTICULARES\t520880\n2015-11-28\t03 - UNIVERSITARIO\t333226\n2015-12-28\t\t9959\n2015-12-28\t01 - TOP\t34167\n2015-12-28\t02 - PARTICULARES\t523985\n2015-12-28\t03 - UNIVERSITARIO\t343910\n2016-01-28\t\t9621\n2016-01-28\t01 - TOP\t34526\n2016-01-28\t02 - PARTICULARES\t525069\n2016-01-28\t03 - UNIVERSITARIO\t347053\n2016-02-28\t\t8823\n2016-02-28\t01 - TOP\t34662\n2016-02-28\t02 - PARTICULARES\t530456\n2016-02-28\t03 - UNIVERSITARIO\t346963\n2016-03-28\t\t7840\n2016-03-28\t01 - TOP\t34919\n2016-03-28\t02 - PARTICULARES\t535460\n2016-03-28\t03 - UNIVERSITARIO\t346857\n2016-04-28\t\t7050\n2016-04-28\t01 - TOP\t34949\n2016-04-28\t02 - PARTICULARES\t539496\n2016-04-28\t03 - UNIVERSITARIO\t346779\n2016-05-28\t\t7025\n2016-05-28\t01 - TOP\t35415\n2016-05-28\t02 - PARTICULARES\t542596\n2016-05-28\t03 - UNIVERSITARIO\t346417\n","comment":"","msgTable":[[{"key":"segmento","value":"2015-01-28"},{"key":"segmento","value":""},{"key":"segmento","value":"7024"}],[{"key":"count(ncodpers)","value":"2015-01-28"},{"key":"count(ncodpers)","value":"01 - TOP"},{"key":"count(ncodpers)","value":"30508"}],[{"value":"2015-01-28"},{"value":"02 - PARTICULARES"},{"value":"360899"}],[{"value":"2015-01-28"},{"value":"03 - UNIVERSITARIO"},{"value":"227026"}],[{"value":"2015-02-28"},{"value":""},{"value":"6003"}],[{"value":"2015-02-28"},{"value":"01 - TOP"},{"value":"30849"}],[{"value":"2015-02-28"},{"value":"02 - PARTICULARES"},{"value":"363262"}],[{"value":"2015-02-28"},{"value":"03 - UNIVERSITARIO"},{"value":"227280"}],[{"value":"2015-03-28"},{"value":""},{"value":"5145"}],[{"value":"2015-03-28"},{"value":"01 - TOP"},{"value":"31226"}],[{"value":"2015-03-28"},{"value":"02 - PARTICULARES"},{"value":"365368"}],[{"value":"2015-03-28"},{"value":"03 - UNIVERSITARIO"},{"value":"227470"}],[{"value":"2015-04-28"},{"value":""},{"value":"4321"}],[{"value":"2015-04-28"},{"value":"01 - TOP"},{"value":"31595"}],[{"value":"2015-04-28"},{"value":"02 - PARTICULARES"},{"value":"366871"}],[{"value":"2015-04-28"},{"value":"03 - UNIVERSITARIO"},{"value":"227580"}],[{"value":"2015-05-28"},{"value":""},{"value":"3619"}],[{"value":"2015-05-28"},{"value":"01 - TOP"},{"value":"31958"}],[{"value":"2015-05-28"},{"value":"02 - PARTICULARES"},{"value":"368666"}],[{"value":"2015-05-28"},{"value":"03 - UNIVERSITARIO"},{"value":"227714"}],[{"value":"2015-06-28"},{"value":""},{"value":"1868"}],[{"value":"2015-06-28"},{"value":"01 - TOP"},{"value":"32159"}],[{"value":"2015-06-28"},{"value":"02 - PARTICULARES"},{"value":"370290"}],[{"value":"2015-06-28"},{"value":"03 - UNIVERSITARIO"},{"value":"227793"}],[{"value":"2015-07-28"},{"value":""},{"value":"19358"}],[{"value":"2015-07-28"},{"value":"01 - TOP"},{"value":"32244"}],[{"value":"2015-07-28"},{"value":"02 - PARTICULARES"},{"value":"505852"}],[{"value":"2015-07-28"},{"value":"03 - UNIVERSITARIO"},{"value":"272363"}],[{"value":"2015-08-28"},{"value":""},{"value":"16981"}],[{"value":"2015-08-28"},{"value":"01 - TOP"},{"value":"32569"}],[{"value":"2015-08-28"},{"value":"02 - PARTICULARES"},{"value":"510013"}],[{"value":"2015-08-28"},{"value":"03 - UNIVERSITARIO"},{"value":"283638"}],[{"value":"2015-09-28"},{"value":""},{"value":"25848"}],[{"value":"2015-09-28"},{"value":"01 - TOP"},{"value":"32970"}],[{"value":"2015-09-28"},{"value":"02 - PARTICULARES"},{"value":"513627"}],[{"value":"2015-09-28"},{"value":"03 - UNIVERSITARIO"},{"value":"292995"}],[{"value":"2015-10-28"},{"value":""},{"value":"30726"}],[{"value":"2015-10-28"},{"value":"01 - TOP"},{"value":"33580"}],[{"value":"2015-10-28"},{"value":"02 - PARTICULARES"},{"value":"517430"}],[{"value":"2015-10-28"},{"value":"03 - UNIVERSITARIO"},{"value":"310515"}],[{"value":"2015-11-28"},{"value":""},{"value":"18157"}],[{"value":"2015-11-28"},{"value":"01 - TOP"},{"value":"33846"}],[{"value":"2015-11-28"},{"value":"02 - PARTICULARES"},{"value":"520880"}],[{"value":"2015-11-28"},{"value":"03 - UNIVERSITARIO"},{"value":"333226"}],[{"value":"2015-12-28"},{"value":""},{"value":"9959"}],[{"value":"2015-12-28"},{"value":"01 - TOP"},{"value":"34167"}],[{"value":"2015-12-28"},{"value":"02 - PARTICULARES"},{"value":"523985"}],[{"value":"2015-12-28"},{"value":"03 - UNIVERSITARIO"},{"value":"343910"}],[{"value":"2016-01-28"},{"value":""},{"value":"9621"}],[{"value":"2016-01-28"},{"value":"01 - TOP"},{"value":"34526"}],[{"value":"2016-01-28"},{"value":"02 - PARTICULARES"},{"value":"525069"}],[{"value":"2016-01-28"},{"value":"03 - UNIVERSITARIO"},{"value":"347053"}],[{"value":"2016-02-28"},{"value":""},{"value":"8823"}],[{"value":"2016-02-28"},{"value":"01 - TOP"},{"value":"34662"}],[{"value":"2016-02-28"},{"value":"02 - PARTICULARES"},{"value":"530456"}],[{"value":"2016-02-28"},{"value":"03 - UNIVERSITARIO"},{"value":"346963"}],[{"value":"2016-03-28"},{"value":""},{"value":"7840"}],[{"value":"2016-03-28"},{"value":"01 - TOP"},{"value":"34919"}],[{"value":"2016-03-28"},{"value":"02 - PARTICULARES"},{"value":"535460"}],[{"value":"2016-03-28"},{"value":"03 - UNIVERSITARIO"},{"value":"346857"}],[{"value":"2016-04-28"},{"value":""},{"value":"7050"}],[{"value":"2016-04-28"},{"value":"01 - TOP"},{"value":"34949"}],[{"value":"2016-04-28"},{"value":"02 - PARTICULARES"},{"value":"539496"}],[{"value":"2016-04-28"},{"value":"03 - UNIVERSITARIO"},{"value":"346779"}],[{"value":"2016-05-28"},{"value":""},{"value":"7025"}],[{"value":"2016-05-28"},{"value":"01 - TOP"},{"value":"35415"}],[{"value":"2016-05-28"},{"value":"02 - PARTICULARES"},{"value":"542596"}],[{"value":"2016-05-28"},{"value":"03 - UNIVERSITARIO"},{"value":"346417"}]],"columnNames":[{"name":"fecha_dato","index":0,"aggr":"sum"},{"name":"segmento","index":1,"aggr":"sum"},{"name":"count(ncodpers)","index":2,"aggr":"sum"}],"rows":[["2015-01-28","","7024"],["2015-01-28","01 - TOP","30508"],["2015-01-28","02 - PARTICULARES","360899"],["2015-01-28","03 - UNIVERSITARIO","227026"],["2015-02-28","","6003"],["2015-02-28","01 - TOP","30849"],["2015-02-28","02 - PARTICULARES","363262"],["2015-02-28","03 - UNIVERSITARIO","227280"],["2015-03-28","","5145"],["2015-03-28","01 - TOP","31226"],["2015-03-28","02 - PARTICULARES","365368"],["2015-03-28","03 - UNIVERSITARIO","227470"],["2015-04-28","","4321"],["2015-04-28","01 - TOP","31595"],["2015-04-28","02 - PARTICULARES","366871"],["2015-04-28","03 - UNIVERSITARIO","227580"],["2015-05-28","","3619"],["2015-05-28","01 - TOP","31958"],["2015-05-28","02 - PARTICULARES","368666"],["2015-05-28","03 - UNIVERSITARIO","227714"],["2015-06-28","","1868"],["2015-06-28","01 - TOP","32159"],["2015-06-28","02 - PARTICULARES","370290"],["2015-06-28","03 - UNIVERSITARIO","227793"],["2015-07-28","","19358"],["2015-07-28","01 - TOP","32244"],["2015-07-28","02 - PARTICULARES","505852"],["2015-07-28","03 - UNIVERSITARIO","272363"],["2015-08-28","","16981"],["2015-08-28","01 - TOP","32569"],["2015-08-28","02 - PARTICULARES","510013"],["2015-08-28","03 - UNIVERSITARIO","283638"],["2015-09-28","","25848"],["2015-09-28","01 - TOP","32970"],["2015-09-28","02 - PARTICULARES","513627"],["2015-09-28","03 - UNIVERSITARIO","292995"],["2015-10-28","","30726"],["2015-10-28","01 - TOP","33580"],["2015-10-28","02 - PARTICULARES","517430"],["2015-10-28","03 - UNIVERSITARIO","310515"],["2015-11-28","","18157"],["2015-11-28","01 - TOP","33846"],["2015-11-28","02 - PARTICULARES","520880"],["2015-11-28","03 - UNIVERSITARIO","333226"],["2015-12-28","","9959"],["2015-12-28","01 - TOP","34167"],["2015-12-28","02 - PARTICULARES","523985"],["2015-12-28","03 - UNIVERSITARIO","343910"],["2016-01-28","","9621"],["2016-01-28","01 - TOP","34526"],["2016-01-28","02 - PARTICULARES","525069"],["2016-01-28","03 - UNIVERSITARIO","347053"],["2016-02-28","","8823"],["2016-02-28","01 - TOP","34662"],["2016-02-28","02 - PARTICULARES","530456"],["2016-02-28","03 - UNIVERSITARIO","346963"],["2016-03-28","","7840"],["2016-03-28","01 - TOP","34919"],["2016-03-28","02 - PARTICULARES","535460"],["2016-03-28","03 - UNIVERSITARIO","346857"],["2016-04-28","","7050"],["2016-04-28","01 - TOP","34949"],["2016-04-28","02 - PARTICULARES","539496"],["2016-04-28","03 - UNIVERSITARIO","346779"],["2016-05-28","","7025"],["2016-05-28","01 - TOP","35415"],["2016-05-28","02 - PARTICULARES","542596"],["2016-05-28","03 - UNIVERSITARIO","346417"]]},"dateCreated":"2016-12-01T11:50:33-0800","dateStarted":"2016-12-01T01:07:42-0800","dateFinished":"2016-12-01T01:13:41-0800","status":"FINISHED","progressUpdateIntervalMs":500,"$$hashKey":"object:204"},{"config":{"colWidth":12,"graph":{"mode":"table","height":300,"optionOpen":false,"keys":[],"values":[],"groups":[],"scatter":{}},"enabled":true,"editorMode":"ace/mode/scala","editorHide":true},"settings":{"params":{},"forms":{}},"jobName":"paragraph_1481280399577_-980990698","id":"20161209-024639_44883735","dateCreated":"2016-12-09T02:46:39-0800","status":"FINISHED","progressUpdateIntervalMs":500,"focus":true,"$$hashKey":"object:1205","text":"%md\n### Regionwise Customers","dateUpdated":"2016-12-09T02:49:10-0800","dateFinished":"2016-12-09T02:49:06-0800","dateStarted":"2016-12-09T02:49:06-0800","result":{"code":"SUCCESS","type":"HTML","msg":"<h3>Regionwise Customers</h3>\n"}},{"text":"%sql\nSelect nomprov, count(ncodpers) from Data group by nomprov  having count(ncodpers) < 2000000","dateUpdated":"2016-12-01T04:08:11-0800","config":{"colWidth":12,"graph":{"mode":"stackedAreaChart","height":300,"optionOpen":false,"keys":[{"name":"nomprov","index":0,"aggr":"sum"}],"values":[{"name":"count(ncodpers)","index":1,"aggr":"sum"}],"groups":[{"name":"nomprov","index":0,"aggr":"sum"}],"scatter":{"yAxis":{"name":"count(ncodpers)","index":1,"aggr":"sum"}},"lineWithFocus":false},"enabled":true,"editorMode":"ace/mode/sql"},"settings":{"params":{},"forms":{}},"jobName":"paragraph_1480624483147_294040156","id":"20161201-123443_1565331603","result":{"code":"SUCCESS","type":"TABLE","msg":"nomprov\tcount(ncodpers)\nCASTELLON\t104295\nSALAMANCA\t164238\nMALAGA\t367023\nOURENSE\t84009\nSANTA CRUZ DE TENERIFE\t70968\nLERIDA\t79059\nTOLEDO\t183067\nBIZKAIA\t185888\nRIOJA, LA\t85202\nnull\t93591\nMELILLA\t9460\nALAVA\t37704\nBARCELONA\t1275219\nBURGOS\t97188\nALMERIA\t60291\nHUELVA\t122283\nCEUTA\t7218\nNAVARRA\t88618\nBALEARS, ILLES\t124933\nTERUEL\t22525\nHUESCA\t40181\nASTURIAS\t265749\nGIPUZKOA\t71567\nLUGO\t84962\nBADAJOZ\t192996\nSEVILLA\t605164\nVALLADOLID\t238259\nALBACETE\t114128\nCACERES\t129912\nCUENCA\t57310\nGIRONA\t90538\nGRANADA\t178562\nZAMORA\t50927\nAVILA\t38783\nJAEN\t64363\nGUADALAJARA\t64618\nPALMAS, LAS\t235700\nCADIZ\t294684\nMURCIA\t396759\nPONTEVEDRA\t280026\nCORUÑA, A\t429322\nVALENCIA\t682304\nALICANTE\t313397\nSORIA\t17660\nSEGOVIA\t42341\nCIUDAD REAL\t119390\nTARRAGONA\t100115\nCANTABRIA\t155706\nLEON\t83003\nCORDOBA\t144679\nZARAGOZA\t342543\nPALENCIA\t49282\n","comment":"","msgTable":[[{"key":"count(ncodpers)","value":"CASTELLON"},{"key":"count(ncodpers)","value":"104295"}],[{"value":"SALAMANCA"},{"value":"164238"}],[{"value":"MALAGA"},{"value":"367023"}],[{"value":"OURENSE"},{"value":"84009"}],[{"value":"SANTA CRUZ DE TENERIFE"},{"value":"70968"}],[{"value":"LERIDA"},{"value":"79059"}],[{"value":"TOLEDO"},{"value":"183067"}],[{"value":"BIZKAIA"},{"value":"185888"}],[{"value":"RIOJA, LA"},{"value":"85202"}],[{"value":"null"},{"value":"93591"}],[{"value":"MELILLA"},{"value":"9460"}],[{"value":"ALAVA"},{"value":"37704"}],[{"value":"BARCELONA"},{"value":"1275219"}],[{"value":"BURGOS"},{"value":"97188"}],[{"value":"ALMERIA"},{"value":"60291"}],[{"value":"HUELVA"},{"value":"122283"}],[{"value":"CEUTA"},{"value":"7218"}],[{"value":"NAVARRA"},{"value":"88618"}],[{"value":"BALEARS, ILLES"},{"value":"124933"}],[{"value":"TERUEL"},{"value":"22525"}],[{"value":"HUESCA"},{"value":"40181"}],[{"value":"ASTURIAS"},{"value":"265749"}],[{"value":"GIPUZKOA"},{"value":"71567"}],[{"value":"LUGO"},{"value":"84962"}],[{"value":"BADAJOZ"},{"value":"192996"}],[{"value":"SEVILLA"},{"value":"605164"}],[{"value":"VALLADOLID"},{"value":"238259"}],[{"value":"ALBACETE"},{"value":"114128"}],[{"value":"CACERES"},{"value":"129912"}],[{"value":"CUENCA"},{"value":"57310"}],[{"value":"GIRONA"},{"value":"90538"}],[{"value":"GRANADA"},{"value":"178562"}],[{"value":"ZAMORA"},{"value":"50927"}],[{"value":"AVILA"},{"value":"38783"}],[{"value":"JAEN"},{"value":"64363"}],[{"value":"GUADALAJARA"},{"value":"64618"}],[{"value":"PALMAS, LAS"},{"value":"235700"}],[{"value":"CADIZ"},{"value":"294684"}],[{"value":"MURCIA"},{"value":"396759"}],[{"value":"PONTEVEDRA"},{"value":"280026"}],[{"value":"CORUÑA, A"},{"value":"429322"}],[{"value":"VALENCIA"},{"value":"682304"}],[{"value":"ALICANTE"},{"value":"313397"}],[{"value":"SORIA"},{"value":"17660"}],[{"value":"SEGOVIA"},{"value":"42341"}],[{"value":"CIUDAD REAL"},{"value":"119390"}],[{"value":"TARRAGONA"},{"value":"100115"}],[{"value":"CANTABRIA"},{"value":"155706"}],[{"value":"LEON"},{"value":"83003"}],[{"value":"CORDOBA"},{"value":"144679"}],[{"value":"ZARAGOZA"},{"value":"342543"}],[{"value":"PALENCIA"},{"value":"49282"}]],"columnNames":[{"name":"nomprov","index":0,"aggr":"sum"},{"name":"count(ncodpers)","index":1,"aggr":"sum"}],"rows":[["CASTELLON","104295"],["SALAMANCA","164238"],["MALAGA","367023"],["OURENSE","84009"],["SANTA CRUZ DE TENERIFE","70968"],["LERIDA","79059"],["TOLEDO","183067"],["BIZKAIA","185888"],["RIOJA, LA","85202"],["null","93591"],["MELILLA","9460"],["ALAVA","37704"],["BARCELONA","1275219"],["BURGOS","97188"],["ALMERIA","60291"],["HUELVA","122283"],["CEUTA","7218"],["NAVARRA","88618"],["BALEARS, ILLES","124933"],["TERUEL","22525"],["HUESCA","40181"],["ASTURIAS","265749"],["GIPUZKOA","71567"],["LUGO","84962"],["BADAJOZ","192996"],["SEVILLA","605164"],["VALLADOLID","238259"],["ALBACETE","114128"],["CACERES","129912"],["CUENCA","57310"],["GIRONA","90538"],["GRANADA","178562"],["ZAMORA","50927"],["AVILA","38783"],["JAEN","64363"],["GUADALAJARA","64618"],["PALMAS, LAS","235700"],["CADIZ","294684"],["MURCIA","396759"],["PONTEVEDRA","280026"],["CORUÑA, A","429322"],["VALENCIA","682304"],["ALICANTE","313397"],["SORIA","17660"],["SEGOVIA","42341"],["CIUDAD REAL","119390"],["TARRAGONA","100115"],["CANTABRIA","155706"],["LEON","83003"],["CORDOBA","144679"],["ZARAGOZA","342543"],["PALENCIA","49282"]]},"dateCreated":"2016-12-01T12:34:43-0800","dateStarted":"2016-12-01T01:52:47-0800","dateFinished":"2016-12-01T01:56:15-0800","status":"FINISHED","progressUpdateIntervalMs":500,"$$hashKey":"object:205"},{"text":"","dateUpdated":"2016-12-01T01:31:22-0800","config":{"colWidth":12,"graph":{"mode":"table","height":300,"optionOpen":false,"keys":[],"values":[],"groups":[],"scatter":{}},"enabled":true},"settings":{"params":{},"forms":{}},"jobName":"paragraph_1480627870219_2028702139","id":"20161201-133110_1008564900","dateCreated":"2016-12-01T01:31:10-0800","status":"READY","progressUpdateIntervalMs":500,"$$hashKey":"object:206"}],"name":"Exploratory Analysis","id":"2C1YFSY5B","angularObjects":{"2C3R66WCH:shared_process":[],"2C2KGB3AD:shared_process":[],"2C44Z4V6D:shared_process":[],"2C1UW5MTW:shared_process":[],"2C3ZH46A3:shared_process":[],"2BZM47CAG:shared_process":[],"2C1DGJ9JM:shared_process":[],"2BZQW9GVA:shared_process":[],"2BZQJMP7W:shared_process":[],"2C441R3PA:shared_process":[],"2BZQ3RWA4:shared_process":[],"2C2S2KX19:shared_process":[],"2C3T985CD:shared_process":[],"2BZMJSMYP:shared_process":[],"2C1WJ9A57:shared_process":[],"2C1TVNY5N:shared_process":[],"2C3BNG19Q:shared_process":[],"2C2SJA3W3:shared_process":[]},"config":{"looknfeel":"default"},"info":{}}
+{
+  "paragraphs": [
+    {
+      "text": "// Read Training data using spark-csv\n\nval df \u003d sqlContext.read\n    .format(\"com.databricks.spark.csv\")\n    .option(\"header\", \"true\") // Use first line of all files as header\n    .option(\"inferSchema\", \"true\") // Automatically infer data types //.option(\"quote\", \"\\\"\")\n    .option(\"mode\", \"DROPMALFORMED\")\n    .load(\"file:///Users/arpitrawat/code/Santander_Data/datasets/train_ver2.csv\")",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 1:59:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 263.0,
+              "optionOpen": false
+            }
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "df: org.apache.spark.sql.DataFrame \u003d [fecha_dato: timestamp, ncodpers: double ... 46 more fields]\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521580050881_282595399",
+      "id": "20180320-170730_538279661",
+      "dateCreated": "Mar 20, 2018 5:07:30 PM",
+      "dateStarted": "Mar 29, 2018 1:59:15 PM",
+      "dateFinished": "Mar 29, 2018 2:05:27 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.sql.functions.udf\nimport util.Random._\n//val textFile \u003d spark.read.textFile(\"file:///Users/arpitrawat/code/Santander_Data/datasets/test_ver2.csv\")\n//textFile.first()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 2:24:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.functions.udf\nimport util.Random._\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521773602418_230012360",
+      "id": "20180322-225322_712161514",
+      "dateCreated": "Mar 22, 2018 10:53:22 PM",
+      "dateStarted": "Mar 29, 2018 2:05:41 PM",
+      "dateFinished": "Mar 29, 2018 2:05:44 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Total number of rows in the data\ndf.count",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 2:05:46 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res65: Long \u003d 13647309\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521595953812_-1929720562",
+      "id": "20180320-213233_1947710605",
+      "dateCreated": "Mar 20, 2018 9:32:33 PM",
+      "dateStarted": "Mar 29, 2018 2:05:46 PM",
+      "dateFinished": "Mar 29, 2018 2:06:57 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Total number of features in the data\ndf.columns.length",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 2:07:51 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res67: Int \u003d 48\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521596342732_1728049482",
+      "id": "20180320-213902_2001116190",
+      "dateCreated": "Mar 20, 2018 9:39:02 PM",
+      "dateStarted": "Mar 29, 2018 2:07:51 PM",
+      "dateFinished": "Mar 29, 2018 2:07:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Name of the features\ndf.columns.map(c \u003d\u003e println(c))",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 2:07:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "fecha_dato\nncodpers\nind_empleado\npais_residencia\nsexo\nage\nfecha_alta\nind_nuevo\nantiguedad\nindrel\nult_fec_cli_1t\nindrel_1mes\ntiprel_1mes\nindresi\nindext\nconyuemp\ncanal_entrada\nindfall\ntipodom\ncod_prov\nnomprov\nind_actividad_cliente\nrenta\nsegmento\nind_ahor_fin_ult1\nind_aval_fin_ult1\nind_cco_fin_ult1\nind_cder_fin_ult1\nind_cno_fin_ult1\nind_ctju_fin_ult1\nind_ctma_fin_ult1\nind_ctop_fin_ult1\nind_ctpp_fin_ult1\nind_deco_fin_ult1\nind_deme_fin_ult1\nind_dela_fin_ult1\nind_ecue_fin_ult1\nind_fond_fin_ult1\nind_hip_fin_ult1\nind_plan_fin_ult1\nind_pres_fin_ult1\nind_reca_fin_ult1\nind_tjcr_fin_ult1\nind_valo_fin_ult1\nind_viv_fin_ult1\nind_nomina_ult1\nind_nom_pens_ult1\nind_recibo_ult1\nres69: Array[Unit] \u003d Array((), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), ())\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521598768624_-720813803",
+      "id": "20180320-221928_1414399579",
+      "dateCreated": "Mar 20, 2018 10:19:28 PM",
+      "dateStarted": "Mar 29, 2018 2:07:55 PM",
+      "dateFinished": "Mar 29, 2018 2:07:56 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Exporing the data types of the fields\ndf.printSchema",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 2:07:59 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- fecha_dato: timestamp (nullable \u003d true)\n |-- ncodpers: double (nullable \u003d true)\n |-- ind_empleado: string (nullable \u003d true)\n |-- pais_residencia: string (nullable \u003d true)\n |-- sexo: string (nullable \u003d true)\n |-- age: string (nullable \u003d true)\n |-- fecha_alta: timestamp (nullable \u003d true)\n |-- ind_nuevo: string (nullable \u003d true)\n |-- antiguedad: string (nullable \u003d true)\n |-- indrel: string (nullable \u003d true)\n |-- ult_fec_cli_1t: timestamp (nullable \u003d true)\n |-- indrel_1mes: string (nullable \u003d true)\n |-- tiprel_1mes: string (nullable \u003d true)\n |-- indresi: string (nullable \u003d true)\n |-- indext: string (nullable \u003d true)\n |-- conyuemp: string (nullable \u003d true)\n |-- canal_entrada: string (nullable \u003d true)\n |-- indfall: string (nullable \u003d true)\n |-- tipodom: string (nullable \u003d true)\n |-- cod_prov: string (nullable \u003d true)\n |-- nomprov: string (nullable \u003d true)\n |-- ind_actividad_cliente: string (nullable \u003d true)\n |-- renta: double (nullable \u003d true)\n |-- segmento: string (nullable \u003d true)\n |-- ind_ahor_fin_ult1: integer (nullable \u003d true)\n |-- ind_aval_fin_ult1: integer (nullable \u003d true)\n |-- ind_cco_fin_ult1: integer (nullable \u003d true)\n |-- ind_cder_fin_ult1: integer (nullable \u003d true)\n |-- ind_cno_fin_ult1: integer (nullable \u003d true)\n |-- ind_ctju_fin_ult1: integer (nullable \u003d true)\n |-- ind_ctma_fin_ult1: integer (nullable \u003d true)\n |-- ind_ctop_fin_ult1: integer (nullable \u003d true)\n |-- ind_ctpp_fin_ult1: integer (nullable \u003d true)\n |-- ind_deco_fin_ult1: integer (nullable \u003d true)\n |-- ind_deme_fin_ult1: integer (nullable \u003d true)\n |-- ind_dela_fin_ult1: integer (nullable \u003d true)\n |-- ind_ecue_fin_ult1: integer (nullable \u003d true)\n |-- ind_fond_fin_ult1: integer (nullable \u003d true)\n |-- ind_hip_fin_ult1: integer (nullable \u003d true)\n |-- ind_plan_fin_ult1: integer (nullable \u003d true)\n |-- ind_pres_fin_ult1: integer (nullable \u003d true)\n |-- ind_reca_fin_ult1: integer (nullable \u003d true)\n |-- ind_tjcr_fin_ult1: integer (nullable \u003d true)\n |-- ind_valo_fin_ult1: integer (nullable \u003d true)\n |-- ind_viv_fin_ult1: integer (nullable \u003d true)\n |-- ind_nomina_ult1: string (nullable \u003d true)\n |-- ind_nom_pens_ult1: string (nullable \u003d true)\n |-- ind_recibo_ult1: integer (nullable \u003d true)\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521593003134_-1094444903",
+      "id": "20180320-204323_1164407989",
+      "dateCreated": "Mar 20, 2018 8:43:23 PM",
+      "dateStarted": "Mar 29, 2018 2:07:59 PM",
+      "dateFinished": "Mar 29, 2018 2:08:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Stats for features\n\ndf.describe(\"age\",\"renta\").show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 2:08:04 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+------------------+------------------+\n|summary|               age|             renta|\n+-------+------------------+------------------+\n|  count|          13647309|          10852934|\n|   mean| 40.18146491355274|134254.31823814227|\n| stddev|17.185086968822375|230620.23882188654|\n|    min|                 2|           1202.73|\n|    max|               164|     2.889439551E7|\n+-------+------------------+------------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521598969664_-905433623",
+      "id": "20180320-222249_196875349",
+      "dateCreated": "Mar 20, 2018 10:22:49 PM",
+      "dateStarted": "Mar 29, 2018 2:08:04 PM",
+      "dateFinished": "Mar 29, 2018 2:10:50 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.describe(\"pais_residencia\").show() ",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 7:06:55 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+---------------+\n|summary|pais_residencia|\n+-------+---------------+\n|  count|       13619575|\n|   mean|           null|\n| stddev|           null|\n|    min|             AD|\n|    max|             ZW|\n+-------+---------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522364473955_-293653394",
+      "id": "20180329-190113_1988038865",
+      "dateCreated": "Mar 29, 2018 7:01:13 PM",
+      "dateStarted": "Mar 29, 2018 7:06:55 PM",
+      "dateFinished": "Mar 29, 2018 7:09:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Storing dataframe in tabular perform some analysis on the data using Spark-SQL\ndf.toDF.registerTempTable(\"sbank\")",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 2:11:10 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "warning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521581563679_-2062135562",
+      "id": "20180320-173243_1885441148",
+      "dateCreated": "Mar 20, 2018 5:32:43 PM",
+      "dateStarted": "Mar 29, 2018 2:11:10 PM",
+      "dateFinished": "Mar 29, 2018 2:11:10 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect * from sbank limit 10",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 7:15:00 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "pieChart",
+              "height": 300.0,
+              "optionOpen": true,
+              "setting": {
+                "pieChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "canal_entrada",
+                  "index": 16.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "canal_entrada",
+                  "index": 16.0,
+                  "aggr": "count"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "fecha_dato\tncodpers\tind_empleado\tpais_residencia\tsexo\tage\tfecha_alta\tind_nuevo\tantiguedad\tindrel\tult_fec_cli_1t\tindrel_1mes\ttiprel_1mes\tindresi\tindext\tconyuemp\tcanal_entrada\tindfall\ttipodom\tcod_prov\tnomprov\tind_actividad_cliente\trenta\tsegmento\tind_ahor_fin_ult1\tind_aval_fin_ult1\tind_cco_fin_ult1\tind_cder_fin_ult1\tind_cno_fin_ult1\tind_ctju_fin_ult1\tind_ctma_fin_ult1\tind_ctop_fin_ult1\tind_ctpp_fin_ult1\tind_deco_fin_ult1\tind_deme_fin_ult1\tind_dela_fin_ult1\tind_ecue_fin_ult1\tind_fond_fin_ult1\tind_hip_fin_ult1\tind_plan_fin_ult1\tind_pres_fin_ult1\tind_reca_fin_ult1\tind_tjcr_fin_ult1\tind_valo_fin_ult1\tind_viv_fin_ult1\tind_nomina_ult1\tind_nom_pens_ult1\tind_recibo_ult1\n2015-01-28 00:00:00.0\t1375586.0\tN\tES\tH\t 35\t2015-01-12 00:00:00.0\t 0\t      6\t 1\tnull\t1.0\tA\tS\tN\tnull\tKHL\tN\t 1\t29\tMALAGA\t 1\t87218.1\t02 - PARTICULARES\t0\t0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t 0\t 0\t0\n2015-01-28 00:00:00.0\t1050611.0\tN\tES\tV\t 23\t2012-08-10 00:00:00.0\t 0\t     35\t 1\tnull\t1\tI\tS\tS\tnull\tKHE\tN\t 1\t13\tCIUDAD REAL\t 0\t35548.74\t03 - UNIVERSITARIO\t0\t0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t 0\t 0\t0\n2015-01-28 00:00:00.0\t1050612.0\tN\tES\tV\t 23\t2012-08-10 00:00:00.0\t 0\t     35\t 1\tnull\t1\tI\tS\tN\tnull\tKHE\tN\t 1\t13\tCIUDAD REAL\t 0\t122179.11000000002\t03 - UNIVERSITARIO\t0\t0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t 0\t 0\t0\n2015-01-28 00:00:00.0\t1050613.0\tN\tES\tH\t 22\t2012-08-10 00:00:00.0\t 0\t     35\t 1\tnull\t1\tI\tS\tN\tnull\tKHD\tN\t 1\t50\tZARAGOZA\t 0\t119775.54\t03 - UNIVERSITARIO\t0\t0\t0\t0\t0\t0\t0\t0\t0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t 0\t 0\t0\n2015-01-28 00:00:00.0\t1050614.0\tN\tES\tV\t 23\t2012-08-10 00:00:00.0\t 0\t     35\t 1\tnull\t1\tA\tS\tN\tnull\tKHE\tN\t 1\t50\tZARAGOZA\t 1\tnull\t03 - UNIVERSITARIO\t0\t0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t 0\t 0\t0\n2015-01-28 00:00:00.0\t1050615.0\tN\tES\tH\t 23\t2012-08-10 00:00:00.0\t 0\t     35\t 1\tnull\t1\tI\tS\tN\tnull\tKHE\tN\t 1\t45\tTOLEDO\t 0\t22220.04\t03 - UNIVERSITARIO\t0\t0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t 0\t 0\t0\n2015-01-28 00:00:00.0\t1050616.0\tN\tES\tH\t 23\t2012-08-10 00:00:00.0\t 0\t     35\t 1\tnull\t1\tI\tS\tN\tnull\tKHE\tN\t 1\t24\tLEON\t 0\t295590.36\t03 - UNIVERSITARIO\t0\t0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t 0\t 0\t0\n2015-01-28 00:00:00.0\t1050617.0\tN\tES\tH\t 23\t2012-08-10 00:00:00.0\t 0\t     35\t 1\tnull\t1\tA\tS\tN\tnull\tKHE\tN\t 1\t50\tZARAGOZA\t 1\t113316.66\t03 - UNIVERSITARIO\t0\t0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t 0\t 0\t0\n2015-01-28 00:00:00.0\t1050619.0\tN\tES\tH\t 24\t2012-08-10 00:00:00.0\t 0\t     35\t 1\tnull\t1\tI\tS\tN\tnull\tKHE\tN\t 1\t20\tGIPUZKOA\t 0\tnull\t03 - UNIVERSITARIO\t0\t0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t 0\t 0\t0\n2015-01-28 00:00:00.0\t1050620.0\tN\tES\tH\t 23\t2012-08-10 00:00:00.0\t 0\t     35\t 1\tnull\t1\tI\tS\tN\tnull\tKHE\tN\t 1\t10\tCACERES\t 0\t113194.98\t03 - UNIVERSITARIO\t0\t0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t 0\t 0\t0\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522365152056_583774066",
+      "id": "20180329-191232_1003134647",
+      "dateCreated": "Mar 29, 2018 7:12:32 PM",
+      "dateStarted": "Mar 29, 2018 7:15:00 PM",
+      "dateFinished": "Mar 29, 2018 7:15:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect segmento, count(ncodpers) as count from sbank  group by segmento",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 6:17:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": true,
+              "setting": {
+                "multiBarChart": {
+                  "stacked": false
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "segmento",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "count",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "segmento\tcount\n01 - TOP\t562142\nnull\t189368\n02 - PARTICULARES\t7960220\n03 - UNIVERSITARIO\t4935579\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521767200034_-509838920",
+      "id": "20180322-210640_2039400430",
+      "dateCreated": "Mar 22, 2018 9:06:40 PM",
+      "dateStarted": "Mar 29, 2018 2:11:49 PM",
+      "dateFinished": "Mar 29, 2018 2:13:23 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Check null values in dataset\n",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 6:17:52 PM",
+      "config": {
+        "colWidth": 4.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eCheck null values in dataset\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522348242311_-339616799",
+      "id": "20180329-143042_1263068686",
+      "dateCreated": "Mar 29, 2018 2:30:42 PM",
+      "dateStarted": "Mar 29, 2018 6:17:52 PM",
+      "dateFinished": "Mar 29, 2018 6:17:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import org.apache.spark.sql.functions.{sum, col}\ndf.select(df.columns.map(c \u003d\u003e sum(col(c).isNull.cast(\"int\")).alias(c)): _*).show\n",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 2:37:39 PM",
+      "config": {
+        "colWidth": 8.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala",
+        "editorHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql.functions.{sum, col}\n+----------+--------+------------+---------------+-----+---+----------+---------+----------+------+--------------+-----------+-----------+-------+------+--------+-------------+-------+-------+--------+-------+---------------------+-------+--------+-----------------+-----------------+----------------+-----------------+----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+----------------+-----------------+-----------------+-----------------+-----------------+-----------------+----------------+---------------+-----------------+---------------+\n|fecha_dato|ncodpers|ind_empleado|pais_residencia| sexo|age|fecha_alta|ind_nuevo|antiguedad|indrel|ult_fec_cli_1t|indrel_1mes|tiprel_1mes|indresi|indext|conyuemp|canal_entrada|indfall|tipodom|cod_prov|nomprov|ind_actividad_cliente|  renta|segmento|ind_ahor_fin_ult1|ind_aval_fin_ult1|ind_cco_fin_ult1|ind_cder_fin_ult1|ind_cno_fin_ult1|ind_ctju_fin_ult1|ind_ctma_fin_ult1|ind_ctop_fin_ult1|ind_ctpp_fin_ult1|ind_deco_fin_ult1|ind_deme_fin_ult1|ind_dela_fin_ult1|ind_ecue_fin_ult1|ind_fond_fin_ult1|ind_hip_fin_ult1|ind_plan_fin_ult1|ind_pres_fin_ult1|ind_reca_fin_ult1|ind_tjcr_fin_ult1|ind_valo_fin_ult1|ind_viv_fin_ult1|ind_nomina_ult1|ind_nom_pens_ult1|ind_recibo_ult1|\n+----------+--------+------------+---------------+-----+---+----------+---------+----------+------+--------------+-----------+-----------+-------+------+--------+-------------+-------+-------+--------+-------+---------------------+-------+--------+-----------------+-----------------+----------------+-----------------+----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+----------------+-----------------+-----------------+-----------------+-----------------+-----------------+----------------+---------------+-----------------+---------------+\n|         0|       0|       27734|          27734|27804|  0|     27734|        0|         0|     0|      13622516|     149781|     149781|  27734| 27734|13645501|       186126|  27734|      0|       0|  93591|                    0|2794375|  189368|                0|                0|               0|                0|               0|                0|                0|                0|                0|                0|                0|                0|                0|                0|               0|                0|                0|                0|                0|                0|               0|              0|                0|              0|\n+----------+--------+------------+---------------+-----+---+----------+---------+----------+------+--------------+-----------+-----------+-------+------+--------+-------------+-------+-------+--------+-------+---------------------+-------+--------+-----------------+-----------------+----------------+-----------------+----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+-----------------+----------------+-----------------+-----------------+-----------------+-----------------+-----------------+----------------+---------------+-----------------+---------------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521770847263_1491446425",
+      "id": "20180322-220727_2094847889",
+      "dateCreated": "Mar 22, 2018 10:07:27 PM",
+      "dateStarted": "Mar 22, 2018 11:39:51 PM",
+      "dateFinished": "Mar 22, 2018 11:46:53 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.filter(df(\"ind_empleado\").isNull || df(\"ind_empleado\") \u003d\u003d\u003d \"\" || df(\"ind_empleado\").isNaN).count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 2:36:04 PM",
+      "config": {
+        "colWidth": 6.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res39: Long \u003d 27734\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521770603024_538486341",
+      "id": "20180322-220323_709948778",
+      "dateCreated": "Mar 22, 2018 10:03:23 PM",
+      "dateStarted": "Mar 22, 2018 10:29:23 PM",
+      "dateFinished": "Mar 22, 2018 10:30:52 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.filter(df(\"pais_residencia\").isNull || df(\"pais_residencia\") \u003d\u003d\u003d \"\" || df(\"pais_residencia\").isNaN).count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 2:36:09 PM",
+      "config": {
+        "colWidth": 6.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res40: Long \u003d 27734\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521772077363_1964885666",
+      "id": "20180322-222757_291354814",
+      "dateCreated": "Mar 22, 2018 10:27:57 PM",
+      "dateStarted": "Mar 22, 2018 10:38:42 PM",
+      "dateFinished": "Mar 22, 2018 10:40:01 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.filter(df(\"sexo\").isNull || df(\"sexo\") \u003d\u003d\u003d \"\" || df(\"sexo\").isNaN).count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 2:36:14 PM",
+      "config": {
+        "colWidth": 6.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res44: Long \u003d 27804\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521772722884_1487480156",
+      "id": "20180322-223842_845190313",
+      "dateCreated": "Mar 22, 2018 10:38:42 PM",
+      "dateStarted": "Mar 22, 2018 11:22:13 PM",
+      "dateFinished": "Mar 22, 2018 11:23:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.filter(df(\"indrel_1mes\").isNull || df(\"indrel_1mes\") \u003d\u003d \"\" || df(\"indrel_1mes\").isNaN).count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 2:36:18 PM",
+      "config": {
+        "colWidth": 6.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res46: Long \u003d 149781\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521775333923_819482136",
+      "id": "20180322-232213_1649337939",
+      "dateCreated": "Mar 22, 2018 11:22:13 PM",
+      "dateStarted": "Mar 22, 2018 11:58:19 PM",
+      "dateFinished": "Mar 22, 2018 11:59:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.filter(df(\"ind_nuevo\").isNull || df(\"ind_nuevo\") \u003d\u003d\u003d \"\" || df(\"ind_nuevo\").isNaN).count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 4:13:23 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res82: Long \u003d 0\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522354328059_2130189774",
+      "id": "20180329-161208_463192576",
+      "dateCreated": "Mar 29, 2018 4:12:08 PM",
+      "dateStarted": "Mar 29, 2018 4:13:23 PM",
+      "dateFinished": "Mar 29, 2018 4:14:31 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.filter(df(\"indrel\").isNull || df(\"indrel\") \u003d\u003d\u003d \"\" || df(\"indrel\").isNaN).count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 4:22:05 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res83: Long \u003d 0\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522354908315_-522859684",
+      "id": "20180329-162148_797859780",
+      "dateCreated": "Mar 29, 2018 4:21:48 PM",
+      "dateStarted": "Mar 29, 2018 4:22:05 PM",
+      "dateFinished": "Mar 29, 2018 4:22:56 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.filter(df(\"conyuemp\").isNull || df(\"conyuemp\") \u003d\u003d\u003d \"\" || df(\"conyuemp\").isNaN).count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 5:04:04 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res86: Long \u003d 13645501\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522357424846_674308682",
+      "id": "20180329-170344_1644564159",
+      "dateCreated": "Mar 29, 2018 5:03:44 PM",
+      "dateStarted": "Mar 29, 2018 5:04:04 PM",
+      "dateFinished": "Mar 29, 2018 5:05:04 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## \"Last Primary Date\" column has so many null values",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 5:43:37 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003e\u0026ldquo;Last Primary Date\u0026rdquo; column has so many null values\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522359761560_861036660",
+      "id": "20180329-174241_1712794986",
+      "dateCreated": "Mar 29, 2018 5:42:41 PM",
+      "dateStarted": "Mar 29, 2018 5:43:37 PM",
+      "dateFinished": "Mar 29, 2018 5:43:37 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.filter(df(\"ult_fec_cli_1t\").isNull || df(\"ult_fec_cli_1t\") \u003d\u003d\u003d \"\").count()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 5:27:42 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "res90: Long \u003d 13622516\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522358769506_-1720449503",
+      "id": "20180329-172609_27051358",
+      "dateCreated": "Mar 29, 2018 5:26:09 PM",
+      "dateStarted": "Mar 29, 2018 5:27:42 PM",
+      "dateFinished": "Mar 29, 2018 5:28:34 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "/*%sql\nSELECT SUM(CASE WHEN age \u003c 18 THEN 1 ELSE 0 END) AS Under_18,\n       SUM(CASE WHEN age BETWEEN 18 AND 100 THEN 1 ELSE 0 END) AS 18to100,\n       SUM(CASE WHEN age \u003e 100  THEN 1 ELSE 0 END) AS 100plus\nFROM  sbank*/",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 4:06:22 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala",
+        "tableHide": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "Under_18\t18to100\t100plus\n0\t3050\t12869\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1521779104806_-186138992",
+      "id": "20180323-002504_376831273",
+      "dateCreated": "Mar 23, 2018 12:25:04 AM",
+      "dateStarted": "Mar 29, 2018 3:39:21 PM",
+      "dateFinished": "Mar 29, 2018 3:40:12 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.groupBy(\"age\").count().show()\n",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 3:46:57 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---+------+\n|age| count|\n+---+------+\n| 51|223297|\n| 81| 38217|\n| 26|347778|\n| 83| 31860|\n|  9|  5887|\n| 78| 34358|\n| 60|117834|\n|101|  2666|\n| 28|240192|\n| 74| 59086|\n|112|   188|\n| 23|779884|\n|113|   117|\n| 12| 12546|\n| 11| 10481|\n| 97|  5962|\n| 94| 10085|\n| 71| 66825|\n| 16| 11759|\n|  5|  3004|\n+---+------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522351634728_1000702229",
+      "id": "20180329-152714_1117702825",
+      "dateCreated": "Mar 29, 2018 3:27:14 PM",
+      "dateStarted": "Mar 29, 2018 3:46:57 PM",
+      "dateFinished": "Mar 29, 2018 3:47:51 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Age Distribution (we can see outliers in the plot)",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 4:31:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eAge Distribution (we can see outliers in the plot)\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522355423698_-1627341316",
+      "id": "20180329-163023_723452068",
+      "dateCreated": "Mar 29, 2018 4:30:23 PM",
+      "dateStarted": "Mar 29, 2018 4:31:24 PM",
+      "dateFinished": "Mar 29, 2018 4:31:24 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect age, count(age) from sbank group by age",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 5:57:27 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "scatterChart",
+              "height": 694.6,
+              "optionOpen": false,
+              "setting": {
+                "stackedAreaChart": {
+                  "style": "stack"
+                },
+                "scatterChart": {
+                  "xAxis": {
+                    "name": "age",
+                    "index": 0.0,
+                    "aggr": "sum"
+                  },
+                  "yAxis": {
+                    "name": "count(age)",
+                    "index": 1.0,
+                    "aggr": "sum"
+                  },
+                  "group": {
+                    "name": "age",
+                    "index": 0.0,
+                    "aggr": "sum"
+                  }
+                }
+              },
+              "keys": [
+                {
+                  "name": "age",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "count(age)",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "age\tcount(age)\n 51\t223297\n 81\t38217\n 26\t347778\n 83\t31860\n  9\t5887\n 78\t34358\n 60\t117834\n101\t2666\n 28\t240192\n 74\t59086\n112\t188\n 23\t779884\n113\t117\n 12\t12546\n 11\t10481\n 97\t5962\n 94\t10085\n 71\t66825\n 16\t11759\n  5\t3004\n  4\t2210\n 75\t50597\n 14\t12667\n107\t594\n110\t261\n  8\t4744\n 44\t322955\n 48\t271576\n 57\t144645\n163\t8\n 68\t78361\n100\t3050\n 63\t91521\n 43\t324303\n 98\t4622\n126\t3\n 36\t198422\n 29\t205709\n 46\t299365\n 58\t134739\n 15\t13118\n 61\t108356\n164\t3\n 22\t736314\n 86\t24956\n 32\t169537\n 49\t250484\n 73\t64431\n 87\t23648\n 62\t101186\n 10\t7950\n 72\t67664\n104\t1350\n102\t2335\n 33\t170477\n 45\t314771\n 92\t13492\n111\t252\n 84\t30124\n 41\t309051\n103\t2003\n 35\t183577\n 85\t27754\n 53\t202527\n 76\t48997\n 40\t287754\n 24\t734785\n115\t82\n 54\t181511\n 96\t7480\n 67\t77693\n 90\t16863\n108\t456\n117\t14\n 82\t33938\n114\t22\n 80\t35773\n  7\t3792\n 77\t49218\n  3\t1534\n106\t899\n 42\t319713\n 56\t151340\n 59\t124177\n 21\t675988\n 18\t10989\n116\t63\n 19\t21597\n105\t1280\n 89\t19175\n 65\t84750\n  6\t3673\n127\t8\n NA\t27734\n 34\t174574\n 31\t167985\n 70\t70192\n 25\t472016\n 50\t236383\n 55\t165355\n 69\t77745\n 27\t281981\n 64\t87398\n 39\t260548\n 93\t11642\n 30\t186040\n 79\t35065\n 52\t211611\n 38\t231963\n109\t265\n 17\t11953\n 47\t286505\n 13\t12745\n 66\t81343\n 91\t15098\n 20\t422867\n 99\t3617\n  2\t733\n 88\t21718\n 95\t8511\n 37\t212420\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522352592188_2109314287",
+      "id": "20180329-154312_216100954",
+      "dateCreated": "Mar 29, 2018 3:43:12 PM",
+      "dateStarted": "Mar 29, 2018 3:51:09 PM",
+      "dateFinished": "Mar 29, 2018 3:52:05 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\n## Segmento (Customer Type) analysis\n",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 5:25:15 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eSegmento (Customer Type) analysis\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522358279162_-929882982",
+      "id": "20180329-171759_119605283",
+      "dateCreated": "Mar 29, 2018 5:17:59 PM",
+      "dateStarted": "Mar 29, 2018 5:25:15 PM",
+      "dateFinished": "Mar 29, 2018 5:25:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.groupBy(\"segmento\").count().show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 4:33:05 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------------+-------+\n|          segmento|  count|\n+------------------+-------+\n|          01 - TOP| 562142|\n|              null| 189368|\n| 02 - PARTICULARES|7960220|\n|03 - UNIVERSITARIO|4935579|\n+------------------+-------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522355575918_560187688",
+      "id": "20180329-163255_324234628",
+      "dateCreated": "Mar 29, 2018 4:32:55 PM",
+      "dateStarted": "Mar 29, 2018 4:33:05 PM",
+      "dateFinished": "Mar 29, 2018 4:34:00 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\n## Nomprov (Providence Name) analysis\n",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 5:19:32 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eNomprov (Providence Name) analysis\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522358331084_-464290316",
+      "id": "20180329-171851_835040773",
+      "dateCreated": "Mar 29, 2018 5:18:51 PM",
+      "dateStarted": "Mar 29, 2018 5:19:32 PM",
+      "dateFinished": "Mar 29, 2018 5:19:32 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.groupBy(\"nomprov\").count().show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 5:16:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+-------+\n|             nomprov|  count|\n+--------------------+-------+\n|           CASTELLON| 104295|\n|           SALAMANCA| 164238|\n|              MALAGA| 367023|\n|             OURENSE|  84009|\n|SANTA CRUZ DE TEN...|  70968|\n|              LERIDA|  79059|\n|              TOLEDO| 183067|\n|              MADRID|4409600|\n|             BIZKAIA| 185888|\n|           RIOJA, LA|  85202|\n|                null|  93591|\n|             MELILLA|   9460|\n|               ALAVA|  37704|\n|           BARCELONA|1275219|\n|              BURGOS|  97188|\n|             ALMERIA|  60291|\n|              HUELVA| 122283|\n|               CEUTA|   7218|\n|             NAVARRA|  88618|\n|      BALEARS, ILLES| 124933|\n+--------------------+-------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522358168365_890025288",
+      "id": "20180329-171608_125539413",
+      "dateCreated": "Mar 29, 2018 5:16:08 PM",
+      "dateStarted": "Mar 29, 2018 5:16:36 PM",
+      "dateFinished": "Mar 29, 2018 5:17:36 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect nomprov, count(nomprov) from sbank group by nomprov\n",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 5:51:03 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 354.0,
+              "optionOpen": true,
+              "setting": {
+                "multiBarChart": {},
+                "scatterChart": {
+                  "xAxis": {
+                    "name": "nomprov",
+                    "index": 0.0,
+                    "aggr": "sum"
+                  },
+                  "yAxis": {
+                    "name": "count(nomprov)",
+                    "index": 1.0,
+                    "aggr": "sum"
+                  },
+                  "group": {
+                    "name": "nomprov",
+                    "index": 0.0,
+                    "aggr": "sum"
+                  }
+                },
+                "stackedAreaChart": {},
+                "lineChart": {}
+              },
+              "keys": [
+                {
+                  "name": "nomprov",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "nomprov",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "LOG(E(), CAST(count(nomprov) AS DOUBLE))",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ],
+              "commonSetting": {}
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "nomprov\tcount(nomprov)\nCASTELLON\t104295\nSALAMANCA\t164238\nMALAGA\t367023\nOURENSE\t84009\nSANTA CRUZ DE TENERIFE\t70968\nLERIDA\t79059\nTOLEDO\t183067\nMADRID\t4409600\nBIZKAIA\t185888\nRIOJA, LA\t85202\nnull\t0\nMELILLA\t9460\nALAVA\t37704\nBARCELONA\t1275219\nBURGOS\t97188\nALMERIA\t60291\nHUELVA\t122283\nCEUTA\t7218\nNAVARRA\t88618\nBALEARS, ILLES\t124933\nTERUEL\t22525\nHUESCA\t40181\nASTURIAS\t265749\nGIPUZKOA\t71567\nLUGO\t84962\nBADAJOZ\t192996\nSEVILLA\t605164\nVALLADOLID\t238259\nALBACETE\t114128\nCACERES\t129912\nCUENCA\t57310\nGIRONA\t90538\nGRANADA\t178562\nZAMORA\t50927\nAVILA\t38783\nJAEN\t64363\nGUADALAJARA\t64618\nPALMAS, LAS\t235700\nCADIZ\t294684\nMURCIA\t396759\nPONTEVEDRA\t280026\nCORUÑA, A\t429322\nVALENCIA\t682304\nALICANTE\t313397\nSORIA\t17660\nSEGOVIA\t42341\nCIUDAD REAL\t119390\nTARRAGONA\t100115\nCANTABRIA\t155706\nLEON\t83003\nCORDOBA\t144679\nZARAGOZA\t342543\nPALENCIA\t49282\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522353037587_1466274637",
+      "id": "20180329-155037_63945864",
+      "dateCreated": "Mar 29, 2018 3:50:37 PM",
+      "dateStarted": "Mar 29, 2018 5:51:03 PM",
+      "dateFinished": "Mar 29, 2018 5:52:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect conyuemp, count(conyuemp) from sbank group by conyuemp",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 5:14:24 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "conyuemp\tcount(conyuemp)\nnull\t0\nN\t1791\nS\t17\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522355726957_1643838161",
+      "id": "20180329-163526_1884740520",
+      "dateCreated": "Mar 29, 2018 4:35:26 PM",
+      "dateStarted": "Mar 29, 2018 5:10:17 PM",
+      "dateFinished": "Mar 29, 2018 5:11:17 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n## Conyuemp (spouse index) has so many null values\n",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 5:15:30 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch2\u003eConyuemp (spouse index) has so many null values\u003c/h2\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522358070371_1962550336",
+      "id": "20180329-171430_791760508",
+      "dateCreated": "Mar 29, 2018 5:14:30 PM",
+      "dateStarted": "Mar 29, 2018 5:15:30 PM",
+      "dateFinished": "Mar 29, 2018 5:15:30 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.groupBy(\"conyuemp\").count().show()\n",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 5:13:08 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------+--------+\n|conyuemp|   count|\n+--------+--------+\n|    null|13645501|\n|       N|    1791|\n|       S|      17|\n+--------+--------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522357416111_-259876971",
+      "id": "20180329-170336_2114772318",
+      "dateCreated": "Mar 29, 2018 5:03:36 PM",
+      "dateStarted": "Mar 29, 2018 5:13:08 PM",
+      "dateFinished": "Mar 29, 2018 5:14:07 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.groupBy(\"ind_empleado\").count().show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 5:51:25 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------------+--------+\n|ind_empleado|   count|\n+------------+--------+\n|           F|    2523|\n|        null|   27734|\n|           B|    3566|\n|           A|    2492|\n|           N|13610977|\n|           S|      17|\n+------------+--------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522359114370_-750640377",
+      "id": "20180329-173154_1012132961",
+      "dateCreated": "Mar 29, 2018 5:31:54 PM",
+      "dateStarted": "Mar 29, 2018 5:51:25 PM",
+      "dateFinished": "Mar 29, 2018 5:53:20 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\nselect pais_residencia, count(pais_residencia) from sbank group by pais_residencia",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 6:00:31 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sql"
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "pais_residencia\tcount(pais_residencia)\nDZ\t86\nMM\t17\nLT\t45\nCI\t51\nFI\t345\nUA\t493\nRO\t2931\nSL\t17\nNL\t757\nPL\t599\nMK\t51\nMX\t2573\nEE\t45\nCN\t563\nAT\t476\nRU\t769\nCG\t34\nAD\t111\nSV\t102\nHR\t68\nCZ\t102\nnull\t0\nPT\t1419\nGH\t17\nHK\t51\nTW\t34\nPY\t1430\nLB\t17\nCL\t989\nLY\t17\nSA\t79\nAU\t424\nPK\t85\nCA\t446\nBM\t6\nGB\t4605\nMT\t2\nBR\t2351\nKZ\t17\nHN\t282\nBY\t102\nGT\t130\nMD\t96\nDE\t4625\nGN\t51\nES\t13553710\nEC\t2169\nIL\t413\nVE\t2331\nMR\t51\nTR\t62\nZA\t119\nCR\t147\nKR\t96\nUS\t3651\nRS\t34\nAL\t17\nIN\t187\nJM\t11\nGM\t17\nAE\t221\nCM\t85\nTG\t17\nFR\t5161\nCH\t1995\nTN\t17\nGQ\t119\nGR\t243\nPA\t77\nGI\t17\nDJ\t11\nBA\t34\nET\t34\nSG\t117\nIT\t2947\nCU\t758\nGW\t34\nSE\t603\nBG\t476\nPH\t34\nGE\t17\nSK\t85\nPE\t900\nLV\t17\nMZ\t34\nDO\t424\nQA\t52\nBZ\t17\nTH\t102\nEG\t68\nJP\t239\nZW\t11\nSN\t68\nNZ\t51\nOM\t22\nHU\t37\nKE\t72\nML\t17\nIE\t409\nKW\t17\nGA\t51\nBE\t1526\nMA\t396\nNI\t62\nKH\t17\nNO\t136\nBO\t1514\nCO\t3526\nUY\t510\nNG\t214\nAR\t4835\nCF\t17\nPR\t101\nLU\t124\nVN\t34\nIS\t17\nDK\t226\nCD\t17\nAO\t68\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522360285745_946401655",
+      "id": "20180329-175125_386038175",
+      "dateCreated": "Mar 29, 2018 5:51:25 PM",
+      "dateStarted": "Mar 29, 2018 6:00:31 PM",
+      "dateFinished": "Mar 29, 2018 6:01:29 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.groupBy(\"sexo\").count().show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 5:58:38 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+----+-------+\n|sexo|  count|\n+----+-------+\n|null|  27804|\n|   V|7424252|\n|   H|6195253|\n+----+-------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522360657003_-2102826444",
+      "id": "20180329-175737_1810694168",
+      "dateCreated": "Mar 29, 2018 5:57:37 PM",
+      "dateStarted": "Mar 29, 2018 5:58:38 PM",
+      "dateFinished": "Mar 29, 2018 5:59:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.groupBy(\"indrel_1mes\").count().show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 6:36:41 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------+-------+\n|indrel_1mes|  count|\n+-----------+-------+\n|        1.0|9133383|\n|          3|   1570|\n|       null| 149781|\n|        4.0|    223|\n|        2.0|    740|\n|          1|4357298|\n|          P|    874|\n|          4|     83|\n|        3.0|   2780|\n|          2|    577|\n+-----------+-------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522360718600_-2089852251",
+      "id": "20180329-175838_1737803993",
+      "dateCreated": "Mar 29, 2018 5:58:38 PM",
+      "dateStarted": "Mar 29, 2018 6:36:41 PM",
+      "dateFinished": "Mar 29, 2018 6:37:43 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.groupBy(\"tiprel_1mes\").count().show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 6:36:45 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------+-------+\n|tiprel_1mes|  count|\n+-----------+-------+\n|       null| 149781|\n|          A|6187123|\n|          N|      4|\n|          R|    870|\n|          I|7304875|\n|          P|   4656|\n+-----------+-------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522362138260_1256359839",
+      "id": "20180329-182218_2105848210",
+      "dateCreated": "Mar 29, 2018 6:22:18 PM",
+      "dateStarted": "Mar 29, 2018 6:36:45 PM",
+      "dateFinished": "Mar 29, 2018 6:39:40 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.groupBy(\"indext\").count().show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 6:37:44 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------+--------+\n|indext|   count|\n+------+--------+\n|  null|   27734|\n|     N|12974839|\n|     S|  644736|\n+------+--------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522362141981_1066309207",
+      "id": "20180329-182221_860359043",
+      "dateCreated": "Mar 29, 2018 6:22:21 PM",
+      "dateStarted": "Mar 29, 2018 6:37:44 PM",
+      "dateFinished": "Mar 29, 2018 6:41:16 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df.groupBy(\"indfall\").count().show()",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 6:42:57 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-------+--------+\n|indfall|   count|\n+-------+--------+\n|   null|   27734|\n|      N|13584813|\n|      S|   34762|\n+-------+--------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1522363008283_-307817416",
+      "id": "20180329-183648_1564901383",
+      "dateCreated": "Mar 29, 2018 6:36:48 PM",
+      "dateStarted": "Mar 29, 2018 6:42:57 PM",
+      "dateFinished": "Mar 29, 2018 6:44:43 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "",
+      "user": "anonymous",
+      "dateUpdated": "Mar 29, 2018 6:46:56 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1522363377350_-1792626362",
+      "id": "20180329-184257_1165780607",
+      "dateCreated": "Mar 29, 2018 6:42:57 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Santander_Product_Recommendation",
+  "id": "2D9FJ41VX",
+  "angularObjects": {
+    "2D9DGRQF7:shared_process": [],
+    "2D8PET8PW:shared_process": [],
+    "2DASB55DC:shared_process": [],
+    "2DADC4VMZ:shared_process": [],
+    "2D8FFPGNW:shared_process": [],
+    "2DBXV5WS7:shared_process": [],
+    "2D9Z65F9C:shared_process": [],
+    "2D96YCHZE:shared_process": [],
+    "2D84MDF2Q:shared_process": [],
+    "2DADT8PAJ:shared_process": [],
+    "2DBTFK7RF:shared_process": [],
+    "2D9KZYRR8:shared_process": [],
+    "2DA7YX813:shared_process": [],
+    "2D9XWZ3TX:shared_process": [],
+    "2D9J1TE8G:shared_process": [],
+    "2DBFAEAQN:shared_process": [],
+    "2D9ZVK41R:shared_process": [],
+    "2D8MYYZZ5:shared_process": [],
+    "2DBQTCA29:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
