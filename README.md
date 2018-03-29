@@ -23,8 +23,9 @@ Data Source:
 
 https://www.kaggle.com/c/santander-product-recommendation/data
 
-Data Size: ~2.3GB [~930K]
+Data Size: ~2.3GB [Rows: ~1.3M]
 
+Backup Repository: https://github.com/vaishalilambe/Team7_Santander_Product_Recommendation
 
 Synopsis:
 
