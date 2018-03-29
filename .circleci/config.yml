@@ -42,3 +42,7 @@ jobs:
       - run:
           command: cat /dev/null | sbt test:test
           working_directory: data-cleaning-app
+
+      - run:
+          command: cat /dev/null | sbt test:test
+          working_directory: scala-ml-rec-app
