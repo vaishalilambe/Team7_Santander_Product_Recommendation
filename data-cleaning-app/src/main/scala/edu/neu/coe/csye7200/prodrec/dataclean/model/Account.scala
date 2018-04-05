@@ -1,12 +1,14 @@
-import java.util.Date
+package edu.neu.coe.csye7200.prodrec.dataclean.model
+
+import java.sql.Date
 import scala.util.Try
 
 case class Account(
-                    customerType: Int,
+                    customerType: String,
                     joinDate: Option[Date],
-                    isCustomerAtMost6MonthOld: Int,
-                    seniority: Int,
-                    isPrimaryCustomer: Int,
+                    isCustomerAtMost6MonthOld: Option[Int],
+                    seniority: Option[Int],
+                    isPrimaryCustomer: Option[Int],
                     customerTypeFirstMonth: Option[String],
                     customerRelationTypeFirstMonth: Option[String],
                     customerResidenceIndex: Option[String],
@@ -14,7 +16,7 @@ case class Account(
                     channelOfJoin: Option[String],
                     deceasedIndex: Option[String],
                     customerAddrProvinceName: String,
-                    isCustomerActive: Int
+                    isCustomerActive: Option[Int]
                   ) {
   override def toString: String = s"$customerType,$joinDate,$isCustomerAtMost6MonthOld,$seniority,$isPrimaryCustomer," +
     s"$customerTypeFirstMonth,$customerRelationTypeFirstMonth,$customerResidenceIndex,$customerForeignIndex," +
@@ -40,11 +42,11 @@ object Account {
            ): Account = {
     val format = new java.text.SimpleDateFormat("yyyy-MM-dd")
 
-    val parsedCustomerType = customerType.trim.toInt
-    val parsedJoinDate = Try(format.parse(joinDate.trim)).toOption
-    val parsedIsCustomerAtMost6MonthOld = isCustomerAtMost6MonthOld.trim.toInt
-    val parsedSeniority = seniority.trim.toInt
-    val parsedIsPrimaryCustomer = isPrimaryCustomer.trim.toInt
+    val parsedCustomerType = customerType.trim
+    val parsedJoinDate = Try(new java.sql.Date(format.parse(joinDate.trim).getTime)).toOption
+    val parsedIsCustomerAtMost6MonthOld = Try(isCustomerAtMost6MonthOld.trim.toInt).toOption
+    val parsedSeniority = Try(seniority.trim.toInt).toOption
+    val parsedIsPrimaryCustomer = Try(isPrimaryCustomer.trim.toInt).toOption
     val parsedCustomerTypeFirstMonth = Try(customerTypeFirstMonth.trim).toOption
     val parsedCustomerRelationTypeFirstMonth = Try(customerRelationTypeFirstMonth.trim).toOption
     val parsedCustomerResidenceIndex = Try(customerResidenceIndex.trim).toOption
@@ -52,7 +54,7 @@ object Account {
     val parsedChannelOfJoin = Try(channelOfJoin.trim).toOption
     val parsedDeceasedIndex = Try(deceasedIndex.trim).toOption
     val parsedCustomerAddrProvinceName = customerAddrProvinceName.trim
-    val parsedIsCustomerActive = isCustomerActive.trim.toInt
+    val parsedIsCustomerActive = Try(isCustomerActive.trim.toInt).toOption
 
     new Account(parsedCustomerType, parsedJoinDate, parsedIsCustomerAtMost6MonthOld, parsedSeniority, parsedIsPrimaryCustomer,
       parsedCustomerTypeFirstMonth, parsedCustomerRelationTypeFirstMonth, parsedCustomerResidenceIndex, parsedCustomerForeignIndex,
