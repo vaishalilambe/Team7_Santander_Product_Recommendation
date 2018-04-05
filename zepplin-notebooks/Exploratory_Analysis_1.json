@@ -2,7 +2,7 @@
   "paragraphs": [
     {
       "text": "/* Read Training data using spark-csv */\n\nval df \u003d sqlContext.read\n    .format(\"com.databricks.spark.csv\")\n    .option(\"header\", \"true\") // Use first line of all files as header\n    .option(\"inferSchema\", \"true\") // Automatically infer data types //.option(\"quote\", \"\\\"\")\n    .option(\"mode\", \"DROPMALFORMED\")\n    .load(\"file:///Users/vaishalilambe/Downloads/train_ver2.csv\")\n\n/* Print columns of the dataframe */\ndf.columns.map(c \u003d\u003e println(c))",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -22,21 +22,21 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "df: org.apache.spark.sql.DataFrame \u003d [fecha_dato: timestamp, ncodpers: double ... 46 more fields]\nfecha_dato\nncodpers\nind_empleado\npais_residencia\nsexo\nage\nfecha_alta\nind_nuevo\nantiguedad\nindrel\nult_fec_cli_1t\nindrel_1mes\ntiprel_1mes\nindresi\nindext\nconyuemp\ncanal_entrada\nindfall\ntipodom\ncod_prov\nnomprov\nind_actividad_cliente\nrenta\nsegmento\nind_ahor_fin_ult1\nind_aval_fin_ult1\nind_cco_fin_ult1\nind_cder_fin_ult1\nind_cno_fin_ult1\nind_ctju_fin_ult1\nind_ctma_fin_ult1\nind_ctop_fin_ult1\nind_ctpp_fin_ult1\nind_deco_fin_ult1\nind_deme_fin_ult1\nind_dela_fin_ult1\nind_ecue_fin_ult1\nind_fond_fin_ult1\nind_hip_fin_ult1\nind_plan_fin_ult1\nind_pres_fin_ult1\nind_reca_fin_ult1\nind_tjcr_fin_ult1\nind_valo_fin_ult1\nind_viv_fin_ult1\nind_nomina_ult1\nind_nom_pens_ult1\nind_recibo_ult1\nres12: Array[Unit] \u003d Array((), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), ())\n"
+            "data": "df: org.apache.spark.sql.DataFrame \u003d [fecha_dato: timestamp, ncodpers: double ... 46 more fields]\nfecha_dato\nncodpers\nind_empleado\npais_residencia\nsexo\nage\nfecha_alta\nind_nuevo\nantiguedad\nindrel\nult_fec_cli_1t\nindrel_1mes\ntiprel_1mes\nindresi\nindext\nconyuemp\ncanal_entrada\nindfall\ntipodom\ncod_prov\nnomprov\nind_actividad_cliente\nrenta\nsegmento\nind_ahor_fin_ult1\nind_aval_fin_ult1\nind_cco_fin_ult1\nind_cder_fin_ult1\nind_cno_fin_ult1\nind_ctju_fin_ult1\nind_ctma_fin_ult1\nind_ctop_fin_ult1\nind_ctpp_fin_ult1\nind_deco_fin_ult1\nind_deme_fin_ult1\nind_dela_fin_ult1\nind_ecue_fin_ult1\nind_fond_fin_ult1\nind_hip_fin_ult1\nind_plan_fin_ult1\nind_pres_fin_ult1\nind_reca_fin_ult1\nind_tjcr_fin_ult1\nind_valo_fin_ult1\nind_viv_fin_ult1\nind_nomina_ult1\nind_nom_pens_ult1\nind_recibo_ult1\nres4: Array[Unit] \u003d Array((), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), (), ())\n"
           }
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325112_902815567",
+      "jobName": "paragraph_1522696275730_-419143451",
       "id": "20171130-181426_1684841825",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "/* Find number of null records for each column in a dataframe */\nimport org.apache.spark.sql.functions.{sum, col}\ndf.select(df.columns.map(c \u003d\u003e sum(col(c).isNull.cast(\"int\")).alias(c)): _*).show\n",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -69,16 +69,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325113_902430818",
+      "jobName": "paragraph_1522696275731_-419528200",
       "id": "20180326-150009_600529673",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "/* Find data type for each column of a dataframe */\ndf.printSchema()",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -103,16 +103,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325114_903585065",
+      "jobName": "paragraph_1522696275731_-419528200",
       "id": "20180326-153629_1456295952",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "/* Find total number of records of a dataframe */\nval rows \u003d df.count()\n",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -136,16 +136,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325115_903200316",
+      "jobName": "paragraph_1522696275732_-421451944",
       "id": "20180326-151413_364454385",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "\nval newNames \u003d Seq(\"Partitioned_Date\",\"Cust_Code\",\"Emp_Index\", \"Cust_Residence\", \"Cust_Gender\", \"Cust_Age\", \"First_Holder_Date\", \"New_Cust_Index\", \"Cust_Seniority\",\n    \"Cust_Index_Primary\", \"Last_Date_Primary_Cust\",\"Cust_Type\",\"Cust_Relation_Type\",\"Residence_Index\",\"Foreigner_Index\", \"Spouse_Index\", \"Channel\", \"Deceased_Index\", \"Addres_Type\",\n    \"Province_Code\", \"Province_Name\", \"Activity_Index\",\"Gross_Income\",\"Cust_Identification\", \"Saving_Acc\", \"Guarantees\",\"Current_Acc\",\"Derivada_Acc\", \"Payroll_Acc\", \"Junior_Acc\", \n    \"Mas_Acc\",\"Particular_Acc\", \"Particular_Plus_Acc\",\"Short_Term_Deposit\", \"Medium_Term_Deposits\",\"Long_Term_Deposits\",\"e_Acc\", \"Funds\", \"Mortgage\",\"Pensions\",\"Loans\",\"Taxes\",\n    \"Credit_Card\",\"Securities\",\"Home_Acc\", \"Payroll\", \"Nom_Pensions\",\"Direct_Debit\" )\nval dfRenamed \u003d df.toDF(newNames: _*)\n\n/* Dataframe as table */    \ndfRenamed.registerTempTable(\"sbank\")",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -169,16 +169,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325115_903200316",
+      "jobName": "paragraph_1522696275732_-421451944",
       "id": "20180326-155123_733416086",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "/* Write new dataframe with changed column names into .csv\"*/\ndfRenamed.coalesce(1).\n    write.\n    format(\"com.databricks.spark.csv\").\n    option(\"header\", \"true\").\n    save(\"file:///Users/vaishalilambe/Downloads/new_train_ver2.csv\")",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -197,16 +197,16 @@
         "msg": []
       },
       "apps": [],
-      "jobName": "paragraph_1522185325115_903200316",
+      "jobName": "paragraph_1522696275733_-421836693",
       "id": "20180326-163626_1010244284",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark import org.apache.commons.io.IOUtils\n\n",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -232,16 +232,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325116_901276571",
+      "jobName": "paragraph_1522696275733_-421836693",
       "id": "20180326-163213_414423801",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Cust_Gender),Cust_Gender\nfrom sbank\n--where Cust_Gender IS NOT NULL\ngroup by Cust_Gender\n\n\n\n",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 4.0,
         "editorMode": "ace/mode/sql",
@@ -299,16 +299,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325116_901276571",
+      "jobName": "paragraph_1522696275733_-421836693",
       "id": "20171130-174854_1830535417",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Last_Date_Primary_Cust), Last_Date_Primary_Cust\nfrom sbank\ngroup by Last_Date_Primary_Cust\norder by Last_Date_Primary_Cust asc\n ",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 4.0,
         "editorMode": "ace/mode/sql",
@@ -342,16 +342,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325119_901661320",
+      "jobName": "paragraph_1522696275734_-420682446",
       "id": "20171130-180401_1527367290",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Cust_Identification), Cust_Identification \nfrom sbank\ngroup by Cust_Identification \n",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 4.0,
         "editorMode": "ace/mode/sql",
@@ -385,16 +385,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325124_885886615",
+      "jobName": "paragraph_1522696275734_-420682446",
       "id": "20171130-180522_911902158",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Cust_Type),Cust_Type\nfrom sbank\ngroup by Cust_Type\n",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 4.0,
         "editorMode": "ace/mode/sql",
@@ -428,16 +428,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325124_885886615",
+      "jobName": "paragraph_1522696275734_-420682446",
       "id": "20171130-181324_1848871664",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect avg(Gross_Income) as Avg_Gross_Income,  Cust_Identification \nfrom sbank\nwhere Cust_Identification  is NOT NULL\ngroup by Cust_Identification ",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 4.0,
         "editorMode": "ace/mode/sql",
@@ -471,16 +471,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325125_885501866",
+      "jobName": "paragraph_1522696275735_-421067195",
       "id": "20171130-180611_720721070",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect avg(Gross_Income) as Avg_Gross_Income, Cust_Gender\nfrom sbank\nwhere Cust_Gender IS NOT NULL\ngroup by Cust_Gender\n",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 4.0,
         "editorMode": "ace/mode/sql",
@@ -514,16 +514,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325125_885501866",
+      "jobName": "paragraph_1522696275735_-421067195",
       "id": "20171130-181357_250140803",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Cust_Gender) as Count_Gender, count(Cust_Identification) as Count_Cust_Identification, Cust_Gender, Cust_Identification\nfrom sbank\nwhere Cust_Gender IS NOT NULL\nand Cust_Identification IS NOT NULL\ngroup by Cust_Gender, Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/sql",
@@ -556,16 +556,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325126_886656113",
+      "jobName": "paragraph_1522696275735_-421067195",
       "id": "20180323-161355_325105400",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Saving_Acc) as Num_Saving_Acc, count(Cust_Gender) as Num_Gender, Cust_Gender, count(Cust_Identification) as Num_Cust_Identification,Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Saving_Acc is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification\nOrder by Num_Saving_Acc desc\n",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -577,9 +577,34 @@
         "results": {
           "0": {
             "graph": {
-              "mode": "table",
+              "mode": "stackedAreaChart",
               "height": 300.0,
-              "optionOpen": false
+              "optionOpen": false,
+              "setting": {
+                "stackedAreaChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "Num_Saving_Acc",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "Cust_Identification",
+                  "index": 4.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "Num_Gender",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
             },
             "helium": {}
           }
@@ -600,16 +625,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325126_886656113",
+      "jobName": "paragraph_1522696275735_-421067195",
       "id": "20180323-223108_606438277",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Guarantees) as Num_Guarantees,count(Cust_Gender) as Num_Gender, Cust_Gender, count(Cust_Identification) as Num_Cust_Identification,Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Saving_Acc is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification\norder by Num_Guarantees desc",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/sql",
@@ -633,16 +658,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325127_886271364",
+      "jobName": "paragraph_1522696275736_-422990940",
       "id": "20180327-130625_1012539441",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Current_Acc) as Num_Current_Accounts,count(Cust_Gender) as Num_Gender, Cust_Gender, count(Cust_Identification) as Num_Cust_Identification,Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Saving_Acc is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification\norder by Num_Current_Accounts desc",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/sql",
@@ -666,16 +691,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325127_886271364",
+      "jobName": "paragraph_1522696275736_-422990940",
       "id": "20180327-130929_1561332803",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Derivada_Acc) as Num_Derivada_Account,count(Cust_Gender) as Num_Gender, Cust_Gender, count(Cust_Identification) as Num_Cust_Identification,Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Saving_Acc is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification\norder by Num_Derivada_Account desc",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/sql",
@@ -699,16 +724,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325128_884347620",
+      "jobName": "paragraph_1522696275737_-423375689",
       "id": "20180327-130957_238932604",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Payroll_Acc) as Num_Payroll_Acc,count(Cust_Gender) as Num_Gender, Cust_Gender,count(Cust_Identification) as Num_Cust_Identification,Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Payroll_Acc is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification\norder by Num_Payroll_Acc desc",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -720,9 +745,34 @@
         "results": {
           "0": {
             "graph": {
-              "mode": "table",
+              "mode": "multiBarChart",
               "height": 300.0,
-              "optionOpen": false
+              "optionOpen": false,
+              "setting": {
+                "pieChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "Num_Payroll_Acc",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "Num_Payroll_Acc",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "Num_Gender",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
             },
             "helium": {}
           }
@@ -743,16 +793,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325128_884347620",
+      "jobName": "paragraph_1522696275737_-423375689",
       "id": "20180324-104245_2099438392",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Junior_Acc) as Num_Junior_Acc,count(Cust_Gender) as Num_Gender, Cust_Gender,count(Cust_Identification) as Num_Cust_Identification,Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Payroll_Acc is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification\n",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 4.0,
         "editorMode": "ace/mode/sql",
@@ -776,20 +826,54 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325128_884347620",
+      "jobName": "paragraph_1522696275737_-423375689",
       "id": "20180327-131327_466881747",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Mas_Acc) as Num_Mas_Acc,count(Cust_Gender) as Num_Gender, Cust_Gender,count(Cust_Identification) as Num_Cust_Identification,Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Payroll_Acc is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 4.0,
         "editorMode": "ace/mode/sql",
-        "results": {},
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "multiBarChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "Num_Mas_Acc",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "Num_Mas_Acc",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "Num_Gender",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
         "enabled": true,
         "editorSetting": {
           "language": "sql"
@@ -809,16 +893,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325129_883962871",
+      "jobName": "paragraph_1522696275738_-422221442",
       "id": "20180327-131415_1663107100",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Particular_Acc) as Num_Particular_Acc,count(Cust_Gender) as Num_Gender, Cust_Gender,count(Cust_Identification) as Num_Cust_Identification,Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Particular_Acc is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 4.0,
         "editorMode": "ace/mode/sql",
@@ -842,16 +926,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325129_883962871",
+      "jobName": "paragraph_1522696275738_-422221442",
       "id": "20180327-131456_1901445638",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Particular_Plus_Acc) as Num_Particular_Plus_Acc,count(Cust_Gender) as Num_Gender, Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Particular_Plus_Acc is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "editorSetting": {
           "language": "sql"
@@ -885,16 +969,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325130_885117117",
+      "jobName": "paragraph_1522696275738_-422221442",
       "id": "20180327-131725_453221145",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Short_Term_Deposit) as Num_Short_Term_Deposit,count(Cust_Gender) as Num_Gender,Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Short_Term_Deposit is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -919,16 +1003,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325130_885117117",
+      "jobName": "paragraph_1522696275738_-422221442",
       "id": "20180326-143452_318103717",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Medium_Term_Deposits) as Num_Medium_Term_Deposit,count(Cust_Gender) as Num_Gender,Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Medium_Term_Deposits is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -936,7 +1020,41 @@
         },
         "colWidth": 4.0,
         "editorMode": "ace/mode/sql",
-        "results": {},
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "lineChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "stackedAreaChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "Num_Medium_Term_Deposit",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "Num_Medium_Term_Deposit",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "Num_Gender",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
         "enabled": true
       },
       "settings": {
@@ -953,16 +1071,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325131_884732368",
+      "jobName": "paragraph_1522696275739_-422606191",
       "id": "20180326-143545_211894114",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Long_Term_Deposits) as Num_Long_Term_Deposit,count(Cust_Gender) as Num_Gender,Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Long_Term_Deposits is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -987,16 +1105,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325131_884732368",
+      "jobName": "paragraph_1522696275739_-422606191",
       "id": "20180326-143618_933808413",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(e_Acc) as Num_e_Acc,count(Cust_Gender) as Num_Gender, count(Cust_Gender) as Num_Gender,Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere e_Acc is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -1030,16 +1148,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325132_882808624",
+      "jobName": "paragraph_1522696275739_-422606191",
       "id": "20180324-110151_1660169145",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Funds) as Num_Funds,count(Cust_Gender) as Num_Gender,count(Cust_Gender) as Num_Gender,Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Funds is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -1048,7 +1166,41 @@
         },
         "colWidth": 4.0,
         "editorMode": "ace/mode/sql",
-        "results": {},
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "pieChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "Num_Funds",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "Num_Funds",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "Num_Gender",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
         "enabled": true
       },
       "settings": {
@@ -1065,16 +1217,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325132_882808624",
+      "jobName": "paragraph_1522696275739_-422606191",
       "id": "20180326-143306_447287742",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Mortgage) as Num_Mortgage,count(Cust_Gender) as Num_Gender,Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Mortgage is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -1099,16 +1251,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325133_882423875",
+      "jobName": "paragraph_1522696275740_-424529935",
       "id": "20180326-143344_890581897",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Pensions) as Num_Pensions,count(Cust_Gender) as Num_Gender,Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Pensions is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -1142,16 +1294,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325133_882423875",
+      "jobName": "paragraph_1522696275740_-424529935",
       "id": "20180326-143409_1226210738",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Loans) as Num_Loans,count(Cust_Gender) as Num_Gender,Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Loans is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -1185,16 +1337,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325137_893196844",
+      "jobName": "paragraph_1522696275740_-424529935",
       "id": "20180324-110656_213650009",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Taxes) as Num_Taxes,count(Cust_Gender) as Num_Gender,Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Taxes is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -1228,16 +1380,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325137_893196844",
+      "jobName": "paragraph_1522696275740_-424529935",
       "id": "20180326-143104_777843831",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Credit_Card) as Num_Credit_Cards,count(Cust_Gender) as Num_Gender,Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Credit_Card is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -1262,16 +1414,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325137_893196844",
+      "jobName": "paragraph_1522696275741_-424914684",
       "id": "20180326-143136_803061786",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Securities) as Num_Securities,count(Cust_Gender) as Num_Gender,Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Securities is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -1282,9 +1434,34 @@
         "results": {
           "0": {
             "graph": {
-              "mode": "pieChart",
+              "mode": "stackedAreaChart",
               "height": 300.0,
-              "optionOpen": false
+              "optionOpen": false,
+              "setting": {
+                "pieChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "Num_Securities",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "Num_Securities",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "Num_Gender",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
             },
             "helium": {}
           }
@@ -1305,16 +1482,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325138_894351091",
+      "jobName": "paragraph_1522696275741_-424914684",
       "id": "20180326-143204_110912189",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Home_Acc) as Num_Home_Acc,count(Cust_Gender) as Num_Gender, Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Home_Acc is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -1322,7 +1499,41 @@
         },
         "colWidth": 4.0,
         "editorMode": "ace/mode/sql",
-        "results": {},
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "stackedAreaChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "pieChart": {}
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "Num_Home_Acc",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "Num_Home_Acc",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "Num_Gender",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
         "enabled": true
       },
       "settings": {
@@ -1339,16 +1550,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325138_894351091",
+      "jobName": "paragraph_1522696275741_-424914684",
       "id": "20180324-111240_152690922",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Payroll) as Num_Payroll,count(Cust_Gender) as Num_Gender, Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Payroll is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -1382,16 +1593,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325139_893966342",
+      "jobName": "paragraph_1522696275741_-424914684",
       "id": "20180324-111451_1062723711",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Nom_Pensions) as Num_Pensions,count(Cust_Gender) as Num_Gender, Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Nom_Pensions is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -1425,16 +1636,16 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325139_893966342",
+      "jobName": "paragraph_1522696275741_-424914684",
       "id": "20180326-142945_1461461984",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%spark.sql\nselect count(Direct_Debit) as Num_Direct_Debit,count(Cust_Gender) as Num_Gender, Cust_Gender, count(Cust_Identification) as Num_Cust_Identification, Cust_Identification,avg(Gross_Income) as Avg_Gross_Income\nfrom sbank\nwhere Direct_Debit is NOT NULL\nand Gross_Income is NOT NULL\nand Cust_Gender is NOT NULL\nand Cust_Identification is NOT NULL\ngroup by Cust_Gender,Cust_Identification",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "tableHide": false,
         "editorSetting": {
@@ -1468,20 +1679,56 @@
         ]
       },
       "apps": [],
-      "jobName": "paragraph_1522185325140_892042598",
+      "jobName": "paragraph_1522696275742_-423760437",
       "id": "20180326-143008_1446242799",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "%spark.sql\n",
-      "dateUpdated": "Mar 27, 2018 5:15:25 PM",
+      "text": "%spark.sql\nSelect Province_Name, count(Cust_Code) \nfrom sbank \nwhere Cust_Code IS NOT NULL \nand Province_Name is Not NULL\ngroup by Province_Name  \nOrder by count(Cust_Code) desc",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/sql",
-        "results": {},
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "stackedAreaChart",
+              "height": 300.0,
+              "optionOpen": true,
+              "setting": {
+                "stackedAreaChart": {
+                  "style": "stack"
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "Province_Name",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [
+                {
+                  "name": "Province_Name",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "values": [
+                {
+                  "name": "count(Cust_Code)",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
         "enabled": true,
         "editorSetting": {
           "language": "sql"
@@ -1491,17 +1738,42 @@
         "params": {},
         "forms": {}
       },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "Province_Name\tcount(Cust_Code)\nMADRID\t4409600\nBARCELONA\t1275219\nVALENCIA\t682304\nSEVILLA\t605164\nCORUÑA, A\t429322\nMURCIA\t396759\nMALAGA\t367023\nZARAGOZA\t342543\nALICANTE\t313397\nCADIZ\t294684\nPONTEVEDRA\t280026\nASTURIAS\t265749\nVALLADOLID\t238259\nPALMAS, LAS\t235700\nBADAJOZ\t192996\nBIZKAIA\t185888\nTOLEDO\t183067\nGRANADA\t178562\nSALAMANCA\t164238\nCANTABRIA\t155706\nCORDOBA\t144679\nCACERES\t129912\nBALEARS, ILLES\t124933\nHUELVA\t122283\nCIUDAD REAL\t119390\nALBACETE\t114128\nCASTELLON\t104295\nTARRAGONA\t100115\nBURGOS\t97188\nGIRONA\t90538\nNAVARRA\t88618\nRIOJA, LA\t85202\nLUGO\t84962\nOURENSE\t84009\nLEON\t83003\nLERIDA\t79059\nGIPUZKOA\t71567\nSANTA CRUZ DE TENERIFE\t70968\nGUADALAJARA\t64618\nJAEN\t64363\nALMERIA\t60291\nCUENCA\t57310\nZAMORA\t50927\nPALENCIA\t49282\nSEGOVIA\t42341\nHUESCA\t40181\nAVILA\t38783\nALAVA\t37704\nTERUEL\t22525\nSORIA\t17660\nMELILLA\t9460\nCEUTA\t7218\n"
+          }
+        ]
+      },
       "apps": [],
-      "jobName": "paragraph_1522185325140_892042598",
+      "jobName": "paragraph_1522696275742_-423760437",
       "id": "20180326-143733_552743360",
-      "dateCreated": "Mar 27, 2018 5:15:25 PM",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark.sql\n",
+      "dateUpdated": "Apr 2, 2018 3:11:15 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1522696275742_-423760437",
+      "id": "20180402-145224_738816207",
+      "dateCreated": "Apr 2, 2018 3:11:15 PM",
       "status": "READY",
       "errorMessage": "",
       "progressUpdateIntervalMs": 500
     }
   ],
-  "name": "/ExploratoryAnalysis-1",
-  "id": "2DC97ZFXE",
+  "name": "/Exploratory Analysis -1",
+  "id": "2DBFYF8DU",
   "angularObjects": {
     "2DAVGMF7R:shared_process": [],
     "2DBVU2576:shared_process": [],
