@@ -15,7 +15,7 @@ case class Account(
                     customerForeignIndex: Option[String],
                     channelOfJoin: Option[String],
                     deceasedIndex: Option[String],
-                    customerAddrProvinceName: String,
+                    customerAddrProvinceName: Option[String],
                     isCustomerActive: Option[Int]
                   ) {
   override def toString: String = s"$customerType,$joinDate,$isCustomerAtMost6MonthOld,$seniority,$isPrimaryCustomer," +
@@ -53,7 +53,7 @@ object Account {
     val parsedCustomerForeignIndex = Try(customerForeignIndex.trim).toOption
     val parsedChannelOfJoin = Try(channelOfJoin.trim).toOption
     val parsedDeceasedIndex = Try(deceasedIndex.trim).toOption
-    val parsedCustomerAddrProvinceName = customerAddrProvinceName.trim
+    val parsedCustomerAddrProvinceName = Try(customerAddrProvinceName.trim).toOption
     val parsedIsCustomerActive = Try(isCustomerActive.trim.toInt).toOption
 
     new Account(parsedCustomerType, parsedJoinDate, parsedIsCustomerAtMost6MonthOld, parsedSeniority, parsedIsPrimaryCustomer,
