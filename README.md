@@ -9,7 +9,7 @@ Team 7: Vaishali Lambe, Arpit Rawat, Nishant Gandhi
 
 Programming Language: **Scala**
 
-Tools: 
+## Tools: 
  - Apache Spark
  - Apache Kafka
  - Zepplin
@@ -19,7 +19,7 @@ Tools:
  - CircleCI
  - [GitlabCI](https://gitlab.com/nishantgandhi99/Team_7_Santander_Product_Recommendation) 
 
-Data Source: 
+## Data Source: 
 
 https://www.kaggle.com/c/santander-product-recommendation/data
 
@@ -27,6 +27,6 @@ Data Size: ~2.3GB [Rows: ~1.3M]
 
 Backup Repository: https://github.com/vaishalilambe/Team7_Santander_Product_Recommendation
 
-Synopsis:
+## Synopsis:
 
 In this project we build a recommendation system [predictive model] for a customer on the basis of behavior of his existing product consumption and recommend products similar to it.
