@@ -13,23 +13,7 @@ object DataModelApp extends App {
     .appName("Santander Product Recommendation")
     .getOrCreate()
 
-  import sparkSession.implicits._
-
-  val trainDF = sparkSession.read
-    .option("header","true")
-    .option("inferSchema",true)
-    .format("csv")
-    .load("./trim_train.csv")
-
-  // val colNos = Array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24)
-
-  //trainDF.select(colNos map (trainDF.columns andThen col): _*)
-
-  val testDF = sparkSession.read
-    .option("header","true")
-    .option("inferSchema",true)
-    .format("csv")
-    .load("./trim_test.csv")
+  val (trainDF, testDF) = loadData(sparkSession)
 
   trainDF.show()
   trainDF.na.drop()
@@ -38,7 +22,7 @@ object DataModelApp extends App {
   val newTrainDF = trainDF.drop("tipodom","cod_prov","convuemp","ult_fec_cli_lt")
   val newTestDF = testDF.drop("tipodom","cod_prov","convuemp","ult_fec_cli_lt")
 
-  newTrainDF.show()*/
+  newTrainDF.show()
 
   //val (dataDFRaw, predictDFRaw) = loadData(args(0), args(1), sc)
 
@@ -118,4 +102,27 @@ object DataModelApp extends App {
     .setInputCol("prediction")
     .setOutputCol("predictedLabel")
     .setLabels(targetIndexer.labels)*/
+
+  def loadData(sc : SparkSession): (DataFrame, DataFrame) = {
+
+    import sparkSession.implicits._
+
+    val trainDF = sc.read
+      .option("header","true")
+      .option("inferSchema",true)
+      .format("csv")
+      .load("./dataset/trim_train.csv")
+
+    // val colNos = Array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24)
+
+    //trainDF.select(colNos map (trainDF.columns andThen col): _*)
+
+    val testDF = sc.read
+      .option("header","true")
+      .option("inferSchema",true)
+      .format("csv")
+      .load("./dataset/trim_test.csv")
+
+    (trainDF, testDF)
+  }
 }
