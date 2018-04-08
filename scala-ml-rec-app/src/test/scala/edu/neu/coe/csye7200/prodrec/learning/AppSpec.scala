@@ -1,5 +1,6 @@
 package edu.neu.coe.csye7200.prodrec.learning
 
+import org.apache.spark.sql.SparkSession
 import org.scalatest.{FlatSpec, Matchers}
 
 class AppSpec extends FlatSpec with Matchers {
