@@ -1,7 +1,8 @@
 package edu.neu.coe.csye7200.prodrec.dataclean.io
 
-import edu.neu.coe.csye7200.prodrec.dataclean.model.{Customer,Product,Account,SantanderRecord}
-import org.apache.spark.sql.{Dataset, SparkSession}
+import edu.neu.coe.csye7200.prodrec.dataclean.model.{Account, Customer, Product, SantanderRecord}
+import org.apache.spark.sql.functions.col
+import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
 
 
 object DataParser extends Serializable {
@@ -10,11 +11,10 @@ object DataParser extends Serializable {
   def getStringDS(inputPath: String, ss: SparkSession): Dataset[String] = {
     import ss.implicits._
 
-    val result = ss.read.format("CSV").option("header","true").textFile(inputPath)
+    val result = ss.read.format("CSV").option("header", "true").textFile(inputPath)
     result.show()
     result
   }
-
 
   def stringDStoClassDS(stringDS: Dataset[String], ss: SparkSession): Dataset[SantanderRecord] = {
 
@@ -25,7 +25,7 @@ object DataParser extends Serializable {
 
         val splitRow = input.split(""",(?=([^\"]*\"[^\"]*\")*[^\"]*$)""")
 
-        val customer = Customer(splitRow(1), splitRow(2), splitRow(3),splitRow(4), splitRow(5),splitRow(22))
+        val customer = Customer(splitRow(1), splitRow(2), splitRow(3), splitRow(4), splitRow(5), splitRow(22))
 
         val account = Account(splitRow(23), splitRow(6), splitRow(7), splitRow(8), splitRow(9), splitRow(11),
           splitRow(12), splitRow(13), splitRow(14), splitRow(16), splitRow(17), splitRow(20), splitRow(21))
@@ -39,6 +39,30 @@ object DataParser extends Serializable {
         SantanderRecord(customer, account, product)
     }
     classDS
+  }
+
+
+  def classDStoDF(classDS: Dataset[SantanderRecord]): DataFrame = {
+    var df = classDS.toDF()
+    val custCol = Seq("code", "employmentStatus", "countryOfResidence", "gender", "age", "income")
+    for (x <- custCol) {
+      df = df.withColumn(x, col("customerInfo")(x))
+    }
+    df = df.drop(col("customerInfo"))
+    val accCol = Seq("customerType", "joinDate", "isCustomerAtMost6MonthOld", "seniority", "isPrimaryCustomer", "customerTypeFirstMonth",
+      "customerRelationTypeFirstMonth", "customerResidenceIndex", "customerForeignIndex", "channelOfJoin", "deceasedIndex", "customerAddrProvinceName", "isCustomerActive")
+    for (x <- accCol) {
+      df = df.withColumn(x, col("accountInfo")(x))
+    }
+    df = df.drop(col("accountInfo"))
+    val prodCol = Seq("savingAcc", "guarantees", "currentAcc", "derivedAcc", "payrollAcc", "juniorAcc", "moreParticularAcc", "particularAcc", "particularPlusAcc",
+      "shortTermDeposit", "midTermDeposit", "longTermDeposit", "eAccount", "funds", "mortgage", "pensionPlan", "loan", "taxes", "creditCard",
+      "securities", "homeAcc", "payrollNom", "pensionNom", "directDebit")
+    for (x <- prodCol) {
+      df = df.withColumn(x, col("productInfo")(x))
+    }
+    df = df.drop(col("productInfo"))
+    df
   }
 
 }
