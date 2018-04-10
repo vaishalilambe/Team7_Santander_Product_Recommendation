@@ -3,7 +3,7 @@ package edu.neu.coe.csye7200.prodrec.dataclean.model
 import scala.util.Try
 
 case class Customer(
-        code: Double,
+        code: Option[Double],
         employmentStatus: String,
         countryOfResidence: String,
         gender: String,
@@ -23,7 +23,7 @@ object Customer {
              income: String
            ): Customer = {
 
-    val parsedCode: Double = code.trim.toDouble
+    val parsedCode = Try(code.trim.toDouble).toOption
     val parsedEStatus = employmentStatus.trim
     val parsedCResidency = countryOfResidence.trim
     val parsedGender = gender.trim

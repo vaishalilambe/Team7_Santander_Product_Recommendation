@@ -11,6 +11,7 @@ object DataParser extends Serializable {
     import ss.implicits._
 
     val result = ss.read.format("CSV").option("header","true").textFile(inputPath)
+    result.show()
     result
   }
 
@@ -22,7 +23,6 @@ object DataParser extends Serializable {
     val classDS: Dataset[SantanderRecord] = stringDS map {
       input =>
 
-//        val splitRow = input.split(""",""")
         val splitRow = input.split(""",(?=([^\"]*\"[^\"]*\")*[^\"]*$)""")
 
         val customer = Customer(splitRow(1), splitRow(2), splitRow(3),splitRow(4), splitRow(5),splitRow(22))

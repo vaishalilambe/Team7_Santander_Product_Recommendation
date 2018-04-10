@@ -5,9 +5,11 @@
 
 package edu.neu.coe.csye7200.prodrec.dataclean.model
 
+import scala.util.{Failure, Success, Try}
+
 case class Product(
                     savingAcc: Boolean,
-                    gaurantees: Boolean,
+                    guarantees: Boolean,
                     currentAcc: Boolean,
                     derivedAcc: Boolean,
                     payrollAcc: Boolean,
@@ -31,22 +33,22 @@ case class Product(
                     pensionNom: Boolean,
                     directDebit: Boolean) {
 
-  override def toString: String = s"$savingAcc,$gaurantees,$currentAcc,$derivedAcc,$payrollAcc,$juniorAcc,$moreParticularAcc," +
+  override def toString: String = s"$savingAcc,$guarantees,$currentAcc,$derivedAcc,$payrollAcc,$juniorAcc,$moreParticularAcc," +
     s"$particularAcc,$particularPlusAcc,$shortTermDeposit,$midTermDeposit,$longTermDeposit,$eAccount,$funds,$mortgage," +
     s"$pensionPlan,$loan,$taxes,$creditCard,$securities,$homeAcc,$payrollNom,$pensionNom,$directDebit"
 }
 
 object Product {
 
-  def intToBool(number: Int): Boolean = number match {
-    case 1 => true
-    case 0 => false
-    case _ => throw new Exception()
+  def intToBool(number: String): Boolean = Try(number.trim.toInt) match {
+    case Success(1) => true
+    case Success(0) => false
+    case Failure(e) => false
   }
 
   def apply(
              savingAcc: String,
-             gaurantees: String,
+             guarantees: String,
              currentAcc: String,
              derivedAcc: String,
              payrollAcc: String,
@@ -71,30 +73,30 @@ object Product {
              directDebit: String
            ): Product = {
 
-    val parsedSavingAcc = intToBool(savingAcc.trim.toDouble.toInt)
-    val parsedGuarantees = intToBool(gaurantees.trim.toDouble.toInt)
-    val parsedCurrentAcc = intToBool(currentAcc.trim.toDouble.toInt)
-    val parsedDerivedAcc = intToBool(derivedAcc.trim.toDouble.toInt)
-    val parsedPayrollAcc = intToBool(payrollAcc.trim.toDouble.toInt)
-    val parsedJuniorAcc = intToBool(juniorAcc.trim.toDouble.toInt)
-    val parsedMoreParticularAcc = intToBool(moreParticularAcc.trim.toDouble.toInt)
-    val parsedParticularAcc = intToBool(particularAcc.trim.toDouble.toInt)
-    val parsedParticularPlusAcc = intToBool(particularPlusAcc.trim.toDouble.toInt)
-    val parsedShortTermDeposit = intToBool(shortTermDeposit.trim.toDouble.toInt)
-    val parsedMidTermDeposit = intToBool(midTermDeposit.trim.toDouble.toInt)
-    val parsedLongTermDeposit = intToBool(longTermDeposit.trim.toDouble.toInt)
-    val parsedEAccount = intToBool(eAccount.trim.toDouble.toInt)
-    val parsedFunds = intToBool(funds.trim.toDouble.toInt)
-    val parsedMortgage = intToBool(mortgage.trim.toDouble.toInt)
-    val parsedPensionPlan = intToBool(pensionPlan.trim.toDouble.toInt)
-    val parsedLoan = intToBool(loan.trim.toDouble.toInt)
-    val parsedTaxes = intToBool(taxes.trim.toDouble.toInt)
-    val parsedCreditCard = intToBool(creditCard.trim.toDouble.toInt)
-    val parsedSecurities = intToBool(securities.trim.toDouble.toInt)
-    val parsedHomeAcc = intToBool(homeAcc.trim.toDouble.toInt)
-    val parsedPayrollNom = intToBool(payrollNom.trim.toDouble.toInt)
-    val parsedPensionNom = intToBool(pensionNom.trim.toDouble.toInt)
-    val parsedDirectDebit = intToBool(directDebit.trim.toDouble.toInt)
+    val parsedSavingAcc = intToBool(savingAcc)
+    val parsedGuarantees = intToBool(guarantees)
+    val parsedCurrentAcc = intToBool(currentAcc)
+    val parsedDerivedAcc = intToBool(derivedAcc)
+    val parsedPayrollAcc = intToBool(payrollAcc)
+    val parsedJuniorAcc = intToBool(juniorAcc)
+    val parsedMoreParticularAcc = intToBool(moreParticularAcc)
+    val parsedParticularAcc = intToBool(particularAcc)
+    val parsedParticularPlusAcc = intToBool(particularPlusAcc)
+    val parsedShortTermDeposit = intToBool(shortTermDeposit)
+    val parsedMidTermDeposit = intToBool(midTermDeposit)
+    val parsedLongTermDeposit = intToBool(longTermDeposit)
+    val parsedEAccount = intToBool(eAccount)
+    val parsedFunds = intToBool(funds)
+    val parsedMortgage = intToBool(mortgage)
+    val parsedPensionPlan = intToBool(pensionPlan)
+    val parsedLoan = intToBool(loan)
+    val parsedTaxes = intToBool(taxes)
+    val parsedCreditCard = intToBool(creditCard)
+    val parsedSecurities = intToBool(securities)
+    val parsedHomeAcc = intToBool(homeAcc)
+    val parsedPayrollNom = intToBool(payrollNom)
+    val parsedPensionNom = intToBool(pensionNom)
+    val parsedDirectDebit = intToBool(directDebit)
 
     Product(parsedSavingAcc, parsedGuarantees, parsedCurrentAcc, parsedDerivedAcc, parsedPayrollAcc, parsedJuniorAcc,
       parsedMoreParticularAcc, parsedParticularAcc, parsedParticularPlusAcc, parsedShortTermDeposit, parsedMidTermDeposit,

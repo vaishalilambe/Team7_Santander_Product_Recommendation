@@ -1,6 +1,7 @@
 package edu.neu.coe.csye7200.prodrec.dataclean.main
 
 import edu.neu.coe.csye7200.prodrec.dataclean.io.DataParser
+import edu.neu.coe.csye7200.prodrec.dataclean.pipeline.Pipeline
 import org.apache.spark.sql.SparkSession
 //import edu.neu.coe.csye7200.prodrec.dataclean.io
 
@@ -14,7 +15,7 @@ object AppRunner extends Serializable {
     val parser = new scopt.OptionParser[Config]("DataCleaningApp")
     {
       head("Data Cleaning App", "1.0")
-      opt[String]('f', "input") required() action
+      opt[String]('i', "input") required() action
         { (x, c) => c.copy(input = x) } text("input is the input path")
       opt[String]('o', "output") required() action
         { (x, c) => c.copy(output = x) } text("output is the output path")
@@ -32,14 +33,8 @@ object AppRunner extends Serializable {
           .config("spark.debug.maxToStringFields",100)
           .getOrCreate()
 
-        val stringDS = DataParser.getStringDS(input,ss)
-
-        print(stringDS.count())
-
-        val classDS = DataParser.stringDStoClassDS(stringDS, ss)
-
-        print(classDS.count())
-
+        val resultdf = Pipeline.run(input, ss)
+        resultdf.show()
 
       case None =>
     }
