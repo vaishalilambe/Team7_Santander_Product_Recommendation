@@ -6,6 +6,7 @@ import org.apache.spark.ml.classification.{RandomForestClassificationModel, Rand
 import org.apache.spark.ml.evaluation.{MulticlassClassificationEvaluator}
 import org.apache.spark.ml.feature.{IndexToString, StringIndexer, VectorAssembler, VectorIndexer}
 import org.apache.spark.sql.types.IntegerType
+import org.apache.spark.ml.tuning.{CrossValidator, ParamGridBuilder}
 
 object DataModelApp extends App {
 
@@ -14,50 +15,27 @@ object DataModelApp extends App {
     .appName("Santander Product Recommendation")
     .getOrCreate()
 
-  val (trainDF, testDF) = loadData(sparkSession)
+  val (trainDF, testDF):(DataFrame,DataFrame) = loadData(sparkSession)
 
   trainDF.show()
   trainDF.printSchema()
 
-  trainDF.na.drop()
-  testDF.na.drop()
-
-  val newTrainDF = trainDF.drop("tipodom","cod_prov","convuemp","ult_fec_cli_lt")
-  val newTestDF = testDF.drop("tipodom","cod_prov","convuemp","ult_fec_cli_lt")
-
-  val trainDFC = newTrainDF.select(
-    newTrainDF("ncodpers").cast(IntegerType).as("ncodpers"),
-    newTrainDF("age").cast(IntegerType).as("age"),
-    newTrainDF("renta").cast(IntegerType).as("renta"),
-    newTrainDF("antiguedad").cast(IntegerType).as("antiguedad"),
-    newTrainDF("ind_ahor_fin_ult1"),
-    newTrainDF("ind_aval_fin_ult1"),
-    newTrainDF("ind_cco_fin_ult1"),
-    newTrainDF("ind_aval_fin_ult1"),
-    newTrainDF("ind_cco_fin_ult1"),
-    newTrainDF("ind_cder_fin_ult1"),
-    newTrainDF("ind_cno_fin_ult1"),
-    newTrainDF("ind_ctju_fin_ult1"),
-    newTrainDF("ind_ctma_fin_ult1"),
-    newTrainDF("ind_ctop_fin_ult1"),
-    newTrainDF("ind_ctpp_fin_ult1"),
-    newTrainDF("ind_deco_fin_ult1"),
-    newTrainDF("ind_deme_fin_ult1"),
-    newTrainDF("ind_dela_fin_ult1"),
-    newTrainDF("ind_ecue_fin_ult1"),
-    newTrainDF("ind_fond_fin_ult1"),
-    newTrainDF("ind_hip_fin_ult1"),
-    newTrainDF("ind_plan_fin_ult1"),
-    newTrainDF("ind_pres_fin_ult1"),
-    newTrainDF("ind_reca_fin_ult1"),
-    newTrainDF("ind_tjcr_fin_ult1"),
-    newTrainDF("ind_valo_fin_ult1"),
-    newTrainDF("ind_viv_fin_ult1"),
-    newTrainDF("ind_nomina_ult1"),
-    newTrainDF("ind_nom_pens_ult1"),
-    newTrainDF("ind_recibo_ult1")
+  val trainDFC:DataFrame = trainDF.select(
+    trainDF("age"),
+    trainDF("seniority"),
+    trainDF("isCustomerActive")
   )
 
+  val testDFC:DataFrame = testDF.select(
+    testDF("age"),
+    testDF("seniority")
+  )
+
+  //val Array(trainingData, testData) = trainDFC.randomSplit(Array(0.7, 0.3))
+
+  print("Clean data: "+trainDFC.show)
+
+  //trainDFC.filter("income is null").show
   /*val trainDFCN = newTrainDF.select(
     newTrainDF("ncodpers").cast(IntegerType).as("ncodpers"),
     newTrainDF("age").cast(IntegerType).as("age"),
@@ -66,6 +44,7 @@ object DataModelApp extends App {
     newTrainDF("ind_ahor_fin_ult1")
   )*/
 
+  testDFC.show
   trainDFC.printSchema
 
   /*val newTrainDF = trainDF.select("ncodpers",
@@ -85,97 +64,62 @@ object DataModelApp extends App {
     "indrel","indrel_1mes","tiprel_1mes","indresi","indext","conyuemp","canal_entrada","indfall",
     "ind_actividad_cliente","renta", "segmento")*/
 
-  val targetCols = Array(
-    "ind_ahor_fin_ult1",
-    "ind_aval_fin_ult1",
-    "ind_cco_fin_ult1",
-    "ind_aval_fin_ult1",
-    "ind_cco_fin_ult1",
-    "ind_cder_fin_ult1",
-    "ind_cno_fin_ult1",
-    "ind_ctju_fin_ult1",
-    "ind_ctma_fin_ult1",
-    "ind_ctop_fin_ult1",
-    "ind_ctpp_fin_ult1",
-    "ind_deco_fin_ult1",
-    "ind_deme_fin_ult1",
-    "ind_dela_fin_ult1",
-    "ind_ecue_fin_ult1",
-    "ind_fond_fin_ult1",
-    "ind_hip_fin_ult1",
-    "ind_plan_fin_ult1",
-    "ind_pres_fin_ult1",
-    "ind_reca_fin_ult1",
-    "ind_tjcr_fin_ult1",
-    "ind_valo_fin_ult1",
-    "ind_viv_fin_ult1",
-    "ind_nomina_ult1",
-    "ind_nom_pens_ult1",
-    "ind_recibo_ult1"
-  )
-
   /*val idxdCategoricalColName = categoricalColNames.map(_ + "Indexed")
   val allIdxdColNames = numericColNames ++ idxdCategoricalColName*/
 
-  val numericColNames = Seq("ncodpers", "age", "antiguedad", "renta")
+  val numericColNames = Seq("age", "seniority")
 
-  val targetIndexer = targetCols.map{
-    colName => new StringIndexer()
-      .setInputCol(colName)
-      .setOutputCol(colName + "_Indexed")
-      .fit(trainDFC)
-  }
-
-  val featureIndexer = numericColNames.map {
+  /*val featureIndexer = numericColNames.map {
     colName => new StringIndexer()
         .setInputCol(colName)
-        .setOutputCol(colName + "Indexed")
+        .setOutputCol(colName+"Indexed")
         .fit(trainDFC)
-  }
+  }*/
 
-  /*val targetIndexer = new StringIndexer()
-       .setInputCol("ind_ahor_fin_ult1")
-       .setOutputCol("ind_ahor_fin_ult1Indexed")
-       .fit(trainDFCN)*/
+  val labelIndexer = new StringIndexer()
+    .setInputCol("isCustomerActive")
+    .setOutputCol("productIndexed")
+    .fit(trainDFC)
+    .setHandleInvalid("skip")
 
-  val assembler = new VectorAssembler()
-    .setInputCols(Array(numericColNames: _*))
-    .setOutputCol("features")
+  labelIndexer.transform(trainDFC).show
+  //print("The value is: "+labelIndexer.transform(trainDFC).show())
 
-  val tassembler = new VectorAssembler()
-    .setInputCols(Array(targetCols: _*))
-    .setOutputCol("label")
+  val assembler:VectorAssembler = new VectorAssembler()
+    .setInputCols(Array("age", "seniority"))
+    .setOutputCol("Features")
+
+  val output = assembler.transform(trainDFC)
+
+  output.select("Features", "isCustomerActive").show
 
   // Train a RandomForest model.
   val randomForest = new RandomForestClassifier()
-    .setLabelCol("label")
-    .setFeaturesCol("features")
+    .setLabelCol("productIndexed")
+    .setFeaturesCol("Features")
 
   // Convert indexed labels back to original labels
   val labelConverter = new IndexToString()
     .setInputCol("prediction")
     .setOutputCol("predictedLabel")
-    .setLabels(targetCols)
+    .setLabels(labelIndexer.labels)
 
   // Chain indexer and forest in a Pipeline.
   val pipeline = new Pipeline().setStages(
-    featureIndexer.toArray ++ targetIndexer ++ Array(assembler, tassembler,
-    randomForest, labelConverter))
+    Array(labelIndexer, assembler, randomForest, labelConverter))
 
   // Train model. This also runs the indexers.
   val model = pipeline.fit(trainDFC)
 
   // Make predictions.
-  val predictions = model.transform(newTestDF)
-
-  //println(s"The value of prediction is : $predictions")
+  val predictions = model.transform(testDF)
 
   // Select example rows to display.
-  predictions.select("predictedLabel", "label", "features").show(5)
+  predictions.select("predictedLabel", "productIndexed", "Features").show(5)
 
   // Select (prediction, true label) and compute test error.
   val evaluator = new MulticlassClassificationEvaluator()
-    .setLabelCol("label")
+    .setLabelCol("productIndexed")
     .setPredictionCol("prediction")
     .setMetricName("accuracy")
 
@@ -193,13 +137,13 @@ object DataModelApp extends App {
       .option("header","true")
       .option("inferSchema",true)
       .format("csv")
-      .load("./dataset/trim_train.csv")
+      .load("./dataset/trim_trait.csv")
 
     val testDF = sc.read
       .option("header","true")
       .option("inferSchema",true)
       .format("csv")
-      .load("./dataset/trim_test.csv")
+      .load("./dataset/trim_trait_test.csv")
 
     (trainDF, testDF)
   }
