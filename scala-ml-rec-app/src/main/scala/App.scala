@@ -21,19 +21,28 @@ object DataModelApp extends App {
   trainDF.printSchema()
 
   val trainDFC:DataFrame = trainDF.select(
+    trainDF("code"),
     trainDF("age"),
     trainDF("seniority"),
+    trainDF("income"),
+    trainDF("employmentStatus"),
+    trainDF("countryOfResidence"),
+    trainDF("gender"),
+    trainDF("customerRelationTypeFirstMonth"),
+    trainDF("customerResidenceIndex"),
     trainDF("isCustomerActive")
   )
 
   val testDFC:DataFrame = testDF.select(
     testDF("age"),
-    testDF("seniority")
+    testDF("seniority"),
+    testDF("income")
   )
 
-  //val Array(trainingData, testData) = trainDFC.randomSplit(Array(0.7, 0.3))
+  val Array(trainingData, testData) = trainDFC.randomSplit(Array(0.7, 0.3))
 
-  print("Clean data: "+trainDFC.show)
+  trainingData.show
+  testData.show
 
   //trainDFC.filter("income is null").show
   /*val trainDFCN = newTrainDF.select(
@@ -47,51 +56,42 @@ object DataModelApp extends App {
   testDFC.show
   trainDFC.printSchema
 
-  /*val newTrainDF = trainDF.select("ncodpers",
-    "ind_nuevo","antiguedad","indrel",
-    "indrel_1mes", "ind_actividad_cliente", "renta")
+  val numericColNames = Seq("code","age", "seniority","income")
+  val categoricalColNames = Seq("employmentStatus",
+    "countryOfResidence",
+    "gender",
+    "customerRelationTypeFirstMonth",
+    "customerResidenceIndex"
+  )
 
-  val newTestDF = testDF.select("ncodpers",
-    "age", "ind_nuevo","antiguedad","indrel",
-    "indrel_1mes", "ind_actividad_cliente", "renta")*/
-
-/*
-  val numericColNames = Seq("ncodpers",
-    "age", "ind_nuevo","antiguedad","indrel",
-    "indrel_1mes", "ind_actividad_cliente", "renta")*/
-
-  /*val categoricalColNames = Seq("ind_empleado","pais_residencia","sexo","ind_nuevo","antiguedad",
-    "indrel","indrel_1mes","tiprel_1mes","indresi","indext","conyuemp","canal_entrada","indfall",
-    "ind_actividad_cliente","renta", "segmento")*/
-
-  /*val idxdCategoricalColName = categoricalColNames.map(_ + "Indexed")
-  val allIdxdColNames = numericColNames ++ idxdCategoricalColName*/
-
-  val numericColNames = Seq("age", "seniority")
-
-  /*val featureIndexer = numericColNames.map {
+  val featureIndexer = categoricalColNames.map {
     colName => new StringIndexer()
         .setInputCol(colName)
-        .setOutputCol(colName+"Indexed")
-        .fit(trainDFC)
-  }*/
+        .setOutputCol(colName + "Indexed")
+        .fit(trainingData)
+        .setHandleInvalid("skip")
+  }
 
   val labelIndexer = new StringIndexer()
     .setInputCol("isCustomerActive")
     .setOutputCol("productIndexed")
-    .fit(trainDFC)
+    .fit(trainingData)
     .setHandleInvalid("skip")
 
-  labelIndexer.transform(trainDFC).show
-  //print("The value is: "+labelIndexer.transform(trainDFC).show())
+  labelIndexer.transform(trainingData).show
+  print("The features unindexed are ============>")
+  featureIndexer.map{x => x.transform(trainingData).show(1)}
+
+  val idxdCategoricalColName = categoricalColNames.map(_ + "Indexed")
+  val allIdxdColNames = numericColNames ++ idxdCategoricalColName
 
   val assembler:VectorAssembler = new VectorAssembler()
-    .setInputCols(Array("age", "seniority"))
+    .setInputCols(Array(allIdxdColNames: _*))
     .setOutputCol("Features")
 
-  val output = assembler.transform(trainDFC)
+  //val output = assembler.transform(trainingData)
 
-  output.select("Features", "isCustomerActive").show
+  //output.select("Features", "isCustomerActive").show
 
   // Train a RandomForest model.
   val randomForest = new RandomForestClassifier()
@@ -106,28 +106,41 @@ object DataModelApp extends App {
 
   // Chain indexer and forest in a Pipeline.
   val pipeline = new Pipeline().setStages(
-    Array(labelIndexer, assembler, randomForest, labelConverter))
+    featureIndexer.toArray ++ Array(labelIndexer, assembler, randomForest, labelConverter))
 
   // Train model. This also runs the indexers.
-  val model = pipeline.fit(trainDFC)
+  val model = pipeline.fit(trainingData)
+
+  //Save model
+    //model.write.overwrite().save("/tmp/spark-random-forest-model")
 
   // Make predictions.
-  val predictions = model.transform(testDF)
+  val predictions = model.transform(testData)
 
   // Select example rows to display.
-  predictions.select("predictedLabel", "productIndexed", "Features").show(5)
+
+  //predictions.printSchema()
+  predictions.select("predictedLabel", "productIndexed", "Features", "probability").show()
 
   // Select (prediction, true label) and compute test error.
   val evaluator = new MulticlassClassificationEvaluator()
     .setLabelCol("productIndexed")
     .setPredictionCol("prediction")
-    .setMetricName("accuracy")
+    .setMetricName("weightedPrecision")
 
   val accuracy = evaluator.evaluate(predictions)
-  println(s"Test Error = ${(1.0 - accuracy)}")
+  println(s"Precision = ${(accuracy)}")
 
-  val rfModel = model.stages(2).asInstanceOf[RandomForestClassificationModel]
-  println(s"Learned classification forest model:\n ${rfModel.toDebugString}")
+  predictions
+    .select("code", "predictedLabel")
+    .coalesce(1)
+    .write
+    .format("csv")
+    .option("header", "true")
+    .save("./dataset/predctions.csv")
+
+  //val rfModel = model.stages(3).asInstanceOf[RandomForestClassificationModel]
+  //println(s"Learned classification forest model:\n ${rfModel.toDebugString}")
 
   def loadData(sc : SparkSession): (DataFrame, DataFrame) = {
 
