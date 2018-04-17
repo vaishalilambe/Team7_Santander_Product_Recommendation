@@ -1,9 +1,7 @@
 package edu.neu.coe.csye7200.prodrec.dataclean.io
 
 import edu.neu.coe.csye7200.prodrec.dataclean.model.{Account, Customer, Product, SantanderRecord}
-import org.apache.spark.sql.functions.col
-import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
-
+import org.apache.spark.sql.{Dataset, SparkSession}
 
 object DataParser extends Serializable {
 
@@ -12,7 +10,6 @@ object DataParser extends Serializable {
     import ss.implicits._
 
     val result = ss.read.format("CSV").option("header", "true").textFile(inputPath)
-    result.show()
     result
   }
 
@@ -39,30 +36,6 @@ object DataParser extends Serializable {
         SantanderRecord(customer, account, product)
     }
     classDS
-  }
-
-
-  def classDStoDF(classDS: Dataset[SantanderRecord]): DataFrame = {
-    var df = classDS.toDF()
-    val custCol = Seq("code", "employmentStatus", "countryOfResidence", "gender", "age", "income")
-    for (x <- custCol) {
-      df = df.withColumn(x, col("customerInfo")(x))
-    }
-    df = df.drop(col("customerInfo"))
-    val accCol = Seq("customerType", "joinDate", "isCustomerAtMost6MonthOld", "seniority", "isPrimaryCustomer", "customerTypeFirstMonth",
-      "customerRelationTypeFirstMonth", "customerResidenceIndex", "customerForeignIndex", "channelOfJoin", "deceasedIndex", "customerAddrProvinceName", "isCustomerActive")
-    for (x <- accCol) {
-      df = df.withColumn(x, col("accountInfo")(x))
-    }
-    df = df.drop(col("accountInfo"))
-    val prodCol = Seq("savingAcc", "guarantees", "currentAcc", "derivedAcc", "payrollAcc", "juniorAcc", "moreParticularAcc", "particularAcc", "particularPlusAcc",
-      "shortTermDeposit", "midTermDeposit", "longTermDeposit", "eAccount", "funds", "mortgage", "pensionPlan", "loan", "taxes", "creditCard",
-      "securities", "homeAcc", "payrollNom", "pensionNom", "directDebit")
-    for (x <- prodCol) {
-      df = df.withColumn(x, col("productInfo")(x))
-    }
-    df = df.drop(col("productInfo"))
-    df
   }
 
 }

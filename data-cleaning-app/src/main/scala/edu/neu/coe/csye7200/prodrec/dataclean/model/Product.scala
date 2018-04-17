@@ -1,42 +1,9 @@
-/** *****************************************************************
-  * Team 7: Santander Product Recommendation
-  * Date : 03/30/2018
-  * **************************************************************/
-
 package edu.neu.coe.csye7200.prodrec.dataclean.model
 
 import scala.util.{Failure, Success, Try}
+import scala.collection.mutable.TreeSet
 
-case class Product(
-                    savingAcc: Boolean,
-                    guarantees: Boolean,
-                    currentAcc: Boolean,
-                    derivedAcc: Boolean,
-                    payrollAcc: Boolean,
-                    juniorAcc: Boolean,
-                    moreParticularAcc: Boolean,
-                    particularAcc: Boolean,
-                    particularPlusAcc: Boolean,
-                    shortTermDeposit: Boolean,
-                    midTermDeposit: Boolean,
-                    longTermDeposit: Boolean,
-                    eAccount: Boolean,
-                    funds: Boolean,
-                    mortgage: Boolean,
-                    pensionPlan: Boolean,
-                    loan: Boolean,
-                    taxes: Boolean,
-                    creditCard: Boolean,
-                    securities: Boolean,
-                    homeAcc: Boolean,
-                    payrollNom: Boolean,
-                    pensionNom: Boolean,
-                    directDebit: Boolean) {
-
-  override def toString: String = s"$savingAcc,$guarantees,$currentAcc,$derivedAcc,$payrollAcc,$juniorAcc,$moreParticularAcc," +
-    s"$particularAcc,$particularPlusAcc,$shortTermDeposit,$midTermDeposit,$longTermDeposit,$eAccount,$funds,$mortgage," +
-    s"$pensionPlan,$loan,$taxes,$creditCard,$securities,$homeAcc,$payrollNom,$pensionNom,$directDebit"
-}
+case class Product(product: String)
 
 object Product {
 
@@ -73,35 +40,35 @@ object Product {
              directDebit: String
            ): Product = {
 
-    val parsedSavingAcc = intToBool(savingAcc)
-    val parsedGuarantees = intToBool(guarantees)
-    val parsedCurrentAcc = intToBool(currentAcc)
-    val parsedDerivedAcc = intToBool(derivedAcc)
-    val parsedPayrollAcc = intToBool(payrollAcc)
-    val parsedJuniorAcc = intToBool(juniorAcc)
-    val parsedMoreParticularAcc = intToBool(moreParticularAcc)
-    val parsedParticularAcc = intToBool(particularAcc)
-    val parsedParticularPlusAcc = intToBool(particularPlusAcc)
-    val parsedShortTermDeposit = intToBool(shortTermDeposit)
-    val parsedMidTermDeposit = intToBool(midTermDeposit)
-    val parsedLongTermDeposit = intToBool(longTermDeposit)
-    val parsedEAccount = intToBool(eAccount)
-    val parsedFunds = intToBool(funds)
-    val parsedMortgage = intToBool(mortgage)
-    val parsedPensionPlan = intToBool(pensionPlan)
-    val parsedLoan = intToBool(loan)
-    val parsedTaxes = intToBool(taxes)
-    val parsedCreditCard = intToBool(creditCard)
-    val parsedSecurities = intToBool(securities)
-    val parsedHomeAcc = intToBool(homeAcc)
-    val parsedPayrollNom = intToBool(payrollNom)
-    val parsedPensionNom = intToBool(pensionNom)
-    val parsedDirectDebit = intToBool(directDebit)
+    val builder = StringBuilder.newBuilder
+    var set = TreeSet[Int]()
 
-    Product(parsedSavingAcc, parsedGuarantees, parsedCurrentAcc, parsedDerivedAcc, parsedPayrollAcc, parsedJuniorAcc,
-      parsedMoreParticularAcc, parsedParticularAcc, parsedParticularPlusAcc, parsedShortTermDeposit, parsedMidTermDeposit,
-      parsedLongTermDeposit, parsedEAccount, parsedFunds, parsedMortgage, parsedPensionPlan, parsedLoan, parsedTaxes,
-      parsedCreditCard, parsedSecurities, parsedHomeAcc, parsedPayrollNom, parsedPensionNom, parsedDirectDebit)
+      if (intToBool(savingAcc)) set += 1
+      if (intToBool(guarantees)) set += 2
+      if (intToBool(currentAcc)) set += 3
+      if (intToBool(derivedAcc)) set += 4
+      if (intToBool(payrollAcc)) set += 5
+      if (intToBool(juniorAcc)) set += 6
+      if (intToBool(moreParticularAcc)) set += 7
+      if (intToBool(particularAcc)) set += 8
+      if (intToBool(particularPlusAcc)) set += 9
+      if (intToBool(shortTermDeposit)) set += 10
+      if (intToBool(midTermDeposit)) set += 11
+      if (intToBool(longTermDeposit)) set += 12
+      if (intToBool(eAccount)) set += 13
+      if (intToBool(funds)) set += 14
+      if (intToBool(mortgage)) set += 15
+      if (intToBool(pensionPlan)) set += 16
+      if (intToBool(loan)) set += 17
+      if (intToBool(taxes)) set += 18
+      if (intToBool(creditCard)) set += 19
+      if (intToBool(securities)) set += 20
+      if (intToBool(homeAcc)) set += 21
+      if (intToBool(payrollNom)) set += 22
+      if (intToBool(pensionNom)) set += 23
+      if (intToBool(directDebit)) set += 24
 
+    var prod:String = set.mkString("[", ",", "]")
+    Product(prod)
   }
 }

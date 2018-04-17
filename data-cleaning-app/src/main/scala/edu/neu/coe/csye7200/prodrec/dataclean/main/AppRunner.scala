@@ -33,8 +33,11 @@ object AppRunner extends Serializable {
           .config("spark.debug.maxToStringFields",100)
           .getOrCreate()
 
+        ss.conf.getAll.foreach(println)
+
         val resultdf = Pipeline.run(input, ss)
         resultdf.show()
+//        resultdf.coalesce(1).write.option("header","true").csv(output)
 
       case None =>
     }

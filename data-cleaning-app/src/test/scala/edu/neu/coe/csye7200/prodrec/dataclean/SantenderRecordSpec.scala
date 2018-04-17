@@ -37,19 +37,19 @@ class SantenderRecordSpec extends FlatSpec with Matchers {
     }
   }
 
-  behavior of "Product"
-
-  it should "work for input" in {
-    Product("0","1","0","1","1","0","1","0","1","1","1","1","0","1","0","1","1","0","1","0","1","1","1","1") should matchPattern{
-      case Product(false,true,false,true,true,false,true,false,true,true,true,true,false,true,false,true,true,false,true,false,true,true,true,true) =>
-    }
-    Product("0","1","0","1","1","0","1","0","1","1","1","1","0","1","0","1","1","0","1","0","1","1  ","   1","1") should matchPattern{
-      case Product(false,true,false,true,true,false,true,false,true,true,true,true,false,true,false,true,true,false,true,false,true,true,true,true) =>
-    }
-  }
-  it should "throw exception for invalid input" in {
-    an[Exception] should be thrownBy Product("23","1","0","1","1","0","1","0","1","1","1","1","0","1","0","1","1","0","1","0","1","1","1","1")
-  }
+//  behavior of "Product"
+//
+//  it should "work for input" in {
+//    Product("0","1","0","1","1","0","1","0","1","1","1","1","0","1","0","1","1","0","1","0","1","1","1","1") should matchPattern{
+//      case Product(false,true,false,true,true,false,true,false,true,true,true,true,false,true,false,true,true,false,true,false,true,true,true,true) =>
+//    }
+//    Product("0","1","0","1","1","0","1","0","1","1","1","1","0","1","0","1","1","0","1","0","1","1  ","   1","1") should matchPattern{
+//      case Product(false,true,false,true,true,false,true,false,true,true,true,true,false,true,false,true,true,false,true,false,true,true,true,true) =>
+//    }
+//  }
+//  it should "throw exception for invalid input" in {
+//    an[Exception] should be thrownBy Product("23","1","0","1","1","0","1","0","1","1","1","1","0","1","0","1","1","0","1","0","1","1","1","1")
+//  }
 
   behavior of "Product.intToBool"
   it should "work for valid input" in {
