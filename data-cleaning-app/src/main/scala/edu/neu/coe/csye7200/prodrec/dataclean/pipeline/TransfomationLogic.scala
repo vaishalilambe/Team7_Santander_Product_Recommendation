@@ -2,11 +2,19 @@ package edu.neu.coe.csye7200.prodrec.dataclean.pipeline
 
 import edu.neu.coe.csye7200.prodrec.dataclean.model.SantanderRecord
 import org.apache.spark.sql.{DataFrame, Dataset}
-import org.apache.spark.sql.functions.col
-import org.apache.spark.sql.functions.udf
+import org.apache.spark.sql.functions.{col, udf, mean}
 
 object TransfomationLogic {
 
+
+  def replaceNullWithAvg(df: DataFrame): DataFrame = {
+    var df1 = df
+
+    val avgIncome: Double = df.select(mean(df("income"))).collect()(0).get(0).toString.toDouble
+
+    df1 = df1.na.fill(avgIncome, Seq("income"))
+    df1
+  }
 
   def replaceEmptyToRation(df: DataFrame): DataFrame = {
     var df1 = df
