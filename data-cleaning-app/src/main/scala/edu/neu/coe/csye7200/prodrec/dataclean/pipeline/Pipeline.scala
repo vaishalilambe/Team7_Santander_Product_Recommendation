@@ -28,9 +28,13 @@ object Pipeline {
     //Fill in Gender
     val df2 = TransfomationLogic.replaceEmptyToRation(df1)
 
-    /* Format */
-    val df3 = TransfomationLogic.formatColumnDF(df2)
+    val df3 = TransfomationLogic.replaceNullWithAvg(df2)
 
-    df3
+
+
+    /* Format */
+    val df4 = TransfomationLogic.formatColumnDF(df3)
+
+    df4
   }
 }
