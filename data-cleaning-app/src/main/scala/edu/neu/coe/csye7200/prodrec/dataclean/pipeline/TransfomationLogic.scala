@@ -33,6 +33,7 @@ object TransfomationLogic {
 
     df1 = df1.withColumn("deceasedIndex", udf(emptyToSNRatio).apply(col("deceasedIndex")))
     df1 = df1.withColumn("customerResidenceIndex", udf(emptyToSNRatio).apply(col("customerResidenceIndex")))
+    df1 = df1.withColumn("employmentStatus", udf(emptyToSNRatio).apply(col("employmentStatus")))
 
     def emptyToIARatio: (String => String) = { x => {
       val r = new scala.util.Random
