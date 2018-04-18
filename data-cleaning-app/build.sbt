@@ -8,6 +8,12 @@ val sparkVersion = "2.2.0"
 val scalatestVersion = "3.0.1"
 val configVersion = "1.3.0"
 
+dependencyOverrides ++= Seq(
+  "io.netty" % "netty" % "3.9.9.Final",
+  "commons-net" % "commons-net" % "2.2",
+  "com.google.guava" % "guava" % "11.0.2"
+)
+
 libraryDependencies ++= Seq(
   "com.typesafe" % "config" % configVersion,
   "org.apache.spark" % "spark-core_2.11" % sparkVersion,

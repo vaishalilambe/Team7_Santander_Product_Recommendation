@@ -40,9 +40,19 @@ jobs:
         
       # run tests!
       - run:
-          command: cat /dev/null | sbt test:test
+          command: cat /dev/null | sbt clean coverage test
           working_directory: data-cleaning-app
 
       - run:
-          command: cat /dev/null | sbt test:test
+          command: cat /dev/null | sbt clean coverage test
           working_directory: scala-ml-rec-app
+
+      # generate test coverage report
+      - run:
+          command: cat /dev/null | sbt coverageReport
+          working_directory: data-cleaning-app
+
+      - run:
+          command: cat /dev/null | sbt coverageReport
+          working_directory: scala-ml-rec-app
+
