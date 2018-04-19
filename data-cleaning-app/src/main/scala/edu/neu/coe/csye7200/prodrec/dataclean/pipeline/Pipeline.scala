@@ -13,7 +13,7 @@ object Pipeline {
 
     /* Filtering */
     val classDS1 = classDS.filter(d => d.customerInfo.code != None)
-
+      .filter(d => d.productInfo.product != "[]")
 
     /* Transformation */
     var df = TransfomationLogic.classDStoDF(classDS1)
