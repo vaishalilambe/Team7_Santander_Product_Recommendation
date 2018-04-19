@@ -6,6 +6,13 @@ import org.apache.spark.sql.functions.{col, mean, udf}
 
 object TransfomationLogic {
 
+  def fixAge(df: DataFrame): DataFrame = {
+    var df1 = df
+    val avgAge: Int = df.select(mean(df("age"))).collect()(0).get(0).toString.toDouble.toInt
+    df1 = df1.na.fill(avgAge, Seq("age"))
+    df1
+  }
+
   def replaceNullWithAvg(df: DataFrame): DataFrame = {
     var df1 = df
 

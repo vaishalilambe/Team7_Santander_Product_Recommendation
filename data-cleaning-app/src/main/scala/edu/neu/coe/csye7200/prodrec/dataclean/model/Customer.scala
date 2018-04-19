@@ -1,6 +1,7 @@
 package edu.neu.coe.csye7200.prodrec.dataclean.model
 
-import scala.util.Try
+import scala.util.{Failure, Success, Try}
+
 
 case class Customer(
         code: Option[Int],
@@ -27,7 +28,11 @@ object Customer {
     val parsedEStatus = employmentStatus.trim
     val parsedCResidency = if (countryOfResidence.trim == "") "ES" else countryOfResidence.trim
     val parsedGender = gender.trim
-    val parsedAge = Try(age.trim.toInt).toOption
+    val parsedAge = Try(age.trim.toInt) match {
+      case Success(x) => Some(x)
+      case Failure(e) => None
+    }
+
     val parsedIncome = Try(income.trim.toDouble).toOption
 
     new Customer(parsedCode, parsedEStatus, parsedCResidency, parsedGender, parsedAge, parsedIncome)

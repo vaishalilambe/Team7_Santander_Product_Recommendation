@@ -1,10 +1,9 @@
 package edu.neu.coe.csye7200.prodrec.dataclean.io
 
 import edu.neu.coe.csye7200.prodrec.dataclean.model.{Account, Customer, Product, SantanderRecord}
-import org.apache.spark.sql.{Dataset, SparkSession}
+import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
 
 object DataParser extends Serializable {
-
 
   def getStringDS(inputPath: String, ss: SparkSession): Dataset[String] = {
     import ss.implicits._
@@ -26,6 +25,7 @@ object DataParser extends Serializable {
 
         val account = Account(splitRow(23), splitRow(6), splitRow(7), splitRow(8), splitRow(9), splitRow(11),
           splitRow(12), splitRow(13), splitRow(14), splitRow(16), splitRow(17), splitRow(20), splitRow(21))
+
 
         val product = Product(splitRow(24), splitRow(25), splitRow(26), splitRow(27), splitRow(28), splitRow(29),
           splitRow(30), splitRow(31), splitRow(32), splitRow(33), splitRow(34), splitRow(35), splitRow(36),
