@@ -66,7 +66,7 @@ object DataModelApp extends App {
     .fit(trainingData)
     .setHandleInvalid("skip")
 
-  //
+  //Convert all the features to Vector
   val assembler:VectorAssembler = new VectorAssembler()
     .setInputCols(Array(allIdxdColNames: _*))
     .setOutputCol("Features")
@@ -74,6 +74,8 @@ object DataModelApp extends App {
   //val output = assembler.transform(trainingData)
 
   //output.select("Features", "isCustomerActive").show
+
+  logger.info("Creating Random Forest Model")
 
   // Train a RandomForest model.
   val randomForest = new RandomForestClassifier()
@@ -86,6 +88,7 @@ object DataModelApp extends App {
     .setOutputCol("predictedLabel")
     .setLabels(labelIndexer.labels)
 
+  logger.info("Creating Random Forest Model")
   // Chain indexer and forest in a Pipeline.
   val pipeline = new Pipeline().setStages(
     categoricalFeatureIndexer.toArray ++ Array(labelIndexer, assembler, randomForest, labelConverter))
@@ -93,6 +96,7 @@ object DataModelApp extends App {
   // Train model. This also runs the indexers.
   val model = pipeline.fit(trainingData)
 
+  logger.info("Saving the Model")
   //Save model
     model.write.overwrite().save("./dataset/spark-random-forest-model")
 
