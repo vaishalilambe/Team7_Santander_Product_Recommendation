@@ -25,7 +25,7 @@ object Customer {
 
     val parsedCode = Try(code.trim.toInt).toOption
     val parsedEStatus = employmentStatus.trim
-    val parsedCResidency = countryOfResidence.trim
+    val parsedCResidency = if (countryOfResidence.trim == "") "ES" else countryOfResidence.trim
     val parsedGender = gender.trim
     val parsedAge = Try(age.trim.toInt).toOption
     val parsedIncome = Try(income.trim.toDouble).toOption

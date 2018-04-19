@@ -9,8 +9,8 @@ class SantenderRecordSpec extends FlatSpec with Matchers {
   behavior of "Customer"
 
   it should "work for input" in {
-    Customer("12345", "A", "India", "M", "34", "34000") should matchPattern {
-      case Customer(Some(12345), "A", "India", "M", Some(34), Some(34000)) =>
+    Customer("12345", "A","", "M", "34", "34000") should matchPattern {
+      case Customer(Some(12345), "A", "ES", "M", Some(34), Some(34000)) =>
     }
     Customer("34567", "B", "China", "F", "", "50000") should matchPattern {
       case Customer(Some(34567), "B", "China", "F", None, Some(50000)) =>
