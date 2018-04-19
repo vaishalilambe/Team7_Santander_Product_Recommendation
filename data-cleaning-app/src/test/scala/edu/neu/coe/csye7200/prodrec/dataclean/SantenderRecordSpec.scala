@@ -27,37 +27,35 @@ class SantenderRecordSpec extends FlatSpec with Matchers {
     val sqlDate = new java.sql.Date(format.parse("2015-11-12").getTime)
 
     Account("01 - VIP", "2015-11-12", "1", "4", "1", "1", "A-Active", "S", "S", "channel", "N", "NA", "1") should matchPattern {
-      case Account("01 - VIP", sqlDate, Some(1), Some(4), Some(1), Some("1"), Some("A-Active"), Some("S"), Some("S"), Some("channel"), Some("N"), Some("NA"), Some(1)) =>
+      case Account(Some("VIP"), sqlDate, Some(1), Some(4), Some(1), Some("1"), Some("A-Active"), Some("S"), Some("S"), Some("channel"), Some("N"), Some("NA"), Some(1)) =>
     }
     Account("01 - VIP", "2015-11", "1", "", "1", "1", "A-Active", "S", "S", "channel", "N", "NA", "2d1") should matchPattern {
-      case Account("01 - VIP", None, Some(1), None, Some(1), Some("1"), Some("A-Active"), Some("S"), Some("S"), Some("channel"), Some("N"), Some("NA"), None) =>
+      case Account(Some("VIP"), None, Some(1), None, Some(1), Some("1"), Some("A-Active"), Some("S"), Some("S"), Some("channel"), Some("N"), Some("NA"), None) =>
     }
     Account("01 - VIP", "201-12", "1d", "4", "", "1", "A-Active", "S", "S", "channel", "N", "NA", "1") should matchPattern {
-      case Account("01 - VIP", None, None, Some(4), None, Some("1"), Some("A-Active"), Some("S"), Some("S"), Some("channel"), Some("N"), Some("NA"), Some(1)) =>
+      case Account(Some("VIP"), None, None, Some(4), None, Some("1"), Some("A-Active"), Some("S"), Some("S"), Some("channel"), Some("N"), Some("NA"), Some(1)) =>
     }
   }
 
-//  behavior of "Product"
-//
-//  it should "work for input" in {
-//    Product("0","1","0","1","1","0","1","0","1","1","1","1","0","1","0","1","1","0","1","0","1","1","1","1") should matchPattern{
-//      case Product(false,true,false,true,true,false,true,false,true,true,true,true,false,true,false,true,true,false,true,false,true,true,true,true) =>
-//    }
-//    Product("0","1","0","1","1","0","1","0","1","1","1","1","0","1","0","1","1","0","1","0","1","1  ","   1","1") should matchPattern{
-//      case Product(false,true,false,true,true,false,true,false,true,true,true,true,false,true,false,true,true,false,true,false,true,true,true,true) =>
-//    }
-//  }
-//  it should "throw exception for invalid input" in {
-//    an[Exception] should be thrownBy Product("23","1","0","1","1","0","1","0","1","1","1","1","0","1","0","1","1","0","1","0","1","1","1","1")
-//  }
+  behavior of "Product"
+
+  it should "work for input" in {
+    Product("0","1","0","1","1","0","1","0","1","1","1","1","0","1","0","1","1","0","1","0","1","1","1","1") should matchPattern{
+      case Product("[2,4,5,7,9,10,11,12,14,16,17,19,21,22,23,24]") =>
+    }
+    Product("0","1","0","1","1","0","1","0","1","1","1","1","0","1","0","1","1","0","1","0","1","1  ","   1","1") should matchPattern{
+      case Product("[2,4,5,7,9,10,11,12,14,16,17,19,21,22,23,24]") =>
+    }
+  }
 
   behavior of "Product.intToBool"
   it should "work for valid input" in {
     Product.intToBool("1") shouldBe true
+    Product.intToBool(" 1 ") shouldBe true
     Product.intToBool("0") shouldBe false
+    Product.intToBool("0 ") shouldBe false
+    Product.intToBool("") shouldBe false
+    Product.intToBool("dfg") shouldBe false
   }
-//  it should "throw exception for invalid input" in {
-//    an[Exception] should be thrownBy Product.intToBool("2")
-//  }
 
 }
