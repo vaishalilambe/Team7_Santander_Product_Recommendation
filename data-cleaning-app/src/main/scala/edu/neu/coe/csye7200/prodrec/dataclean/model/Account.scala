@@ -4,7 +4,7 @@ import java.sql.Date
 import scala.util.Try
 
 case class Account(
-                    customerType: String,
+                    customerType: Option[String],
                     joinDate: Option[Date],
                     isCustomerAtMost6MonthOld: Option[Int],
                     seniority: Option[Int],
@@ -42,7 +42,7 @@ object Account {
            ): Account = {
     val format = new java.text.SimpleDateFormat("yyyy-MM-dd")
 
-    val parsedCustomerType = customerType.trim
+    val parsedCustomerType = Try(customerType.split("-")(1).trim).toOption
     val parsedJoinDate = Try(new java.sql.Date(format.parse(joinDate.trim).getTime)).toOption
     val parsedIsCustomerAtMost6MonthOld = Try(isCustomerAtMost6MonthOld.trim.toInt).toOption
     val parsedSeniority = Try(seniority.trim.toInt).toOption
