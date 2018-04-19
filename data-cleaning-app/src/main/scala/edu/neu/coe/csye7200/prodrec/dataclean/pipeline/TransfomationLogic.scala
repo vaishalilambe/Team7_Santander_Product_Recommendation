@@ -2,10 +2,9 @@ package edu.neu.coe.csye7200.prodrec.dataclean.pipeline
 
 import edu.neu.coe.csye7200.prodrec.dataclean.model.SantanderRecord
 import org.apache.spark.sql.{DataFrame, Dataset}
-import org.apache.spark.sql.functions.{col, udf, mean}
+import org.apache.spark.sql.functions.{col, mean, udf}
 
 object TransfomationLogic {
-
 
   def replaceNullWithAvg(df: DataFrame): DataFrame = {
     var df1 = df
