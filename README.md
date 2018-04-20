@@ -30,3 +30,7 @@ Backup Repository: https://github.com/vaishalilambe/Team7_Santander_Product_Reco
 ## Synopsis:
 
 In this project we build a recommendation system [predictive model] for a customer on the basis of behavior of his existing product consumption and recommend products similar to it.
+
+## Final Project Prsentation
+
+https://prezi.com/view/L9AIqnlsLZrmKhNYkX50/
