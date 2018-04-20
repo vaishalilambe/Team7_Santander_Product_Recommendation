@@ -10,6 +10,7 @@ object Product {
   def intToBool(number: String): Boolean = Try(number.trim.toInt) match {
     case Success(1) => true
     case Success(0) => false
+    case Success(x) => false
     case Failure(e) => false
   }
 

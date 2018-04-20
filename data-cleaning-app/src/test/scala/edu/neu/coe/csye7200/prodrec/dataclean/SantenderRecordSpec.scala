@@ -46,6 +46,10 @@ class SantenderRecordSpec extends FlatSpec with Matchers {
     Product("0","1","0","1","1","0","1","0","1","1","1","1","0","1","0","1","1","0","1","0","1","1  ","   1","1") should matchPattern{
       case Product("[2,4,5,7,9,10,11,12,14,16,17,19,21,22,23,24]") =>
     }
+    Product(" 1","0","1","1","0","1","1","1","0","1","1","1","1","1","1","1","1","1  ","1"," 1","0","1  ","   1"," 0") should matchPattern{
+      case Product("[1,3,4,6,7,8,10,11,12,13,14,15,16,17,18,19,20,22,23]") =>
+    }
+
   }
 
   behavior of "Product.intToBool"
@@ -53,7 +57,7 @@ class SantenderRecordSpec extends FlatSpec with Matchers {
     Product.intToBool("1") shouldBe true
     Product.intToBool(" 1 ") shouldBe true
     Product.intToBool("0") shouldBe false
-    Product.intToBool("0 ") shouldBe false
+    Product.intToBool("23 ") shouldBe false
     Product.intToBool("") shouldBe false
     Product.intToBool("dfg") shouldBe false
   }

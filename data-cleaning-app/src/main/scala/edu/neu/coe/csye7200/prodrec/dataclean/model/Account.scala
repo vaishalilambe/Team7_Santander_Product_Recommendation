@@ -17,12 +17,7 @@ case class Account(
                     deceasedIndex: Option[String],
                     customerAddrProvinceName: Option[String],
                     isCustomerActive: Option[Int]
-                  ) {
-  override def toString: String = s"$customerType,$joinDate,$isCustomerAtMost6MonthOld,$seniority,$isPrimaryCustomer," +
-    s"$customerTypeFirstMonth,$customerRelationTypeFirstMonth,$customerResidenceIndex,$customerForeignIndex," +
-    s"$channelOfJoin,$deceasedIndex,$customerAddrProvinceName,$isCustomerActive"
-
-}
+                  )
 
 object Account {
   def apply(

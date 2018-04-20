@@ -10,9 +10,7 @@ case class Customer(
         gender: String,
         age: Option[Int],
         income: Option[Double]
-        ) {
-            override def toString: String = s"$code,$employmentStatus,$countryOfResidence,$gender,$age,$income"
-        }
+        )
 
 object Customer {
   def apply(
