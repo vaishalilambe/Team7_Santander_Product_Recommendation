@@ -3,23 +3,28 @@ package edu.neu.coe.csye7200.prodrec.learning
 import org.apache.log4j.Logger
 import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.ml.classification.RandomForestClassifier
+import org.apache.spark.ml.feature.{IndexToString, StringIndexer, VectorAssembler}
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
-import org.apache.spark.ml.feature.{IndexToString, StringIndexer, VectorAssembler}
-import org.apache.spark.ml.tuning.{CrossValidator, ParamGridBuilder}
 
 object DataModelApp extends App {
 
   val SANTANDER_PRODUCT_RECOMMENDATION_APP = "Santander Product Recommendation with Random Forest Classification"
   val SET_UP_MESSAGE_COMPLETION = "Spark Set Up Complete"
+  val filePath = "./dataset/part-00000-a8e7bf79-9817-48e0-bc58-825c29c3d30d-c000.csv"
 
-  val numericColNames = Seq("code","age", "seniority","income")
-  val categoricalColNames = Seq(
-    "employmentStatus",
+  val numericColNames:Seq[String] = Seq("code","age","income")
+  val categoricalColNames:Seq[String] = Seq(
     "gender",
+    "employmentStatus",
+    "customerAddrProvinceName",
     "customerRelationTypeFirstMonth",
-    "customerResidenceIndex"
+    "customerType",
+    "deceasedIndex"
   )
+
+  val topProducts = Seq("[3]", "[3,8]", "[3,24]", "[8]", "[3,13]", "[6]", "[13]", "[3,9]",
+    "[3,12]", "[5,22,23,24]")
 
   val logger = getLogger()
 
@@ -32,9 +37,9 @@ object DataModelApp extends App {
 
   logger.info(SET_UP_MESSAGE_COMPLETION)
 
-  //Loading the train and test data
+  //Loading the train data
 
-  val trainDF :DataFrame = loadCleanedData(sparkSession)
+  val trainDF:DataFrame = loadCleanedData(sparkSession, filePath)
 
   trainDF.show()
   trainDF.printSchema()
@@ -42,6 +47,7 @@ object DataModelApp extends App {
   val filteredData = filterData(trainDF)
 
   // Split training and test data
+  //val splitSeed = 5043
   val Array(trainingData, testData) = filteredData.randomSplit(Array(0.9, 0.1))
 
   logger.info("Training data :")
@@ -71,16 +77,13 @@ object DataModelApp extends App {
     .setInputCols(Array(allIdxdColNames: _*))
     .setOutputCol("Features")
 
-  //val output = assembler.transform(trainingData)
-
-  //output.select("Features", "isCustomerActive").show
-
   logger.info("Creating Random Forest Model")
 
   // Train a RandomForest model.
   val randomForest = new RandomForestClassifier()
     .setLabelCol("productIndexed")
     .setFeaturesCol("Features")
+    .setMaxBins(60)
 
   // Convert indexed labels back to original labels
   val labelConverter = new IndexToString()
@@ -108,11 +111,10 @@ object DataModelApp extends App {
   //predictions.printSchema()
   predictions.select("predictedLabel", "productIndexed", "Features", "probability").show()
 
-  // Select (prediction, true label) and compute test error.
   val precisionEvaluator = new MulticlassClassificationEvaluator()
-    .setLabelCol("productIndexed")
-    .setPredictionCol("prediction")
-    .setMetricName("weightedPrecision")
+      .setLabelCol("productIndexed")
+      .setPredictionCol("prediction")
+      .setMetricName("weightedPrecision")
 
   val precision = precisionEvaluator.evaluate(predictions)
   logger.info(s"Precision = ${(precision)}")
@@ -134,17 +136,19 @@ object DataModelApp extends App {
   }
 
   def filterData(trainDF : DataFrame): DataFrame ={
-    val filteredData : DataFrame = trainDF.select(
+    val filteredData : DataFrame = trainDF
+      .select(
       trainDF("code"),
+      trainDF("gender"),
       trainDF("age"),
-      trainDF("seniority"),
       trainDF("income"),
       trainDF("employmentStatus"),
+      trainDF("customerType"),
+      trainDF("deceasedIndex"),
       trainDF("countryOfResidence"),
-      trainDF("gender"),
       trainDF("customerRelationTypeFirstMonth"),
       trainDF("customerResidenceIndex"),
-      trainDF("isCustomerActive"),
+      trainDF("customerAddrProvinceName"),
       trainDF("product")
     )
 
@@ -166,7 +170,7 @@ object DataModelApp extends App {
   def createPipeline(){}
   def savePredictions(){}
 
-  def loadCleanedData(sc : SparkSession): DataFrame = {
+  def loadCleanedData(sc : SparkSession, filePath: String): DataFrame = {
 
     //import sparkSession.implicits._
 
@@ -174,7 +178,8 @@ object DataModelApp extends App {
       .option("header","true")
       .option("inferSchema",true)
       .format("csv")
-      .load("./dataset/clean_data.csv")
+      .load(filePath)
+      .cache()
 
     trainDF
   }
