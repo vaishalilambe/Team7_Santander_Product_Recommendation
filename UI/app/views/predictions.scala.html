@@ -1,4 +1,4 @@
-@(predictions: scala.io.BufferedSource, style: String = "scala")
+@(cId: Int, productSeq: Seq[String])
 
 @defining(play.core.PlayVersion.current) { version =>
 <!DOCTYPE html>
@@ -15,19 +15,20 @@
             * the page content. *@
             <section id="top">
                 <div class="wrapper">
-                    <h1><a href="https://playframework.com/documentation/@version/Home">Predoctions</a></h1>
+                    <h1><a href="https://playframework.com/documentation/@version/Home">Predictions</a></h1>
                 </div>
             </section>
             <section>
+                <h2>Customer Code: @cId</h2>
+                <h2>Product:</h2>
+
                 <table>
-                    <thead>
-                        <tr><th>Code</th><th>Product</th>
-                    </thead>
-                    <tbody>
-                    @for(w <- predictions.getLines().drop(1).toList) {
-                        <tr><td>@w</td><td>@w.split(",").map(_.trim)[1]</td></tr>
+                    @for(w <- productSeq) {
+                        <tr>
+                            <td>@w</td>
+                            @*<td>@w.split(",").map(_.trim)[1]</td>*@
+                        </tr>
                     }
-                    </tbody>
                 </table>
             </section>
             <div id="content" class="wrapper doc"></div>

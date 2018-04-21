@@ -1,9 +1,12 @@
 package controllers
 
 import javax.inject._
-import play.api.mvc._
+
 import scala.io.Source
+import play.api.mvc._
 import com.github.tototoshi.csv._
+
+//import scala.collection.mutable.TreeSet._
 
 /**
   * This controller creates an `Action` to handle HTTP requests to the
@@ -22,10 +25,63 @@ class RecommendationController @Inject()(cc: ControllerComponents) extends Abstr
     Ok(views.html.recommendation("Recommendation application is ready."))
   }
 
-  case class Prediction(customer_code:Int, products: Seq[Int])
+//  case class Prediction(customer_code:Int, products: Seq[Int])
 
   def getPredictions(id:Int) = Action {
-    val sources = Source.fromFile("/tmp/trim_train.csv")
-    Ok(views.html.predictions(sources))
+    val sources = Source.fromFile("dataset/predictionresult.csv")
+
+    val prodMap = Map(
+      "1" -> "Saving Account",
+      "2" -> "Guarantees",
+      "3" -> "Current Acc",
+      "4"  -> "Derived Acc",
+      "5"-> "Payroll Acc",
+      "6"-> "Junior Acc",
+      "7" -> "More Particular Acc",
+      "8" -> "Particular Acc",
+      "9" -> "Particular Plus Acc",
+      "10" -> "Short Term Deposit",
+      "11" -> "Mid Term Deposit",
+      "12" -> "Long Term Deposit",
+      "13" -> "eAccount",
+      "14" -> "Funds",
+      "15" -> "Mortgage",
+      "16" -> "Pension Plan",
+      "17" -> "Loan",
+      "18" -> "Taxes",
+      "19" -> "Credit Card",
+      "20"->  "Securities",
+      "21" -> "Home Acc",
+      "22"-> "Payroll Nom",
+      "23" -> "Pension Nom",
+      "24" -> "Direct Debit"
+    )
+    val cId = id
+    val regex = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)"
+    var prodSeq:Seq[String] = Seq("")
+    for(line <- sources.getLines())
+      {
+        val cid = line.split(regex)(0)
+        var prodList = line.split(regex)(1)
+
+        if ( cid == cId.toString) {
+          var myprodList = prodList.substring(2,prodList.length-2).split(",")
+          for(x <- myprodList)
+            {
+//              prodSeq =
+              prodSeq = prodSeq :+ prodMap.get(x).get
+
+              println(prodMap.get(x).get)
+            }
+          println(prodList)
+        }
+      }
+
+    println(prodSeq)
+    val productSeq = Seq("Savings Account", "Current Account")
+    Ok(views.html.predictions(cId, prodSeq))
+//    Ok(views.html.index("Your new application is ready. vjvkvkvkhv"))
+
   }
+
 }
