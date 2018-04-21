@@ -15,14 +15,11 @@ lazy val root = (project in file(".")).aggregate(dataclean, scalaMlRecApp)
 
 val meta = """META.INF(.)*""".r
 
-mergeStrategy in assembly :=
+assemblyMergeStrategy in assembly :=
   {
     case "log4j.properties" => MergeStrategy.last
     case meta(_) => MergeStrategy.discard
     case x => MergeStrategy.last
-    //  case x =>
-    //    val oldStrategy = (assemblyMergeStrategy in assembly).value
-    //    oldStrategy(x)
   }
 
 
