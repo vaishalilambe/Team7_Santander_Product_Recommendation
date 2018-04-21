@@ -6,6 +6,64 @@ import org.apache.spark.sql.functions.{col, mean, udf}
 
 object TransfomationLogic {
 
+  def emptyToGenderRation: (String => String) = {
+    x => {
+      val r = new scala.util.Random
+      x match {
+        case "" => if (r.nextFloat > 0.54) "V" else "H"
+        case a => a
+      }
+    }
+  }
+
+  def emptyToSNRatio: (String => String) = {
+    x => {
+      val r = new scala.util.Random
+      x match {
+        case "" => if (r.nextFloat > 0.54) "S" else "N"
+        case a => a
+      }
+    }
+  }
+
+  def emptyToIARatio: (String => String) = {
+    x => {
+      val r = new scala.util.Random
+      x match {
+        case "" => if (r.nextFloat > 0.54) "A" else "I"
+        case a => a
+      }
+    }
+  }
+
+  def emptyToSNRatioRev: (String => String) = {
+    x => {
+      val r = new scala.util.Random
+      x match {
+        case "" => if (r.nextFloat > 0.46) "S" else "N"
+        case a => a
+      }
+    }
+  }
+
+  def emptyToUnknown: (String => String) = {
+    x =>
+      if (x == "")
+        "Unknown"
+      else
+        x
+  }
+
+  def removeQuotes: (String => String) = {
+    x =>
+      if (x.charAt(0) == '"' && x.charAt(x.length - 1) == '"') {
+        x.substring(1, x.length - 1)
+      }
+      else {
+        x
+      }
+  }
+
   def fixAge(df: DataFrame): DataFrame = {
     var df1 = df
     val avgAge: Int = df.select(mean(df("age"))).collect()(0).get(0).toString.toDouble.toInt
@@ -25,50 +83,11 @@ object TransfomationLogic {
   def replaceEmptyToRation(df: DataFrame): DataFrame = {
     var df1 = df
 
-    def emptyToGenderRation: (String => String) = { x => {
-      val r = new scala.util.Random
-      x match {
-        case "" => if (r.nextFloat > 0.54) "V" else "H"
-        case a => a
-      }
-    }
-    }
-
     df1 = df1.withColumn("gender", udf(emptyToGenderRation).apply(col("gender")))
-
-    def emptyToSNRatio: (String => String) = { x => {
-      val r = new scala.util.Random
-      x match {
-        case "" => if (r.nextFloat > 0.54) "S" else "N"
-        case a => a
-      }
-    }
-    }
-
     df1 = df1.withColumn("deceasedIndex", udf(emptyToSNRatio).apply(col("deceasedIndex")))
     df1 = df1.withColumn("customerResidenceIndex", udf(emptyToSNRatio).apply(col("customerResidenceIndex")))
     df1 = df1.withColumn("employmentStatus", udf(emptyToSNRatio).apply(col("employmentStatus")))
-
-    def emptyToIARatio: (String => String) = { x => {
-      val r = new scala.util.Random
-      x match {
-        case "" => if (r.nextFloat > 0.54) "A" else "I"
-        case a => a
-      }
-    }
-    }
-
     df1 = df1.withColumn("customerRelationTypeFirstMonth", udf(emptyToIARatio).apply(col("customerRelationTypeFirstMonth")))
-
-    def emptyToSNRatioRev: (String => String) = { x => {
-      val r = new scala.util.Random
-      x match {
-        case "" => if (r.nextFloat > 0.46) "S" else "N"
-        case a => a
-      }
-    }
-    }
-
     df1 = df1.withColumn("customerForeignIndex", udf(emptyToIARatio).apply(col("customerForeignIndex")))
 
     df1
@@ -77,8 +96,6 @@ object TransfomationLogic {
   def replaceEmptyToUnknown(df: DataFrame): DataFrame = {
 
     var df1 = df
-
-    def emptyToUnknown: (String => String) = { x => if (x == "") "Unknown" else x }
 
     val columns = Seq("customerAddrProvinceName", "customerType", "customerTypeFirstMonth", "channelOfJoin")
 
@@ -89,16 +106,6 @@ object TransfomationLogic {
   }
 
   def formatColumnDF(df: DataFrame): DataFrame = {
-
-    def removeQuotes: (String => String) = {
-      x =>
-        if (x.charAt(0) == '"' && x.charAt(x.length - 1) == '"') {
-          x.substring(1, x.length - 1)
-        }
-        else {
-          x
-        }
-    }
 
     val df1 = df.withColumn("customerAddrProvinceName", udf(removeQuotes).apply(col("customerAddrProvinceName")))
 
