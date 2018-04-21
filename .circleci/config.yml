@@ -39,20 +39,12 @@ jobs:
           key: v1-dependencies--{{ checksum "build.sbt" }}
         
       # run tests!
-      - run:
-          command: cat /dev/null | sbt clean coverage test
-          working_directory: data-cleaning-app
+      - run: cat /dev/null | sbt clean coverage test
 
-      - run:
-          command: cat /dev/null | sbt clean coverage test
-          working_directory: scala-ml-rec-app
+      # fix for coverageAggregate (run test twice)
+      - run: cat /dev/null | sbt coverage test
 
-      # generate test coverage report
-      - run:
-          command: cat /dev/null | sbt coverageReport
-          working_directory: data-cleaning-app
-
-      - run:
-          command: cat /dev/null | sbt coverageReport
-          working_directory: scala-ml-rec-app
+      # generate coverage report!
+      - run: cat /dev/null | sbt coverageReport
+      - run: cat /dev/null | sbt coverageAggregate
 
