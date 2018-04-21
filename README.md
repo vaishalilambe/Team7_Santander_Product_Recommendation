@@ -11,7 +11,6 @@ Programming Language: **Scala**
 
 ## Tools: 
  - Apache Spark
- - Apache Kafka
  - Zepplin
  - Play Framework
  - AWS
