@@ -1,11 +1,9 @@
 package edu.neu.coe.csye7200.prodrec.dataclean.main
 
-import edu.neu.coe.csye7200.prodrec.dataclean.io.DataParser
 import edu.neu.coe.csye7200.prodrec.dataclean.pipeline.Pipeline
 import org.apache.spark.sql.SparkSession
-//import edu.neu.coe.csye7200.prodrec.dataclean.io
 
-case class Config(input: String = null, output:String = null)
+case class Config(input: Option[String] = None, output: Option[String] = None)
 
 object AppRunner extends Serializable {
 
@@ -16,28 +14,28 @@ object AppRunner extends Serializable {
     {
       head("Data Cleaning App", "1.0")
       opt[String]('i', "input") required() action
-        { (x, c) => c.copy(input = x) } text("input is the input path")
+        { (x, c) => c.copy(input = Some(x)) } text("input is the input path")
       opt[String]('o', "output") required() action
-        { (x, c) => c.copy(output = x) } text("output is the output path")
+        { (x, c) => c.copy(output = Some(x)) } text("output is the output path")
     }
 
     parser.parse(args, Config()) match {
       case Some(config) =>
-        val input = config.input
-        val output = config.output
+        val input = config.input.get
+        val output = config.output.get
 
         val ss = SparkSession
           .builder()
           .appName("Data Cleaning App")
-          .master("local")
+          .master("local[*]")
           .config("spark.debug.maxToStringFields",100)
           .getOrCreate()
 
         ss.conf.getAll.foreach(println)
 
         val resultdf = Pipeline.run(input, ss)
-        resultdf.show()
-//        resultdf.coalesce(1).write.option("header","true").csv(output)
+
+        resultdf.coalesce(1).write.option("header","true").csv(output)
 
       case None =>
     }
