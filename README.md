@@ -1,4 +1,5 @@
 # [Santander Product Recommendation](https://www.kaggle.com/c/santander-product-recommendation/data)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/27ca05a3535f41ffb4f83b1bb300a688)](https://app.codacy.com/app/lambe.v/Team7_Santander_Product_Recommendation?utm_source=github.com&utm_medium=referral&utm_content=vaishalilambe/Team7_Santander_Product_Recommendation&utm_campaign=badger)
 ### Build Status: [![CircleCI](https://circleci.com/gh/vaishalilambe/Team7_Santander_Product_Recommendation.svg?style=svg)](https://circleci.com/gh/vaishalilambe/Team7_Santander_Product_Recommendation)
 
 Course : [CSYE7200 Big Data Engineering with Scala](https://www.coursicle.com/neu/courses/CSYE/7200/)
