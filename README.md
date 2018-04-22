@@ -29,8 +29,17 @@ Data Size: ~2.3GB [Rows: ~1.3M]
 Backup Repository: https://github.com/vaishalilambe/Team7_Santander_Product_Recommendation
 
 ## Synopsis:
+- Problem Statement:
 
-In this project we build a recommendation system for a customer on the basis of behavior of his existing product consumption and recommend products similar to it.
+  In this project we build a recommendation system for a customer on the basis of behavior of his existing product consumption and recommend products similar to it.
+
+- Appoarch:
+  
+  To achieve it we  followed the appraoch of divide single task into multiple subtasks
+  So we have below stages in our project:
+
+
+- 
 
 ## Final Project Prsentation
 
