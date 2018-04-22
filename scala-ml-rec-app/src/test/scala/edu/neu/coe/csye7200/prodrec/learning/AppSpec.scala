@@ -17,23 +17,33 @@ trait SparkSessionTestWrapper {
 
 class AppSpec extends FlatSpec with SparkSessionTestWrapper with Matchers {
 
-  behavior of "app"
+  behavior of "load data method"
 
-  val trainDF = DataModelApp.loadCleanedData(spark, "./dataset/trim_trait.csv")
+  val trainDF = DataModelApp.loadCleanedData(spark, "./dataset/sample.csv")
 
-  it should "have total 24 columns" in {
-    assert(21 == trainDF.columns.length)
+  it should "have total 21 columns" in {
+    assert(20 == trainDF.columns.length)
   }
 
   it should "have total 100 row" in {
-    assertResult(834) {
+    assertResult(100) {
       trainDF.count
     }
   }
 
-  /*it should "not have null values in products columns" in {
-    assertResult(false) {
-      trainDF("product").isNull
+  it should "not have null values in product column" in {
+    assertResult(0) {
+      trainDF.filter(trainDF("product").isNull || trainDF("product") === "" || trainDF("product").isNaN).count()
     }
-  }*/
+  }
+
+  behavior of "filter data method"
+
+  val filteredData = DataModelApp.filterData(trainDF)
+
+  it should "have total columns 12 after filtering the features" in {
+    assertResult(12) {
+      filteredData.columns.length
+    }
+  }
 }

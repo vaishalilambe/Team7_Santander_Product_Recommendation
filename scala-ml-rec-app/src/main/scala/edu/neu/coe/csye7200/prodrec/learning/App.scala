@@ -2,16 +2,32 @@ package edu.neu.coe.csye7200.prodrec.learning
 
 import org.apache.log4j.Logger
 import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.joda.time.{DateTime, Seconds}
 import org.apache.spark.ml.classification.RandomForestClassifier
-import org.apache.spark.ml.feature.{IndexToString, StringIndexer, VectorAssembler}
+import org.apache.spark.ml.feature.{IndexToString, StringIndexer, StringIndexerModel, VectorAssembler}
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
+//import org.apache.spark.ml.classification.NaiveBayes
+//import org.apache.spark.ml.classification.DecisionTreeClassifier
 
 object DataModelApp extends App {
 
   val SANTANDER_PRODUCT_RECOMMENDATION_APP = "Santander Product Recommendation with Random Forest Classification"
   val SET_UP_MESSAGE_COMPLETION = "Spark Set Up Complete"
-  val filePath = "./dataset/cleaned_data.csv"
+  val CREATE_MODEL_MESSAGE = "Creating Random Forest Model"
+  val SAVE_MODEL_MESSAGE = "Saving the Model"
+  val CREATE_PIPELINE_MESSAGE = "Creating Pipleline"
+
+  val filePath = "./dataset/clean_data.csv"
+  val modelSavePath = "./dataset/spark-random-forest-model"
+  val maxBin:Int = 60
+  val splitSeed:Int = 5043
+  val metricName = "weightedPrecision"
+  val featuresColName = "Features"
+  val productColName = "product"
+  val productIndexedColName = "productIndexed"
+  val predictColName = "prediction"
+  val predictOutputColName = "predictedLabel"
 
   val numericColNames:Seq[String] = Seq("code","age","income")
   val categoricalColNames:Seq[String] = Seq(
@@ -23,9 +39,6 @@ object DataModelApp extends App {
     "deceasedIndex"
   )
 
-  val topProducts = Seq("[3]", "[3,8]", "[3,24]", "[8]", "[3,13]", "[6]", "[13]", "[3,9]",
-    "[3,12]", "[5,22,23,24]")
-
   val logger = getLogger()
 
   logger.info(s"Starting up $SANTANDER_PRODUCT_RECOMMENDATION_APP")
@@ -35,127 +48,153 @@ object DataModelApp extends App {
     .appName(SANTANDER_PRODUCT_RECOMMENDATION_APP)
     .getOrCreate()
 
+  import sparkSession.implicits._
+
   logger.info(SET_UP_MESSAGE_COMPLETION)
 
   //Loading the train data
-
   val trainDF:DataFrame = loadCleanedData(sparkSession, filePath)
 
-  trainDF.show()
-  trainDF.printSchema()
-
-  val filteredData = filterData(trainDF)
+  //Based on feature engineering, filtering best features for the model
+  val filteredData: DataFrame = filterData(trainDF)
 
   // Split training and test data
-  //val splitSeed = 5043
-  val Array(trainingData, testData) = filteredData.randomSplit(Array(0.9, 0.1))
+  val Array(trainingData, testData) = filteredData.randomSplit(Array(0.7, 0.3), splitSeed)
 
-  logger.info("Training data :")
-  trainingData.show
-
-  logger.info("Test data :")
-  testData.show
-
-  filteredData.printSchema
+  //filteredData.printSchema
 
   //Converting categorical columns to numeric
-  val categoricalFeatureIndexer = convertCategoricalToIndexes(categoricalColNames)
+  val categoricalFeatureIndexer:Seq[StringIndexerModel] = convertCategoricalToIndexes(categoricalColNames, trainingData)
 
   // Appending categorical index columns and numeric columns
   val idxdCategoricalColName = categoricalColNames.map(_ + "Indexed")
   val allIdxdColNames = numericColNames ++ idxdCategoricalColName
 
   //Create Index for Target column
-  val labelIndexer = new StringIndexer()
-    .setInputCol("product")
-    .setOutputCol("productIndexed")
+  val labelIndexer:StringIndexerModel = new StringIndexer()
+    .setInputCol(productColName)
+    .setOutputCol(productIndexedColName)
     .fit(trainingData)
     .setHandleInvalid("skip")
 
   //Convert all the features to Vector
   val assembler:VectorAssembler = new VectorAssembler()
     .setInputCols(Array(allIdxdColNames: _*))
-    .setOutputCol("Features")
+    .setOutputCol(featuresColName)
 
-  logger.info("Creating Random Forest Model")
+  logger.info(CREATE_MODEL_MESSAGE)
+
+  /*val nb = new NaiveBayes()
+    .setLabelCol("productIndexed")
+    .setFeaturesCol("Features")*/
+
+  /*val dt = new DecisionTreeClassifier()
+    .setLabelCol(productIndexedColName)
+    .setFeaturesCol(featuresColName)
+    .setMaxBins(maxBin)*/
 
   // Train a RandomForest model.
-  val randomForest = new RandomForestClassifier()
+  val randomForest:RandomForestClassifier = new RandomForestClassifier()
     .setLabelCol("productIndexed")
     .setFeaturesCol("Features")
-    .setMaxBins(60)
+    .setMaxBins(maxBin)
 
   // Convert indexed labels back to original labels
-  val labelConverter = new IndexToString()
-    .setInputCol("prediction")
-    .setOutputCol("predictedLabel")
+  val labelConverter:IndexToString = new IndexToString()
+    .setInputCol(predictColName)
+    .setOutputCol(predictOutputColName)
     .setLabels(labelIndexer.labels)
 
-  logger.info("Creating Random Forest Model")
-  // Chain indexer and forest in a Pipeline.
-  val pipeline = new Pipeline().setStages(
+  logger.info(CREATE_MODEL_MESSAGE)
+
+  // Chain indexer and forest in a Pipeline
+  val pipeline:Pipeline = new Pipeline().setStages(
     categoricalFeatureIndexer.toArray ++ Array(labelIndexer, assembler, randomForest, labelConverter))
+
+  val startRandomForest = DateTime.now
 
   // Train model. This also runs the indexers.
   val model = pipeline.fit(trainingData)
 
-  logger.info("Saving the Model")
-  //Save model
-    model.write.overwrite().save("./dataset/spark-random-forest-model")
+  logger.info(SAVE_MODEL_MESSAGE)
+
+  // Save model for new data prediction
+  model.write.overwrite().save(modelSavePath)
+
+  val endRandomForest = DateTime.now
 
   // Make predictions.
   val predictions = model.transform(testData)
 
-  // Select example rows to display.
-
+  // Show predictions for the model
   //predictions.printSchema()
-  predictions.select("predictedLabel", "productIndexed", "Features", "probability").show()
+  predictions.select(predictOutputColName, featuresColName).show()
 
   val precisionEvaluator = new MulticlassClassificationEvaluator()
-      .setLabelCol("productIndexed")
-      .setPredictionCol("prediction")
-      .setMetricName("weightedPrecision")
+      .setLabelCol(productIndexedColName)
+      .setPredictionCol(predictColName)
+      .setMetricName(metricName)
 
   val precision = precisionEvaluator.evaluate(predictions)
-  logger.info(s"Precision = ${(precision)}")
+  println(s"Precision = ${(precision)}")
 
-  predictions
-    .select("code", "predictedLabel")
-    .coalesce(1)
-    .write
-    .format("csv")
-    .option("header", "true")
-    .save("./dataset/predctions.csv")
+  // Save the predictions
+  //savePredictions(predictions)
+
+  val predictionTime = Seconds.secondsBetween(startRandomForest, endRandomForest).getSeconds
+  println(s"Total Prediction Time: $predictionTime seconds")
 
   //val rfModel = model.stages(3).asInstanceOf[RandomForestClassificationModel]
   //println(s"Learned classification forest model:\n ${rfModel.toDebugString}")
 
   def getLogger(): Logger = {
-    val logger = Logger.getLogger("some")
+    val logger = Logger.getLogger("org")
     logger
+  }
+
+  def loadCleanedData(sc : SparkSession, filePath: String): DataFrame = {
+
+    val trainDF = sc.read
+      .option("header","true")
+      .option("inferSchema",true)
+      .format("csv")
+      .load(filePath)
+      .cache()
+
+    trainDF
   }
 
   def filterData(trainDF : DataFrame): DataFrame ={
     val filteredData : DataFrame = trainDF
       .select(
-      trainDF("code"),
-      trainDF("gender"),
-      trainDF("age"),
-      trainDF("income"),
-      trainDF("employmentStatus"),
-      trainDF("customerType"),
-      trainDF("deceasedIndex"),
-      trainDF("countryOfResidence"),
-      trainDF("customerRelationTypeFirstMonth"),
-      trainDF("customerResidenceIndex"),
-      trainDF("customerAddrProvinceName"),
-      trainDF("product")
-    )
+        trainDF("code"),
+        trainDF("gender"),
+        trainDF("age"),
+        trainDF("income"),
+        trainDF("employmentStatus"),
+        trainDF("customerType"),
+        trainDF("deceasedIndex"),
+        trainDF("countryOfResidence"),
+        trainDF("customerRelationTypeFirstMonth"),
+        trainDF("customerResidenceIndex"),
+        trainDF("customerAddrProvinceName"),
+        trainDF("product")
+      )
+
+    //import org.apache.spark.sql.functions._
+
+    // Count Top 10 products and filter the data for these products. These top products covers 95% of the data.
+    // This helped in increasing the Precision of the model
+
+    //filteredData.groupBy("product").count().orderBy(desc("count")).show
+
+    //val topProducts = List("[3]", "[3,8]", "[3,24]", "[8]", "[3,13]", "[6]", "[13]", "[3,9]", "[3,12]", "[5,22,23,24]")
+    //filteredData.filter($"product".isin(topProducts:_*)).show()
 
     filteredData
   }
 
-  def convertCategoricalToIndexes(catColNames:Seq[String]) = {
+  def convertCategoricalToIndexes(catColNames:Seq[String], trainingData:DataFrame) = {
     val categoricalFeatureIndexer = catColNames.map {
       colName => new StringIndexer()
         .setInputCol(colName)
@@ -167,20 +206,13 @@ object DataModelApp extends App {
     categoricalFeatureIndexer
   }
 
-  //def createPipeline(){}
-  //def savePredictions(){}
-
-  def loadCleanedData(sc : SparkSession, filePath: String): DataFrame = {
-
-    //import sparkSession.implicits._
-
-    val trainDF = sc.read
-      .option("header","true")
-      .option("inferSchema",true)
+  def savePredictions(predictions:DataFrame): Unit ={
+    predictions
+      .select("code", "predictedLabel")
+      .coalesce(1)
+      .write
       .format("csv")
-      .load(filePath)
-      .cache()
-
-    trainDF
+      .option("header", "true")
+      .save("./dataset/predctions.csv")
   }
 }
