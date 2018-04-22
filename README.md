@@ -15,7 +15,6 @@ Programming Language: **Scala**
  - Apache Spark
  - Zepplin
  - Play Framework
- - AWS
  - IntelliJ IDEA
  - CircleCI
  - [GitlabCI](https://gitlab.com/nishantgandhi99/Team_7_Santander_Product_Recommendation) 
@@ -39,11 +38,8 @@ Backup Repository: https://github.com/vaishalilambe/Team7_Santander_Product_Reco
 
   To achieve it we  followed the appraoch of divide single task into multiple subtasks
   So we have below stages in our project: Data Exploratory Analysis -> Data Cleaning -> Data Modelling -> Predictions
+
   
-
-
-- 
-
 ## Final Project Prsentation
 
 https://prezi.com/view/L9AIqnlsLZrmKhNYkX50/
