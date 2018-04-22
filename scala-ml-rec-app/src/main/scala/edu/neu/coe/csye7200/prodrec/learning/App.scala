@@ -11,7 +11,7 @@ object DataModelApp extends App {
 
   val SANTANDER_PRODUCT_RECOMMENDATION_APP = "Santander Product Recommendation with Random Forest Classification"
   val SET_UP_MESSAGE_COMPLETION = "Spark Set Up Complete"
-  val filePath = "./dataset/part-00000-a8e7bf79-9817-48e0-bc58-825c29c3d30d-c000.csv"
+  val filePath = "./dataset/cleaned_data.csv"
 
   val numericColNames:Seq[String] = Seq("code","age","income")
   val categoricalColNames:Seq[String] = Seq(
@@ -167,8 +167,8 @@ object DataModelApp extends App {
     categoricalFeatureIndexer
   }
 
-  def createPipeline(){}
-  def savePredictions(){}
+  //def createPipeline(){}
+  //def savePredictions(){}
 
   def loadCleanedData(sc : SparkSession, filePath: String): DataFrame = {
 
