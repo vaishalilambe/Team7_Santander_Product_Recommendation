@@ -58,13 +58,10 @@ object DataModelApp extends App {
   //Based on feature engineering, filtering best features for the model
   val filteredData: DataFrame = filterData(trainDF)
 
-  // Split training and test data
-  val Array(trainingData, testData) = filteredData.randomSplit(Array(0.7, 0.3), splitSeed)
-
   //filteredData.printSchema
 
   //Converting categorical columns to numeric
-  val categoricalFeatureIndexer:Seq[StringIndexerModel] = convertCategoricalToIndexes(categoricalColNames, trainingData)
+  val categoricalFeatureIndexer:Seq[StringIndexerModel] = convertCategoricalToIndexes(categoricalColNames, filteredData)
 
   // Appending categorical index columns and numeric columns
   val idxdCategoricalColName = categoricalColNames.map(_ + "Indexed")
@@ -74,8 +71,11 @@ object DataModelApp extends App {
   val labelIndexer:StringIndexerModel = new StringIndexer()
     .setInputCol(productColName)
     .setOutputCol(productIndexedColName)
-    .fit(trainingData)
+    .fit(filteredData)
     .setHandleInvalid("skip")
+
+  // Split training and test data
+  val Array(trainingData, testData) = filteredData.randomSplit(Array(0.7, 0.3), splitSeed)
 
   //Convert all the features to Vector
   val assembler:VectorAssembler = new VectorAssembler()
