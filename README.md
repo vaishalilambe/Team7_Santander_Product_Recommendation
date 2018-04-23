@@ -3,19 +3,27 @@
 
 ### Build Status: [![CircleCI](https://circleci.com/gh/vaishalilambe/Team7_Santander_Product_Recommendation.svg?style=svg)](https://circleci.com/gh/vaishalilambe/Team7_Santander_Product_Recommendation)
 
+
+## Introduction:
+
 Course : [CSYE7200 Big Data Engineering with Scala](https://www.coursicle.com/neu/courses/CSYE/7200/)
 
 Professor: Robin Hillyard
 
-Team 7: Vaishali Lambe, Arpit Rawat, Nishant Gandhi
+Team member:
+
+Vaishali Lambe - [lambe.v@husky.neu.edu] (mailto:lambe.v@husky.neu.edu )
+
+Nishant Gandhi - [gandhi.n@husky.neu.edu] (mailto:gandhi.n@husky.neu.edu])
+
+Arpit Rawat - [rawat.a@husky.neu.edu] (mailto:rawat.a@husky.neu.edu)
 
 Programming Language: **Scala**
 
-## Tools: 
+## Tools / Framework: 
  - Apache Spark
  - Zepplin
  - Play Framework
- - AWS
  - IntelliJ IDEA
  - CircleCI
  - [GitlabCI](https://gitlab.com/nishantgandhi99/Team_7_Santander_Product_Recommendation) 
@@ -30,8 +38,21 @@ Backup Repository: https://github.com/vaishalilambe/Team7_Santander_Product_Reco
 
 ## Synopsis:
 
-In this project we build a recommendation system for a customer on the basis of behavior of his existing product consumption and recommend products similar to it.
+- Problem Statement:
 
+  In this project we build a recommendation system for a customer on the basis of behavior of his existing product consumption and recommend products similar to it.
+
+- Approach:
+
+  To achieve it we  followed the appraoch of divide single task into multiple subtasks
+  So we have below stages in our project: Data Exploratory Analysis -> Data Cleaning -> Data Modelling -> Predictions
+  Predicted top 10 products 
+
+- Model Accuracy
+
+  Precision achieved with this predictive model is 0.63
+
+  
 ## Final Project Prsentation
 
 https://prezi.com/view/L9AIqnlsLZrmKhNYkX50/
