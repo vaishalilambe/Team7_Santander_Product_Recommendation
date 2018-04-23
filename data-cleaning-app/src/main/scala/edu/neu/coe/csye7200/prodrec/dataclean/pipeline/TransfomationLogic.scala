@@ -65,18 +65,14 @@ object TransfomationLogic {
   }
 
   def fixAge(df: DataFrame): DataFrame = {
-    var df1 = df
     val avgAge: Int = df.select(mean(df("age"))).collect()(0).get(0).toString.toDouble.toInt
-    df1 = df1.na.fill(avgAge, Seq("age"))
+    val df1 = df.na.fill(avgAge, Seq("age"))
     df1
   }
 
   def replaceNullWithAvg(df: DataFrame): DataFrame = {
-    var df1 = df
-
     val avgIncome: Double = df.select(mean(df("income"))).collect()(0).get(0).toString.toDouble
-
-    df1 = df1.na.fill(avgIncome, Seq("income"))
+    val df1 = df.na.fill(avgIncome, Seq("income"))
     df1
   }
 
@@ -94,11 +90,8 @@ object TransfomationLogic {
   }
 
   def replaceEmptyToUnknown(df: DataFrame): DataFrame = {
-
     var df1 = df
-
     val columns = Seq("customerAddrProvinceName", "customerType", "customerTypeFirstMonth", "channelOfJoin")
-
     for (x <- columns) {
       df1 = df1.withColumn(x, udf(emptyToUnknown).apply(col(x)))
     }
@@ -106,16 +99,13 @@ object TransfomationLogic {
   }
 
   def formatColumnDF(df: DataFrame): DataFrame = {
-
     val df1 = df.withColumn("customerAddrProvinceName", udf(removeQuotes).apply(col("customerAddrProvinceName")))
-
     df1
   }
 
   def classDStoDF(classDS: Dataset[SantanderRecord]): DataFrame = {
 
     var df = classDS.toDF()
-
     val custCol = Seq("code", "employmentStatus", "countryOfResidence", "gender", "age", "income")
     for (x <- custCol) {
       df = df.withColumn(x, col("customerInfo")(x))
