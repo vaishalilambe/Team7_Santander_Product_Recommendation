@@ -42,7 +42,7 @@ object Product {
            ): Product = {
 
     val builder = StringBuilder.newBuilder
-    var set = TreeSet[Int]()
+    val set = TreeSet[Int]()
 
       if (intToBool(savingAcc)) set += 1
       if (intToBool(guarantees)) set += 2
@@ -69,7 +69,7 @@ object Product {
       if (intToBool(pensionNom)) set += 23
       if (intToBool(directDebit)) set += 24
 
-    var prod:String = set.mkString("[", ",", "]")
+    val prod:String = set.mkString("[", ",", "]")
     Product(prod)
   }
 }

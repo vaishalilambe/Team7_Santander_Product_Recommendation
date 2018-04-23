@@ -1,7 +1,7 @@
 package edu.neu.coe.csye7200.prodrec.dataclean.io
 
 import edu.neu.coe.csye7200.prodrec.dataclean.model.{Account, Customer, Product, SantanderRecord}
-import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
+import org.apache.spark.sql.{Dataset, SparkSession}
 
 object DataParser extends Serializable {
 
