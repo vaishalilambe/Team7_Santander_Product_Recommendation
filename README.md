@@ -9,7 +9,7 @@ Professor: Robin Hillyard
 
 Team member:
 
-Vaishali Lambe - mailto: ambe.v@husky.neu.edu
+Vaishali Lambe - [lambe.v@husky.neu.edu] (mailto:lambe.v@husky.neu.edu )
 
 Nishant Gandhi - mailto: gandhi.n@husky.neu.edu
 
