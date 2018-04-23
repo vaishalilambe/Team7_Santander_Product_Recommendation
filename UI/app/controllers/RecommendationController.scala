@@ -5,8 +5,7 @@ import javax.inject._
 import scala.io.Source
 import play.api.mvc._
 import com.github.tototoshi.csv._
-
-//import scala.collection.mutable.TreeSet._
+import scala.collection.mutable.TreeSet
 
 /**
   * This controller creates an `Action` to handle HTTP requests to the
@@ -24,8 +23,6 @@ class RecommendationController @Inject()(cc: ControllerComponents) extends Abstr
   def index = Action {
     Ok(views.html.recommendation("Ready for the Recommendation"))
   }
-
-//  case class Prediction(customer_code:Int, products: Seq[Int])
 
   def getPredictions(id:Int) = Action {
     val sources = Source.fromFile("dataset/predictionresult.csv")
@@ -57,28 +54,21 @@ class RecommendationController @Inject()(cc: ControllerComponents) extends Abstr
       "24" -> "Direct Debit"
     )
     val cId = id
+    val set = TreeSet[String]()
     val regex = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)"
-    //we are appending products based on recommendation
-    var prodSeq:Seq[String] = Seq()
     for(line <- sources.getLines())
       {
         val cid = line.split(regex)(0)
-        var prodList = line.split(regex)(1)
+        val prodList = line.split(regex)(1)
 
         if (cid == cId.toString) {
           var myprodList = prodList.substring(2,prodList.length-2).split(",")
           for(x <- myprodList)
             {
-              prodSeq = prodSeq :+ prodMap.get(x).get
-
-              //println(prodMap.get(x).get)
+              set.add(prodMap.get(x).get)
             }
-          //println(prodList)
         }
       }
-
-    //println(prodSeq)
-    //val productSeq = Seq("Savings Account", "Current Account")
-    Ok(views.html.predictions(cId, prodSeq))
+    Ok(views.html.predictions(cId, set.toSeq))
   }
 }
