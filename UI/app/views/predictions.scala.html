@@ -7,6 +7,7 @@
             @* Here's where we render the page title `String`. *@
             <title>Recommendation</title>
             <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+            <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
             <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
             <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
         </head>
@@ -15,21 +16,79 @@
             * the page content. *@
             <section id="top">
                 <div class="wrapper">
-                    <h1><a href="https://playframework.com/documentation/@version/Home">Predictions</a></h1>
+                    <h1><a href="/">Recommendations</a></h1>
                 </div>
             </section>
             <section>
-                <h2>Customer Code: @cId</h2>
-                <h2>Product:</h2>
+                <a href="/recommendations"><button type="button" class="btn btn-primary btn-lg btn-block">Customer No. @cId</button></a>
+                <section>
+                    <button type="button" class="btn btn-success">
+                    Products <span class="badge badge-light">@productSeq.length</span>
+                </button>
+                </section>
+                <div class="container">
 
-                <table>
-                    @for(w <- productSeq) {
-                        <tr>
-                            <td>@w</td>
-                            @*<td>@w.split(",").map(_.trim)[1]</td>*@
-                        </tr>
-                    }
-                </table>
+                        @if(productSeq.length > 0) {
+                            <div class="row">
+                            @for(w <- productSeq) {
+                                @{val imgSrc = w.toUpperCase()}
+                                <div class="col-sm">
+                                    <figure class="figure">
+                                        <img src="/assets/images/{@w.toLowerCase()}.jpg" class="figure-img img-fluid rounded" alt="image">
+                                        <figcaption class="figure-caption text-right">@w.toUpperCase()</figcaption>
+                                    </figure>
+                                </div>
+                            }
+                            </div>
+                        } else {
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="card p-3">
+                                        <blockquote class="blockquote mb-0 card-body">
+                                            <p><b>Current Account</b></p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="card p-3">
+                                        <blockquote class="blockquote mb-0 card-body">
+                                            <p><b>Payroll Nom</b></p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="card p-3">
+                                        <blockquote class="blockquote mb-0 card-body">
+                                            <p><b>Direct Debit</b></p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="card p-3">
+                                        <blockquote class="blockquote mb-0 card-body">
+                                            <p><b>Junior Account</b></p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="card p-3">
+                                        <blockquote class="blockquote mb-0 card-body">
+                                            <p><b>Pension Nom</b></p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <div class="card p-3">
+                                        <blockquote class="blockquote mb-0 card-body">
+                                            <p><b>Long Term Deposit</b></p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                </div>
             </section>
             <div id="content" class="wrapper doc"></div>
         </body>

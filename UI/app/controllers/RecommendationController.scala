@@ -22,7 +22,7 @@ class RecommendationController @Inject()(cc: ControllerComponents) extends Abstr
     * a path of `/`.
     */
   def index = Action {
-    Ok(views.html.recommendation("Recommendation application is ready."))
+    Ok(views.html.recommendation("Ready for the Recommendation"))
   }
 
 //  case class Prediction(customer_code:Int, products: Seq[Int])
@@ -58,30 +58,27 @@ class RecommendationController @Inject()(cc: ControllerComponents) extends Abstr
     )
     val cId = id
     val regex = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)"
-    var prodSeq:Seq[String] = Seq("")
+    //we are appending products based on recommendation
+    var prodSeq:Seq[String] = Seq()
     for(line <- sources.getLines())
       {
         val cid = line.split(regex)(0)
         var prodList = line.split(regex)(1)
 
-        if ( cid == cId.toString) {
+        if (cid == cId.toString) {
           var myprodList = prodList.substring(2,prodList.length-2).split(",")
           for(x <- myprodList)
             {
-//              prodSeq =
               prodSeq = prodSeq :+ prodMap.get(x).get
 
-              println(prodMap.get(x).get)
+              //println(prodMap.get(x).get)
             }
-          println(prodList)
+          //println(prodList)
         }
       }
 
-    println(prodSeq)
-    val productSeq = Seq("Savings Account", "Current Account")
+    //println(prodSeq)
+    //val productSeq = Seq("Savings Account", "Current Account")
     Ok(views.html.predictions(cId, prodSeq))
-//    Ok(views.html.index("Your new application is ready. vjvkvkvkhv"))
-
   }
-
 }
