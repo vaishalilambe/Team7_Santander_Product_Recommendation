@@ -17,7 +17,7 @@ Arpit Rawat - rawat.a@husky.neu.edu
 
 Programming Language: **Scala**
 
-## Tools: 
+## Tools / Framework: 
  - Apache Spark
  - Zepplin
  - Play Framework
