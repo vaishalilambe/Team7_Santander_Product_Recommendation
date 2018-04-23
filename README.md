@@ -9,11 +9,11 @@ Professor: Robin Hillyard
 
 Team member:
 
-Vaishali Lambe - lambe.v@husky.neu.edu
+Vaishali Lambe - mailto: ambe.v@husky.neu.edu
 
-Nishant Gandhi - gandhi.n@husky.neu.edu
+Nishant Gandhi - mailto: gandhi.n@husky.neu.edu
 
-Arpit Rawat - rawat.a@husky.neu.edu
+Arpit Rawat - mailto: rawat.a@husky.neu.edu
 
 Programming Language: **Scala**
 
