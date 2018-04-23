@@ -62,7 +62,7 @@ class RecommendationController @Inject()(cc: ControllerComponents) extends Abstr
         val prodList = line.split(regex)(1)
 
         if (cid == cId.toString) {
-          var myprodList = prodList.substring(2,prodList.length-2).split(",")
+          val myprodList = prodList.substring(2,prodList.length-2).split(",")
           for(x <- myprodList)
             {
               set.add(prodMap.get(x).get)
