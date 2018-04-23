@@ -7,7 +7,13 @@ Course : [CSYE7200 Big Data Engineering with Scala](https://www.coursicle.com/ne
 
 Professor: Robin Hillyard
 
-Team 7: Vaishali Lambe, Arpit Rawat, Nishant Gandhi
+Team member:
+
+Vaishali Lambe - lambe.v@husky.neu.edu
+
+Nishant Gandhi - gandhi.n@husky.neu.edu
+
+Arpit Rawat - rawat.a@husky.neu.edu
 
 Programming Language: **Scala**
 
@@ -34,10 +40,14 @@ Backup Repository: https://github.com/vaishalilambe/Team7_Santander_Product_Reco
   In this project we build a recommendation system for a customer on the basis of behavior of his existing product consumption and recommend products similar to it.
 
 - Approach:
-  
 
   To achieve it we  followed the appraoch of divide single task into multiple subtasks
   So we have below stages in our project: Data Exploratory Analysis -> Data Cleaning -> Data Modelling -> Predictions
+  Predicted top 10 products 
+
+- Model Accuracy
+
+  Precision achieved with this predictive model is 0.63
 
   
 ## Final Project Prsentation
