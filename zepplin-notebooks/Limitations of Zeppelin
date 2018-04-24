@@ -1,0 +1,14 @@
+
+1. Data Visualization is limited
+
+   Input data 1.36 M rows
+   
+   Though you set up spark interpreter variable to your  input data size, 
+   it automatically truncates your output visualization to default value 102400
+   
+   Refer varibales settings for  spark interpreter
+   zeppelin.interpreter.output.limit 102400 
+   
+   So, in out case only 10% of input data was visible
+
+2. Performance is low compare to jupyter notebook
